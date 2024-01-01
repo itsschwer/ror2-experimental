@@ -44,5 +44,25 @@ namespace AmGoldfish
 
             return -1;
         }
+
+
+
+
+#if DEBUG
+        private void Update()
+        {
+            if (!UnityEngine.Networking.NetworkServer.active || !RoR2.Run.instance) return;
+
+            bool ctrlKey = UnityEngine.Input.GetKey("left ctrl") || UnityEngine.Input.GetKey("right ctrl");
+            if (!ctrlKey) return;
+
+            RoR2.CharacterBody user = RoR2.LocalUserManager.GetFirstLocalUser()?.currentNetworkUser?.master?.GetBody();
+            if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.S)) Debug.SpawnScrapper(user);
+            else if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.P)) Debug.SpawnPrinter(user);
+            else if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.C)) Debug.SpawnCauldron(user);
+            else if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.R)) Debug.SpawnShrineChance(user);
+            else if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.M)) Debug.SpawnShrineBoss(user);
+        }
+#endif
     }
 }
