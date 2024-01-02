@@ -57,6 +57,20 @@ namespace AmGoldfish
 
             return spawn;
         }
+
+
+
+
+        public static CharacterMaster SpawnJellyfish(CharacterBody body)
+        {
+            CharacterSpawnCard spawn = Addressables.LoadAssetAsync<CharacterSpawnCard>("RoR2/Base/Jellyfish/cscJellyfish.asset").WaitForCompletion();
+            DirectorPlacementRule placement = new DirectorPlacementRule {
+                position = body.footPosition,
+                placementMode = DirectorPlacementRule.PlacementMode.Approximate
+            };
+            DirectorCore.GetMonsterSpawnDistance(DirectorCore.MonsterSpawnDistance.Close, out placement.minDistance, out placement.maxDistance);
+            return DirectorCore.instance.TrySpawnObject(new DirectorSpawnRequest(spawn, placement, RoR2Application.rng) { teamIndexOverride = body.master.teamIndex })?.GetComponent<CharacterMaster>();
+        }
     }
 }
 #endif
