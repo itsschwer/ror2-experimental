@@ -60,7 +60,6 @@ namespace AmGoldfish
             if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.S)) Debug.SpawnScrapper(user);
             else if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.P)) Debug.SpawnPrinter(user);
             else if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.C)) Debug.SpawnCauldron(user);
-            else if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.R)) Debug.SpawnShrineChance(user);
             else if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.M)) Debug.SpawnShrineBoss(user);
         }
 #endif

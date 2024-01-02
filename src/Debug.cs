@@ -12,7 +12,6 @@ namespace AmGoldfish
         public static void SpawnScrapper(CharacterBody body) => SpawnAtBody(LoadInteractableSpawnCard("RoR2/Base/Scrapper/iscScrapper.asset"), body);
         public static void SpawnPrinter(CharacterBody body) => SpawnAtBody(LoadInteractableSpawnCard("RoR2/Base/DuplicatorLarge/iscDuplicatorLarge.asset"), body);
         public static void SpawnCauldron(CharacterBody body) => SpawnAtBody(CreateCauldronSpawnCard(), body);
-        public static void SpawnShrineChance(CharacterBody body) => SpawnAtBody(LoadInteractableSpawnCard("RoR2/Base/ShrineChance/iscShrineChanceSnowy.asset"), body);
         public static void SpawnShrineBoss(CharacterBody body) => SpawnAtBody(LoadInteractableSpawnCard("RoR2/Base/ShrineBoss/iscShrineBossSnowy.asset"), body);
 
         public static void SpawnAtBody(SpawnCard spawnCard, CharacterBody body, TeamIndex teamIndexOverride = TeamIndex.Void)
