@@ -45,18 +45,22 @@ namespace AmGoldfish
 
         private static void AnnounceExchangedItems(Dictionary<PickupDef, int> exchanged, NetworkUser user)
         {
+            if (exchanged.Count <= 0) return;
+
             System.Text.StringBuilder items = new();
             var keys = exchanged.Keys.ToList();
             for (int i = 0; i < keys.Count; i++) {
                 var item = keys[i];
                 items.Append(Util.GenerateColoredString(Language.GetString(item.nameToken), item.baseColor));
                 if (exchanged[item] != 1) items.Append($"({exchanged[item]})");
-                if (keys.Count - 1 - i > 2) items.Append(", ");
-                else if (keys.Count - 1 - i > 1) items.Append(", and ");
+
+                int remaining = keys.Count - i;
+                if (remaining > 2) items.Append(", ");
+                else if (remaining > 1) items.Append((keys.Count > 2) ? ", and " : " and ");
             }
 
             // RoR2.SubjectChatMessage.IsSecondPerson()
-            string subject = (LocalUserManager.readOnlyLocalUsersList.Count == 1 && user?.localUser != null) ? user.masterController.GetDisplayName() : "You";
+            string subject = (LocalUserManager.readOnlyLocalUsersList.Count == 1 && user?.localUser != null) ? "You" : user.masterController.GetDisplayName();
             Chat.AddMessage($"<style=cEvent>{subject} gave up {items}</color>");
         }
 
@@ -65,7 +69,7 @@ namespace AmGoldfish
                 || item == RoR2Content.Items.ScrapGreen.itemIndex
                 || item == RoR2Content.Items.ScrapRed.itemIndex
                 || item == RoR2Content.Items.ScrapYellow.itemIndex
-                || item == RoR2.DLC1Content.Items.RegeneratingScrap.itemIndex;
+                || item == DLC1Content.Items.RegeneratingScrap.itemIndex;
         }
     }
 }
