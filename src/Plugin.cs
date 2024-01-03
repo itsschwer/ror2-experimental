@@ -18,7 +18,7 @@ namespace AmGoldfish
             new Harmony(Info.Metadata.GUID).PatchAll();
             Log.Message($"{Plugin.GUID}> awake.");
 #if DEBUG
-            RoR2.Inventory.onInventoryChangedGlobal += EternalGhost;
+            RoR2.Inventory.onInventoryChangedGlobal += Debug.EternalGhost;
 #endif
         }
 
@@ -52,40 +52,30 @@ namespace AmGoldfish
 
 
 #if DEBUG
+        private RoR2.CharacterBody _body;
+        private RoR2.CharacterBody body {
+            get {
+                if (_body == null) {
+                    _body = RoR2.LocalUserManager.GetFirstLocalUser()?.currentNetworkUser?.master?.GetBody();
+                }
+                return _body;
+            }
+        }
+
         private void Update()
         {
             if (!UnityEngine.Networking.NetworkServer.active || !RoR2.Run.instance) return;
 
-            if (UnityEngine.Input.GetKeyDown("right alt")) { Jellyfish(); return; }
+            if (UnityEngine.Input.GetKeyDown("right alt")) { Debug.SpawnJellyfish(body); return; }
 
             bool ctrlKey = UnityEngine.Input.GetKey("left ctrl") || UnityEngine.Input.GetKey("right ctrl");
             if (!ctrlKey) return;
 
-            RoR2.CharacterBody user = RoR2.LocalUserManager.GetFirstLocalUser()?.currentNetworkUser?.master?.GetBody();
-            if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.S)) Debug.SpawnScrapper(user);
-            else if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.P)) Debug.SpawnPrinter(user);
-            else if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.C)) Debug.SpawnCauldron(user);
-            else if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.M)) Debug.SpawnShrineBoss(user);
-        }
+            if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.S)) Debug.SpawnScrapper(body);
+            else if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.P)) Debug.SpawnPrinter(body);
+            else if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.C)) Debug.SpawnCauldron(body);
+            else if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.M)) Debug.SpawnShrineBoss(body);
 
-        private void Jellyfish()
-        {
-            RoR2.CharacterMaster jelly = Debug.SpawnJellyfish(RoR2.LocalUserManager.GetFirstLocalUser()?.currentNetworkUser?.master?.GetBody());
-            if (jelly == null) return;
-
-            jelly.inventory.GiveItem(RoR2.RoR2Content.Items.ExtraLife.itemIndex);
-            jelly.inventory.GiveItem(RoR2.RoR2Content.Items.Ghost);
-
-            RoR2.Chat.SendBroadcastChat(new RoR2.Chat.SimpleChatMessage { baseToken = "<style=cWorldEvent>An eternal Jellyfish joins the fray...</style>" });
-        }
-
-        private static void EternalGhost(RoR2.Inventory inventory)
-        {
-            if (inventory.GetItemCount(RoR2.RoR2Content.Items.Ghost) <= 0) return;
-            if (inventory.GetItemCount(RoR2.RoR2Content.Items.ExtraLifeConsumed) > 0
-             && inventory.GetItemCount(RoR2.RoR2Content.Items.ExtraLife) <= 0) {
-                inventory.GiveItem(RoR2.RoR2Content.Items.ExtraLife.itemIndex);
-            }
         }
 #endif
     }
