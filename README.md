@@ -1,13 +1,14 @@
-# am goldfish
+# [ Risk of Rain 2 ] mod experiments
 
-## to test
+## client-side
+> *untested as non-host*
 - lunar seer destination on ping
 - show items lost to cauldron in (local) chat (excl. scrap)
 
-## todo
-- objectives/reminders panel
-    - `TeleporterInteraction.instance.shrineBonusStacks`
-    - reminders for lockbox (+ void) and shipping request? — [ref](https://github.com/WolfoIsBestWolf/ror2-WolfoQualityoLlife/blob/main/WolfoQualityOfLife/code/Text/Reminders.cs)
-        - also all chests, terminals, cradles, potentials, chance shrines, equipment barrels?
-    - show client ping?
-- equipment drones show equipment name?
+## server-side
+- debug spawning *(`ctrl`)*
+    - \[`s`\]crapper
+    - \[`p`\]rinter
+    - \[`c`\]auldron
+    - \[`g`\]ive lepton daisy
+- `ctrl`+`right alt` → eternal jellyfish

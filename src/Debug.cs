@@ -3,9 +3,8 @@ using RoR2;
 using RoR2.Navigation;
 using UnityEngine.AddressableAssets;
 using UnityEngine;
-using UnityEngine.Networking;
 
-namespace AmGoldfish
+namespace Experimental
 {
     public static class Debug
     {
@@ -43,7 +42,7 @@ namespace AmGoldfish
         public static void SpawnScrapper(CharacterBody body) => SpawnAtBody(LoadInteractableSpawnCard("RoR2/Base/Scrapper/iscScrapper.asset"), body);
         public static void SpawnPrinter(CharacterBody body) => SpawnAtBody(LoadInteractableSpawnCard("RoR2/Base/DuplicatorLarge/iscDuplicatorLarge.asset"), body);
         public static void SpawnCauldron(CharacterBody body) => SpawnAtBody(CreateCauldronSpawnCard(), body);
-        public static void SpawnShrineBoss(CharacterBody body) => SpawnAtBody(LoadInteractableSpawnCard("RoR2/Base/ShrineBoss/iscShrineBossSnowy.asset"), body);
+
 
         public static GameObject SpawnAtBody(SpawnCard spawnCard, CharacterBody body, TeamIndex teamIndexOverride = TeamIndex.Void)
         {
@@ -66,6 +65,7 @@ namespace AmGoldfish
             GameObject obj = DirectorCore.instance.TrySpawnObject(new DirectorSpawnRequest(spawnCard, placement, RoR2Application.rng) { teamIndexOverride = (teamIndexOverride != TeamIndex.None) ? teamIndexOverride: body.master.teamIndex });
             return obj;
         }
+
 
         // https://github.com/Goorakh/RiskOfChaos/blob/149f6e103588a66ae83c5539f6f778fd2d405915/RiskOfChaos/EffectDefinitions/World/Spawn/SpawnRandomInteractable.cs#L23-L35
         public static InteractableSpawnCard LoadInteractableSpawnCard(string assetPath)

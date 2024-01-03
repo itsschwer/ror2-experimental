@@ -1,7 +1,7 @@
 ﻿using HarmonyLib;
 using RoR2;
 
-namespace AmGoldfish
+namespace Experimental
 {
     [HarmonyPatch]
     internal static class LunarSeer

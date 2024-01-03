@@ -1,14 +1,14 @@
 using BepInEx;
 using HarmonyLib;
 
-namespace AmGoldfish
+namespace Experimental
 {
     [BepInPlugin(GUID, Name, Version)]
     public sealed class Plugin : BaseUnityPlugin
     {
         public const string GUID = Author + "." + Name;
         public const string Author = "itsschwer";
-        public const string Name = "AmGoldfish";
+        public const string Name = "experimental";
         public const string Version = "0.0.0";
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Unity Message")]
@@ -52,30 +52,21 @@ namespace AmGoldfish
 
 
 #if DEBUG
-        private RoR2.CharacterBody _body;
-        private RoR2.CharacterBody body {
-            get {
-                if (_body == null) {
-                    _body = RoR2.LocalUserManager.GetFirstLocalUser()?.currentNetworkUser?.master?.GetBody();
-                }
-                return _body;
-            }
-        }
-
         private void Update()
         {
             if (!UnityEngine.Networking.NetworkServer.active || !RoR2.Run.instance) return;
 
-            if (UnityEngine.Input.GetKeyDown("right alt")) { Debug.SpawnJellyfish(body); return; }
-
             bool ctrlKey = UnityEngine.Input.GetKey("left ctrl") || UnityEngine.Input.GetKey("right ctrl");
             if (!ctrlKey) return;
+
+            RoR2.CharacterBody body = RoR2.LocalUserManager.GetFirstLocalUser()?.currentNetworkUser?.master?.GetBody();
 
             if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.S)) Debug.SpawnScrapper(body);
             else if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.P)) Debug.SpawnPrinter(body);
             else if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.C)) Debug.SpawnCauldron(body);
-            else if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.M)) Debug.SpawnShrineBoss(body);
 
+            else if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.G)) body?.master?.inventory?.GiveItem(RoR2.RoR2Content.Items.TPHealingNova);
+            else if (UnityEngine.Input.GetKeyDown("right alt")) Debug.SpawnJellyfish(body);
         }
 #endif
     }

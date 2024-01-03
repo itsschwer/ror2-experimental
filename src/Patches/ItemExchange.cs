@@ -3,7 +3,7 @@ using RoR2;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace AmGoldfish
+namespace Experimental
 {
     [HarmonyPatch]
     internal static class ItemExchange

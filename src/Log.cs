@@ -1,6 +1,6 @@
 ﻿using BepInEx.Logging;
 
-namespace AmGoldfish
+namespace Experimental
 {
     internal static class Log
     {
