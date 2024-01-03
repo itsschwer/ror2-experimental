@@ -41,22 +41,24 @@ namespace AmGoldfish
                 exchanged[def]++;
             }
 
-            AnnounceExchangedItems(exchanged);
+            AnnounceExchangedItems(exchanged, user);
         }
 
-        private static void AnnounceExchangedItems(Dictionary<PickupDef, int> exchanged)
+        private static void AnnounceExchangedItems(Dictionary<PickupDef, int> exchanged, NetworkUser user)
         {
-            System.Text.StringBuilder s = new();
-            s.Append("You gave up ");
+            System.Text.StringBuilder items = new();
             var keys = exchanged.Keys.ToList();
             for (int i = 0; i < keys.Count; i++) {
                 var item = keys[i];
-                s.Append(Util.GenerateColoredString(Language.GetString(item.nameToken), item.baseColor));
-                if (exchanged[item] != 1) s.Append($"({exchanged[item]})");
-                if (keys.Count - 1 - i > 2) s.Append(", ");
-                else if (keys.Count - 1 - i > 1) s.Append(", and ");
+                items.Append(Util.GenerateColoredString(Language.GetString(item.nameToken), item.baseColor));
+                if (exchanged[item] != 1) items.Append($"({exchanged[item]})");
+                if (keys.Count - 1 - i > 2) items.Append(", ");
+                else if (keys.Count - 1 - i > 1) items.Append(", and ");
             }
-            Chat.AddMessage($"<style=cEvent>{s}</color>");
+
+            // RoR2.SubjectChatMessage.IsSecondPerson()
+            string subject = (LocalUserManager.readOnlyLocalUsersList.Count == 1 && user?.localUser != null) ? user.masterController.GetDisplayName() : "You";
+            Chat.AddMessage($"<style=cEvent>{subject} gave up {items}</color>");
         }
 
         public static bool IsScrap(ItemIndex item) {
