@@ -21,9 +21,8 @@ namespace AmGoldfish
                     break;
             }
 
-            NetworkUser client = LocalUserManager.GetFirstLocalUser()?.currentNetworkUser;
             NetworkUser user = activator?.GetComponent<CharacterBody>()?.master?.playerCharacterMasterController?.networkUser;
-            if (client == null || user == null || client != user) return;
+            if (user == null) return;
 
             Dictionary<PickupDef, int> exchanged = [];
 
