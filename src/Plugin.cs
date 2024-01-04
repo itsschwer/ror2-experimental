@@ -16,7 +16,7 @@ namespace Experimental
         {
             Log.Init(Logger);
             new Harmony(Info.Metadata.GUID).PatchAll();
-            Log.Message($"{Plugin.GUID}> awake.");
+            Log.Message($"~awake.");
 #if DEBUG
             RoR2.Inventory.onInventoryChangedGlobal += Debug.EternalGhost;
 #endif
@@ -25,13 +25,13 @@ namespace Experimental
         [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Unity Message")]
         private void OnEnable()
         {
-            Log.Message($"{Plugin.GUID}> enabled.");
+            Log.Message($"~enabled.");
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Unity Message")]
         private void OnDisable()
         {
-            Log.Message($"{Plugin.GUID}> disabled.");
+            Log.Message($"~disabled.");
         }
 
         public static int GetClientPingMilliseconds()
