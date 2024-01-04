@@ -18,9 +18,10 @@
 
 
 # idea: Newt Alternative
-> *less exploitable bazaar*
+*less exploitable bazaar*
 
 ## server-side
+[test implementation](./src/Patches/NewtAlternative.cs)
 - buds can only be opened once per loop
     - prevent users with edited lunar coins from amassing absurd amounts of (specific) lunar items (through rerolling)
 - newt altars cost 0 lunar coins
