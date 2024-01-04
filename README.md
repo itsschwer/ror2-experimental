@@ -17,7 +17,8 @@
 
 
 
-# idea: 'less exploitable bazaar'
+# idea: Newt Alternative
+> *less exploitable bazaar*
 
 ## server-side
 - buds can only be opened once per loop

@@ -19,6 +19,7 @@ namespace Experimental
             Log.Message($"~awake.");
 #if DEBUG
             RoR2.Inventory.onInventoryChangedGlobal += Debug.EternalGhost;
+            nAlt.OnEnable();
 #endif
         }
 
@@ -68,6 +69,17 @@ namespace Experimental
             else if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.B)) Debug.SpawnBluePortal(body);
 
             else if (UnityEngine.Input.GetKeyDown("right alt")) Debug.SpawnJellyfish(body);
+        }
+
+
+
+
+        private static NewtAlternative _nAlt;
+        internal static NewtAlternative nAlt {
+            get {
+                _nAlt ??= new NewtAlternative();
+                return _nAlt;
+            }
         }
 #endif
     }
