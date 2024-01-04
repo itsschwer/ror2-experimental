@@ -64,8 +64,9 @@ namespace Experimental
             if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.S)) Debug.SpawnScrapper(body);
             else if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.P)) Debug.SpawnPrinter(body);
             else if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.C)) Debug.SpawnCauldron(body);
-
             else if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.G)) body?.master?.inventory?.GiveItem(RoR2.RoR2Content.Items.TPHealingNova);
+            else if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.B)) Debug.SpawnBluePortal(body);
+
             else if (UnityEngine.Input.GetKeyDown("right alt")) Debug.SpawnJellyfish(body);
         }
 #endif

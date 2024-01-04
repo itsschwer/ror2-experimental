@@ -43,6 +43,12 @@ namespace Experimental
         public static void SpawnPrinter(CharacterBody body) => SpawnAtBody(LoadInteractableSpawnCard("RoR2/Base/DuplicatorLarge/iscDuplicatorLarge.asset"), body);
         public static void SpawnCauldron(CharacterBody body) => SpawnAtBody(CreateCauldronSpawnCard(), body);
 
+        public static void SpawnBluePortal(CharacterBody body)
+        {
+            SpawnCard card = Addressables.LoadAssetAsync<SpawnCard>("RoR2/Base/PortalShop/iscShopPortal.asset").WaitForCompletion();
+            SpawnAtBody(card, body);
+        }
+
 
         public static GameObject SpawnAtBody(SpawnCard spawnCard, CharacterBody body, TeamIndex teamIndexOverride = TeamIndex.Void)
         {
