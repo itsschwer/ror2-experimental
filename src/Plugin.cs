@@ -3,6 +3,7 @@ using HarmonyLib;
 
 namespace Experimental
 {
+    [BepInDependency(PressureDrop.Plugin.GUID)]
     [BepInPlugin(GUID, Name, Version)]
     public sealed class Plugin : BaseUnityPlugin
     {
@@ -29,12 +30,18 @@ namespace Experimental
         private void OnEnable()
         {
             Log.Message($"~enabled.");
+#if DEBUG
+            Commands.Register();
+#endif
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Unity Message")]
         private void OnDisable()
         {
             Log.Message($"~disabled.");
+#if DEBUG
+            Commands.Unregister();
+#endif
         }
 
         public static int GetClientPingMilliseconds()
@@ -54,29 +61,6 @@ namespace Experimental
 
 
 
-#if DEBUG
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Unity Message")]
-        private void Update()
-        {
-            if (!UnityEngine.Networking.NetworkServer.active || !RoR2.Run.instance) return;
-
-            bool ctrlKey = UnityEngine.Input.GetKey("left ctrl") || UnityEngine.Input.GetKey("right ctrl");
-            if (!ctrlKey) return;
-
-            RoR2.CharacterBody body = RoR2.LocalUserManager.GetFirstLocalUser()?.currentNetworkUser?.master?.GetBody();
-
-            if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.S)) Debug.SpawnScrapper(body);
-            else if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.P)) Debug.SpawnPrinter(body);
-            else if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.C)) Debug.SpawnCauldron(body);
-            else if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.G)) body?.master?.inventory?.GiveItem(RoR2.RoR2Content.Items.TPHealingNova);
-            else if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.B)) Debug.SpawnBluePortal(body);
-
-            else if (UnityEngine.Input.GetKeyDown("right alt")) Debug.SpawnJellyfish(body);
-        }
-
-
-
-
 #if NEWT_ALTERNATIVE
         private static NewtAlternative _nAlt;
         internal static NewtAlternative nAlt {
@@ -85,7 +69,6 @@ namespace Experimental
                 return _nAlt;
             }
         }
-#endif
 #endif
     }
 }
