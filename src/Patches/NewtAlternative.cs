@@ -1,4 +1,5 @@
-﻿using HarmonyLib;
+﻿#if NEWT_ALTERNATIVE
+using HarmonyLib;
 using RoR2;
 using System.Collections.Generic;
 
@@ -60,3 +61,4 @@ namespace Experimental
     }
 #endif
 }
+#endif

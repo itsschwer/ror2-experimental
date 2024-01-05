@@ -19,7 +19,9 @@ namespace Experimental
             Log.Message($"~awake.");
 #if DEBUG
             RoR2.Inventory.onInventoryChangedGlobal += Debug.EternalGhost;
+#if NEWT_ALTERNATIVE
             nAlt.OnEnable();
+#endif
 #endif
         }
 
@@ -53,6 +55,7 @@ namespace Experimental
 
 
 #if DEBUG
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Unity Message")]
         private void Update()
         {
             if (!UnityEngine.Networking.NetworkServer.active || !RoR2.Run.instance) return;
@@ -74,6 +77,7 @@ namespace Experimental
 
 
 
+#if NEWT_ALTERNATIVE
         private static NewtAlternative _nAlt;
         internal static NewtAlternative nAlt {
             get {
@@ -81,6 +85,7 @@ namespace Experimental
                 return _nAlt;
             }
         }
+#endif
 #endif
     }
 }
