@@ -1,5 +1,4 @@
-﻿#define NEWT_ALTERNATIVE
-#if NEWT_ALTERNATIVE
+﻿#if NEWT_ALTERNATIVE
 using HarmonyLib;
 using RoR2;
 using System.Collections.Generic;
@@ -31,13 +30,9 @@ namespace Experimental
             // new run or looped | RoR2.Achievements.LoopOnceAchievement.Check()
             if (Run.instance.stageClearCount == 0 || Run.instance.loopClearCount > 0) {
                 Self.purchased.Clear();
-#if DEBUG
                 Log.Info($"{nameof(NewtAlternative)}> Resetting lunar bud availability.");
-#endif
             }
-#if DEBUG
             else Log.Info($"{nameof(NewtAlternative)}> {Self.purchased.Count} lunar buds locked | {Run.instance.stageClearCount} stages cleared"); ;
-#endif
         }
 
         [HarmonyPostfix, HarmonyPatch(typeof(PurchaseInteraction), nameof(PurchaseInteraction.Awake))]
