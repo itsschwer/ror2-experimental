@@ -20,9 +20,6 @@ namespace Experimental
             Log.Message($"~awake.");
 #if DEBUG
             RoR2.Inventory.onInventoryChangedGlobal += Debug.EternalGhost;
-#if NEWT_ALTERNATIVE
-            nAlt.OnEnable();
-#endif
 #endif
         }
 
@@ -57,18 +54,5 @@ namespace Experimental
 
             return -1;
         }
-
-
-
-
-#if NEWT_ALTERNATIVE
-        private static NewtAlternative _nAlt;
-        internal static NewtAlternative nAlt {
-            get {
-                _nAlt ??= new NewtAlternative();
-                return _nAlt;
-            }
-        }
-#endif
     }
 }

@@ -1,4 +1,5 @@
-﻿#if NEWT_ALTERNATIVE
+﻿#define NEWT_ALTERNATIVE
+#if NEWT_ALTERNATIVE
 using HarmonyLib;
 using RoR2;
 using System.Collections.Generic;
@@ -8,6 +9,9 @@ namespace Experimental
     [HarmonyPatch]
     internal class NewtAlternative
     {
+        private static NewtAlternative _instance;
+        private static NewtAlternative Self => _instance ??= new NewtAlternative();
+
         private readonly List<int> purchased = [];
 
         public bool Purchased(int budIndex) => purchased.Contains(budIndex);
@@ -16,17 +20,23 @@ namespace Experimental
             else { purchased.Add(budIndex); return true; }
         }
 
-        internal void OnEnable() => Stage.onStageStartGlobal += OnStageStart;
-        internal void OnDisable() => Stage.onStageStartGlobal -= OnStageStart;
-        private void OnStageStart(Stage stage)
+        // Patches -----------------------------------------
+
+        [HarmonyPostfix, HarmonyPatch(typeof(Stage), nameof(Stage.Start))]
+        private static void OnStageStart()
         {
             // new run or looped | RoR2.Achievements.LoopOnceAchievement.Check()
             if (Run.instance.stageClearCount == 0 || Run.instance.loopClearCount > 0) {
-                purchased.Clear();
+                Self.purchased.Clear();
+#if DEBUG
+                Log.Info($"{nameof(NewtAlternative)}> Resetting lunar bud availability.");
+#endif
             }
+#if DEBUG
+            else Log.Info($"{nameof(NewtAlternative)}> {Self.purchased.Count} lunar buds locked | {Run.instance.stageClearCount} stages cleared"); ;
+#endif
         }
 
-        // Patches -----------------------------------------
 #if DEBUG
         [HarmonyPostfix, HarmonyPatch(typeof(PurchaseInteraction), nameof(PurchaseInteraction.Awake))]
         private static void Awake(PurchaseInteraction __instance)
@@ -38,7 +48,8 @@ namespace Experimental
         private static void LunarBudAwake(PurchaseInteraction lunarBud)
         {
             int idx = (lunarBud.transform.parent.name == "LunarTable") ? lunarBud.transform.GetSiblingIndex() : -1;
-            if (idx < 0 || !Plugin.nAlt.Purchased(idx)) return;
+            if (idx < 0) return;
+            if (!Self.Purchased(idx)) return;
 
             lunarBud.SetAvailable(false);
             lunarBud.onPurchase.Invoke(null); // sets the correct appearance but spawns an invisible but ping-able '???' pickup.
@@ -56,7 +67,7 @@ namespace Experimental
             if (!__instance.CanBeAffordedByInteractor(activator)) return;
 
             int idx = (__instance.transform.parent.name == "LunarTable") ? __instance.transform.GetSiblingIndex() : -1;
-            Plugin.nAlt.MarkPurchased(idx);
+            Self.MarkPurchased(idx);
         }
     }
 #endif
