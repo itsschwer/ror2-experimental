@@ -37,27 +37,33 @@ namespace Experimental
 #endif
         }
 
-#if DEBUG
         [HarmonyPostfix, HarmonyPatch(typeof(PurchaseInteraction), nameof(PurchaseInteraction.Awake))]
         private static void Awake(PurchaseInteraction __instance)
         {
             if (__instance.displayNameToken == "LUNAR_TERMINAL_NAME") { LunarBudAwake(__instance); return; }
-            if (__instance.displayNameToken == "NEWT_STATUE_NAME" && __instance.GetComponent<PortalStatueBehavior>() != null) { NewtAltarAwake(__instance); return; }
+            if (__instance.displayNameToken == "NEWT_STATUE_NAME" && __instance.GetComponent<PortalStatueBehavior>() != null) { __instance.Networkcost = 0; return; }
         }
 
         private static void LunarBudAwake(PurchaseInteraction lunarBud)
         {
             int idx = (lunarBud.transform.parent.name == "LunarTable") ? lunarBud.transform.GetSiblingIndex() : -1;
             if (idx < 0) return;
+#if DEBUG
+            for (int i = 0; i < lunarBud.onPurchase.GetPersistentEventCount(); i++) {
+                Log.Info($"[{i}] {lunarBud.onPurchase.GetPersistentMethodName(i)} | {lunarBud.onPurchase.GetPersistentTarget(i)}");
+                /* PurchaseInteraction.SetAvailable()
+                 * ShopTerminalBehaviour.DropPickup() -> ShopTerminalBehaviour.SetHasBeenPurchased(true)
+                 * ShopTerminalBehaviour.SetNoPickup()
+                 * BazaarController.CommentOnLunarPurchase()
+                 * EntityLogic.Counter.Add()
+                 */
+            }
+#endif
             if (!Self.Purchased(idx)) return;
 
-            lunarBud.SetAvailable(false);
-            lunarBud.onPurchase.Invoke(null); // sets the correct appearance but spawns an invisible but ping-able '???' pickup.
-        }
-
-        private static void NewtAltarAwake(PurchaseInteraction newtAltar)
-        {
-            newtAltar.Networkcost = 0;
+            lunarBud.SetAvailable(false); // Interactable state
+            ShopTerminalBehavior terminal = lunarBud.GetComponent<ShopTerminalBehavior>();
+            terminal?.SetHasBeenPurchased(true); // Visual state
         }
 
         [HarmonyPostfix, HarmonyPatch(typeof(PurchaseInteraction), nameof(PurchaseInteraction.OnInteractionBegin))]
@@ -70,6 +76,5 @@ namespace Experimental
             Self.MarkPurchased(idx);
         }
     }
-#endif
 }
 #endif
