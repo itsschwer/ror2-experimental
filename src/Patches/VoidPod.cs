@@ -1,4 +1,5 @@
-﻿using HarmonyLib;
+﻿#if DEBUG
+using HarmonyLib;
 using RoR2;
 using UnityEngine.AddressableAssets;
 using UnityEngine;
@@ -18,3 +19,4 @@ namespace Experimental
         }
     }
 }
+#endif
