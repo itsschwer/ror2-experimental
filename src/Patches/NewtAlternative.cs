@@ -3,6 +3,7 @@
 using HarmonyLib;
 using RoR2;
 using System.Collections.Generic;
+using UnityEngine.Networking;
 
 namespace Experimental
 {
@@ -25,6 +26,8 @@ namespace Experimental
         [HarmonyPostfix, HarmonyPatch(typeof(Stage), nameof(Stage.Start))]
         private static void OnStageStart()
         {
+            if (!NetworkServer.active) return;
+
             // new run or looped | RoR2.Achievements.LoopOnceAchievement.Check()
             if (Run.instance.stageClearCount == 0 || Run.instance.loopClearCount > 0) {
                 Self.purchased.Clear();
@@ -40,12 +43,15 @@ namespace Experimental
         [HarmonyPostfix, HarmonyPatch(typeof(PurchaseInteraction), nameof(PurchaseInteraction.Awake))]
         private static void Awake(PurchaseInteraction __instance)
         {
+            if (!NetworkServer.active) return;
             if (__instance.displayNameToken == "LUNAR_TERMINAL_NAME") { LunarBudAwake(__instance); return; }
             if (__instance.displayNameToken == "NEWT_STATUE_NAME" && __instance.GetComponent<PortalStatueBehavior>() != null) { __instance.Networkcost = 0; return; }
         }
 
         private static void LunarBudAwake(PurchaseInteraction lunarBud)
         {
+            if (!NetworkServer.active) return;
+
             int idx = (lunarBud.transform.parent.name == "LunarTable") ? lunarBud.transform.GetSiblingIndex() : -1;
             if (idx < 0) return;
 #if DEBUG
@@ -69,6 +75,7 @@ namespace Experimental
         [HarmonyPostfix, HarmonyPatch(typeof(PurchaseInteraction), nameof(PurchaseInteraction.OnInteractionBegin))]
         private static void OnInteractionBegin(PurchaseInteraction __instance, Interactor activator)
         {
+            if (!NetworkServer.active) return;
             if (__instance.displayNameToken != "LUNAR_TERMINAL_NAME") return;
             if (!__instance.CanBeAffordedByInteractor(activator)) return;
 
