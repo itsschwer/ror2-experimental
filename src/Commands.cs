@@ -162,7 +162,10 @@ namespace Experimental
                         Debug.SpawnCommandCube(target.footPosition, Debug.GetEquipmentPickupOptions());
                         return;
                 }
-                Debug.SpawnCommandCube(target.footPosition, predicate);
+                if (predicate != null) {
+                    Debug.SpawnCommandCube(target.footPosition, predicate);
+                    return;
+                }
             }
 
             ChatCommander.OutputFail(args[0],
