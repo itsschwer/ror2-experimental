@@ -38,19 +38,16 @@ namespace Experimental
         public static PickupPickerController.Option[] GetEquipmentPickupOptions()
         {
             PickupIndex[] equip = PickupTransmutationManager.GetGroupFromPickupIndex(PickupCatalog.FindPickupIndex(RoR2Content.Equipment.Blackhole.equipmentIndex));
-            PickupIndex[] elite = PickupTransmutationManager.GetGroupFromPickupIndex(PickupCatalog.FindPickupIndex(RoR2Content.Equipment.AffixRed.equipmentIndex));
             PickupIndex[] lunar = PickupTransmutationManager.GetGroupFromPickupIndex(PickupCatalog.FindPickupIndex(RoR2Content.Equipment.Meteor.equipmentIndex));
 
-            PickupPickerController.Option[] result = new PickupPickerController.Option[equip.Length + elite.Length + lunar.Length];
+            PickupPickerController.Option[] result = new PickupPickerController.Option[equip.Length + lunar.Length];
             for (int i = 0; i < result.Length; i++) {
                 PickupIndex index = PickupIndex.none;
 
                 int j = i - equip.Length;
-                int k = j - elite.Length;
 
                 if (i < equip.Length) index = equip[i];
-                else if (j < elite.Length) index = elite[j];
-                else if (k < lunar.Length) index = lunar[k];
+                else if (j < lunar.Length) index = lunar[j];
 
                 result[i] = new PickupPickerController.Option { available = true, pickupIndex = index };
             }
