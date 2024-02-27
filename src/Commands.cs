@@ -13,9 +13,8 @@ namespace Experimental
             ChatCommander.Register("/?", Help);
             ChatCommander.Register("/f", ForceStage);
             ChatCommander.Register("/ne", DisableEnemySpawns);
-            ChatCommander.Register("/i", SpawnInteractable);
-            ChatCommander.Register("/b", SpawnBeetle);
-            ChatCommander.Register("/lepton", SpawnLeptonDrop);
+            ChatCommander.Register("/s", Spawn);
+            ChatCommander.Register("/i", SpawnCommandCube);
         }
 
         public static void Unregister()
@@ -23,9 +22,8 @@ namespace Experimental
             ChatCommander.Unregister("/?", Help);
             ChatCommander.Unregister("/f", ForceStage);
             ChatCommander.Unregister("/ne", DisableEnemySpawns);
-            ChatCommander.Unregister("/i", SpawnInteractable);
-            ChatCommander.Unregister("/b", SpawnBeetle);
-            ChatCommander.Unregister("/lepton", SpawnLeptonDrop);
+            ChatCommander.Unregister("/s", Spawn);
+            ChatCommander.Unregister("/i", SpawnCommandCube);
         }
 
         private static void Help(NetworkUser user, string[] args)
@@ -33,30 +31,42 @@ namespace Experimental
             ChatCommander.Output($"<style=cWorldEvent>{Plugin.GUID}</style> chat commands:");
             ChatCommander.Output($"  <style=cSub>/f</style>: forces a stage change.");
             ChatCommander.Output($"  <style=cSub>/ne</style>: toggles enemy spawns.");
-            ChatCommander.Output($"  <style=cSub>/i</style>: spawns an interactable.");
-            ChatCommander.Output($"  <style=cSub>/b</style>: spawns an enemy Beetle.");
+            ChatCommander.Output($"  <style=cSub>/s</style>: spawns an object.");
+            ChatCommander.Output($"  <style=cSub>/i</style>: spawns an Command Cube.");
         }
 
+        private static bool GetUserBody(NetworkUser user, out CharacterBody body)
+        {
+            body = null;
+            if (Run.instance == null) return false;
+            body = user?.GetCurrentBody();
+            return (body != null);
+        }
+
+
+
+        private static string[] _stages;
+        private static string[] Stages {
+            get {
+                return _stages ??= SceneCatalog.allStageSceneDefs.Select(def => def.cachedName.ToLowerInvariant()).ToArray();
+            }
+        }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("BepInEx.Analyzers", "Publicizer001")] // Accessing a member that was not originally public
         private static void ForceStage(NetworkUser user, string[] args)
         {
             if (Run.instance == null) return;
-            if (args.Length == 2) {
-                string scene = null;
-                args[1] = args[1].ToLowerInvariant();
-                if (Stages.Contains(args[1])) scene = args[1];
-                else if (args[1] == "aq") scene = "goolake";
-                else if (args[1] == "dr") scene = "blackbeach";
 
-                if (!string.IsNullOrWhiteSpace(scene)) {
+            if (args.Length == 2) {
+                args[1] = args[1].ToLowerInvariant();
+                if (Stages.Contains(args[1])) {
                     Run.instance.GenerateStageRNG();
-                    UnityEngine.Networking.NetworkManager.singleton.ServerChangeScene(scene);
+                    UnityEngine.Networking.NetworkManager.singleton.ServerChangeScene(args[1]);
                     return;
                 }
             }
 
-            ChatCommander.OutputFail(args[0], "{ <style=cSub>aq</style> | <style=cSub>dr</style> }");
+            ChatCommander.OutputFail(args[0], "invalid scene name.");
         }
 
         private static void DisableEnemySpawns(NetworkUser user, string[] args)
@@ -70,36 +80,9 @@ namespace Experimental
             else ChatCommander.OutputFail(args[0], "expects zero arguments.");
         }
 
-        private static void SpawnBeetle(NetworkUser user, string[] args)
+        private static void Spawn(NetworkUser user, string[] args)
         {
-            if (Run.instance == null) return;
-            CharacterBody target = user?.GetCurrentBody();
-            if (target == null) return;
-
-            SpawnCard card = Addressables.LoadAssetAsync<SpawnCard>("RoR2/Base/Beetle/cscBeetle.asset").WaitForCompletion();
-            Debug.SpawnAtBody(card, target, TeamIndex.Monster);
-        }
-
-        private static void SpawnLeptonDrop(NetworkUser user, string[] args)
-        {
-            if (Run.instance == null) return;
-            CharacterBody target = user?.GetCurrentBody();
-            if (target == null) return;
-
-            int count = 0;
-            if (args.Length > 1) int.TryParse(args[1], out count);
-            if (count <= 0) count = 1;
-            if (count > PressureDrop.Plugin.Config.MaxItemsToDropAtATime) count = PressureDrop.Plugin.Config.MaxItemsToDropAtATime;
-
-            PickupIndex idx = PickupCatalog.FindPickupIndex(RoR2Content.Items.TPHealingNova.itemIndex);
-            PressureDrop.Drop.DropStyleChest(target.gameObject.transform, idx, count, forwardOverride: PressureDrop.Drop.GetAimDirection(target));
-        }
-
-        private static void SpawnInteractable(NetworkUser user, string[] args)
-        {
-            if (Run.instance == null) return;
-            CharacterBody target = user?.GetCurrentBody();
-            if (target == null) return;
+            if (!GetUserBody(user, out CharacterBody target)) return;
 
             if (args.Length == 2) {
                 switch (args[1].ToLowerInvariant()) {
@@ -127,6 +110,11 @@ namespace Experimental
                     case "jelly":
                         Debug.SpawnJellyfish(target);
                         return;
+                    case "e":
+                    case "beetle":
+                        SpawnCard card = Addressables.LoadAssetAsync<SpawnCard>("RoR2/Base/Beetle/cscBeetle.asset").WaitForCompletion();
+                        Debug.SpawnAtBody(card, target, TeamIndex.Monster);
+                        return;
                 }
             }
 
@@ -134,14 +122,50 @@ namespace Experimental
                 "{ <style=cSub>scrapper</style> | <style=cSub>printer</style> | <style=cSub>cauldron</style> | <style=cSub>blueportal</style> }");
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("BepInEx.Analyzers", "Publicizer001")] // Accessing a member that was not originally public
+        private static void SpawnCommandCube(NetworkUser user, string[] args)
+        {
+            if (!GetUserBody(user, out CharacterBody target)) return;
 
-
-
-        private static string[] _stages;
-        private static string[] Stages {
-            get {
-                return _stages ??= SceneCatalog.allStageSceneDefs.Select(def => def.cachedName.ToLowerInvariant()).ToArray();
+            if (args.Length == 2) {
+                System.Func<ItemDef, bool> predicate = null;
+                switch (args[1].ToLowerInvariant()) {
+                    default: break;
+                    case "w":
+                    case "white":
+                        predicate = (def => def.tier == ItemTier.Tier1);
+                        break;
+                    case "g":
+                    case "green":
+                        predicate = (def => def.tier == ItemTier.Tier2);
+                        break;
+                    case "r":
+                    case "red":
+                        predicate = (def => def.tier == ItemTier.Tier3);
+                        break;
+                    case "y":
+                    case "yellow":
+                        predicate = (def => def.tier == ItemTier.Boss);
+                        break;
+                    case "l":
+                    case "lunar":
+                        predicate = (def => def.tier == ItemTier.Lunar);
+                        break;
+                    case "v":
+                    case "void":
+                        predicate = (def => PressureDrop.Drop.IsVoidTier(def.tier));
+                        break;
+                }
+                if (predicate != null) {
+                    UnityEngine.GameObject o = UnityEngine.Object.Instantiate(RoR2.Artifacts.CommandArtifactManager.commandCubePrefab, target.footPosition, UnityEngine.Quaternion.identity);
+                    o.GetComponent<PickupPickerController>().SetOptionsInternal(Debug.GetPickupOptions(predicate));
+                    UnityEngine.Networking.NetworkServer.Spawn(o);
+                    return;
+                }
             }
+
+            ChatCommander.OutputFail(args[0],
+                "{ <style=cSub>white</style> | <style=cSub>green</style> | <style=cSub>red</style> | <style=cSub>yellow</style> | <style=cSub>lunar</style> | <style=cSub>void</style> }");
         }
     }
 }

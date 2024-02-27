@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Experimental
 {
-    public static class Debug
+    public static partial class Debug
     {
         public static void SpawnScrapper(CharacterBody body)
             => SpawnAtBody(LoadInteractableSpawnCard("RoR2/Base/Scrapper/iscScrapper.asset"), body);
