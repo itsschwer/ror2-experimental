@@ -122,7 +122,6 @@ namespace Experimental
                 "{ <style=cSub>scrapper</style> | <style=cSub>printer</style> | <style=cSub>cauldron</style> | <style=cSub>blueportal</style> }");
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("BepInEx.Analyzers", "Publicizer001")] // Accessing a member that was not originally public
         private static void SpawnCommandCube(NetworkUser user, string[] args)
         {
             if (!GetUserBody(user, out CharacterBody target)) return;
@@ -155,17 +154,19 @@ namespace Experimental
                     case "void":
                         predicate = (def => PressureDrop.Drop.IsVoidTier(def.tier));
                         break;
+                    case "o":
+                    case "orange":
+                    case "e":
+                    case "equip":
+                    case "equipment":
+                        Debug.SpawnCommandCube(target.footPosition, Debug.GetEquipmentPickupOptions());
+                        return;
                 }
-                if (predicate != null) {
-                    UnityEngine.GameObject o = UnityEngine.Object.Instantiate(RoR2.Artifacts.CommandArtifactManager.commandCubePrefab, target.footPosition, UnityEngine.Quaternion.identity);
-                    o.GetComponent<PickupPickerController>().SetOptionsInternal(Debug.GetPickupOptions(predicate));
-                    UnityEngine.Networking.NetworkServer.Spawn(o);
-                    return;
-                }
+                Debug.SpawnCommandCube(target.footPosition, predicate);
             }
 
             ChatCommander.OutputFail(args[0],
-                "{ <style=cSub>white</style> | <style=cSub>green</style> | <style=cSub>red</style> | <style=cSub>yellow</style> | <style=cSub>lunar</style> | <style=cSub>void</style> }");
+                "{ <style=cSub>white</style> | <style=cSub>green</style> | <style=cSub>red</style> | <style=cSub>yellow</style> | <style=cSub>lunar</style> | <style=cSub>void</style> | <style=cSub>equipment</style> }");
         }
     }
 }
