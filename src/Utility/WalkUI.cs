@@ -18,6 +18,9 @@ namespace Experimental
                 case "diff":
                     Walk(GameObject.FindObjectOfType<CurrentDifficultyIconController>().transform, 0);
                     break;
+                case "obj":
+                    Walk(GameObject.FindObjectOfType<ObjectivePanelController>().GetComponentInChildren<HGTextMeshProUGUI>().transform, 0);
+                    break;
                 case "dmg":
                     Walk(GameObject.Find("DamageEntry").transform, 0);
                     break;
