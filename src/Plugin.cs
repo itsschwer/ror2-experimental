@@ -3,6 +3,7 @@ using HarmonyLib;
 
 namespace Experimental
 {
+    [BepInDependency(DamageLog.Plugin.GUID, BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency(PressureDrop.Plugin.GUID)]
     [BepInPlugin(GUID, Name, Version)]
     public sealed class Plugin : BaseUnityPlugin

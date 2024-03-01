@@ -15,6 +15,8 @@ namespace Experimental
             ChatCommander.Register("/ne", DisableEnemySpawns);
             ChatCommander.Register("/s", Spawn);
             ChatCommander.Register("/i", SpawnCommandCube);
+
+            if (WalkUI.DamageLogLoaded) ChatCommander.Register("/w", WalkUI.Walk);
         }
 
         public static void Unregister()
@@ -24,6 +26,8 @@ namespace Experimental
             ChatCommander.Unregister("/ne", DisableEnemySpawns);
             ChatCommander.Unregister("/s", Spawn);
             ChatCommander.Unregister("/i", SpawnCommandCube);
+
+            ChatCommander.Unregister("/w", WalkUI.Walk);
         }
 
         private static void Help(NetworkUser user, string[] args)

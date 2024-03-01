@@ -20,6 +20,10 @@
             <HintPath>..\..\pressure-drop\src\bin\Release\netstandard2.0\PressureDrop.dll</HintPath>
             <Private>false</Private>
         </Reference>
+        <Reference Include="DamageLog">
+            <HintPath>..\..\damage-log\src\bin\Release\netstandard2.0\DamageLog.dll</HintPath>
+            <Private>false</Private>
+        </Reference>
     </ItemGroup>
 
     <PropertyGroup>
