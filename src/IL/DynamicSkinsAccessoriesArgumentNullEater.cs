@@ -7,6 +7,7 @@ using System.Reflection;
 namespace Eater.IL
 {
     /// <summary>
+    /// Each dynamic skin appears to log a warning and an error each time an enemy spawns:
     /// [Warning: ] An error occured while adding accessories to a skin
     /// [Error  : ] System.ArgumentNullException: Value cannot be null.
     /// Parameter name: key
@@ -16,12 +17,14 @@ namespace Eater.IL
     /// </summary>
     internal static class DynamicSkinsAccessoriesArgumentNullEater
     {
+        const string target = "RuneFoxMods.DynamicSkins.DynamicSkinManager";
+
         internal static void Apply()
         {
             foreach (Assembly assembly in AppDomain.CurrentDomain.GetAssemblies()) {
-                Type type = assembly.GetType("RuneFoxMods.DynamicSkins.DynamicSkinManager");
+                Type type = assembly.GetType(target);
                 if (type != null) {
-                    Log.Debug($"Found dynamic skin in {assembly.FullName}");
+                    Log.Info($"Found dynamic skin in {assembly.FullName}");
                     MethodInfo method = type.GetMethod("SkinDefApply", BindingFlags.Instance | BindingFlags.NonPublic);
                     if (method != null) {
                         Apply(method);
@@ -32,23 +35,23 @@ namespace Eater.IL
 
         private static void Apply(MethodBase method)
         {
-            // ArgumentException: opcode
             ILHook hook = new(method, (il) => {
                 ILCursor c = new(il);
                 c.GotoNext(
+                    // InstanceLogger.LogWarning((object)"An error occured while adding accessories to a skin");
                     x => x.MatchLdstr("An error occured while adding accessories to a skin") // IL_0093
                 );
-                c.Index++; // Right before loading and calling logger
-                c.Emit(OpCodes.Ldloc_S, 7); // Load exception to stack
-                c.Emit(OpCodes.Isinst, typeof(ArgumentNullException));
+                c.Index -= 2; // To before IL_008d: ldarg.0
+                c.Emit(OpCodes.Ldloc, 7);                              // Load exception to stack (Ldloc instead of Ldloc_S since latter expects byte?)
+                c.Emit(OpCodes.Isinst, typeof(ArgumentNullException)); // ex is ArgumentNullException
 
                 ILLabel catchEnd = c.MarkLabel();
-                c.Emit(OpCodes.Brfalse_S, catchEnd);
-                c.GotoNext(
+                c.Emit(OpCodes.Brtrue_S, catchEnd); // Branch if true
+                c.GotoNext(            // Find instructions at end of catch block
                     x => x.MatchNop(), // IL_00ab
                     x => x.MatchNop()  // IL_00ac
                 );
-                c.MarkLabel(catchEnd); // Skip to end of catch block
+                c.MarkLabel(catchEnd); // Setup label at end of catch block
 
                 Log.Info($"Applied ILHook to {method.DeclaringType.FullName}.{method.Name}");
             });
