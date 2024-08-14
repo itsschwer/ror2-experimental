@@ -9,6 +9,8 @@ namespace Eater.IL
     {
         internal static void Apply()
         {
+            if (!BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey(LetsGoGamblingPlugin.MODUID)) return;
+
             MethodInfo method = typeof(LetsGoGamblingPlugin).GetMethod("ShrineChanceBehavior_AddShrineStack", BindingFlags.Instance | BindingFlags.NonPublic);
             ILHook hook = new(method, (il) => {
                 ILCursor c = new(il);
