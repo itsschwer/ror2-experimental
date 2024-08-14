@@ -1,4 +1,5 @@
 using BepInEx;
+using Eater.IL;
 
 namespace Eater
 {
@@ -14,6 +15,9 @@ namespace Eater
         private void Awake()
         {
             Log.Init(Logger);
+
+            LetsGoGamblingSuccessSoundEater.Apply();
+            DynamicSkinsAccessoriesArgumentNullEater.Apply();
 
             Log.Message("~awake.");
         }
