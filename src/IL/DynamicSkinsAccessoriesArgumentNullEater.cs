@@ -18,8 +18,21 @@ namespace Eater.IL
     {
         internal static void Apply()
         {
-            Type type = Type.GetType("RuneFoxMods.DynamicSkins.DynamicSkinManager"); // Insufficient, need assembly information; but want to match multiple :/
-            MethodInfo method = type.GetMethod("SkinDefApply", BindingFlags.Instance | BindingFlags.NonPublic);
+            foreach (Assembly assembly in AppDomain.CurrentDomain.GetAssemblies()) {
+                Type type = assembly.GetType("RuneFoxMods.DynamicSkins.DynamicSkinManager");
+                if (type != null) {
+                    Log.Debug($"Found dynamic skin in {assembly.FullName}");
+                    MethodInfo method = type.GetMethod("SkinDefApply", BindingFlags.Instance | BindingFlags.NonPublic);
+                    if (method != null) {
+                        Apply(method);
+                    }
+                }
+            }
+        }
+
+        private static void Apply(MethodBase method)
+        {
+            // ArgumentException: opcode
             ILHook hook = new(method, (il) => {
                 ILCursor c = new(il);
                 c.GotoNext(
@@ -27,11 +40,15 @@ namespace Eater.IL
                 );
                 c.Index++; // Right before loading and calling logger
                 c.Emit(OpCodes.Ldloc_S, 7); // Load exception to stack
-                c.EmitDelegate<Action<Exception>>((e) => {
-                    if (e is ArgumentNullException) {
-                        c.RemoveRange(7); // Skip to end of catch block
-                    }
-                });
+                c.Emit(OpCodes.Isinst, typeof(ArgumentNullException));
+
+                ILLabel catchEnd = c.MarkLabel();
+                c.Emit(OpCodes.Brfalse_S, catchEnd);
+                c.GotoNext(
+                    x => x.MatchNop(), // IL_00ab
+                    x => x.MatchNop()  // IL_00ac
+                );
+                c.MarkLabel(catchEnd); // Skip to end of catch block
 
                 Log.Info($"Applied ILHook to {method.DeclaringType.FullName}.{method.Name}");
             });
