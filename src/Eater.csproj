@@ -16,10 +16,6 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Reference Include="HatsuneMikuArtificer">
-            <HintPath>..\food\HatsuneMikuArtificer.dll</HintPath>
-            <Private>false</Private>
-        </Reference>
         <Reference Include="letsgogambling">
             <HintPath>..\food\letsgogambling.dll</HintPath>
             <Private>false</Private>
