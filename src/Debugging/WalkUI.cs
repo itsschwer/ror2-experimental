@@ -3,13 +3,13 @@ using RoR2.UI;
 using UnityEngine.UI;
 using UnityEngine;
 
-namespace Experimental
+namespace Experimental.Debugging
 {
-    internal static class WalkUI
+    public static class WalkUI
     {
-        public static bool DamageLogLoaded => BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey(DamageLog.Plugin.GUID);
+        internal static bool DamageLogLoaded => BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey(DamageLog.Plugin.GUID);
 
-        public static void Walk(RoR2.NetworkUser _, string[] args)
+        internal static void Walk(RoR2.NetworkUser _, string[] args)
         {
             if (args.Length <= 1) return;
 

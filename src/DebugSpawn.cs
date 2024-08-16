@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Experimental
 {
-    public static partial class Debug
+    public static class Debug
     {
         public static void SpawnScrapper(CharacterBody body)
             => SpawnAtBody(LoadInteractableSpawnCard("RoR2/Base/Scrapper/iscScrapper.asset"), body);
@@ -62,33 +62,6 @@ namespace Experimental
             spawn.sendOverNetwork = true;
 
             return spawn;
-        }
-
-
-
-
-        internal static void EternalGhost(Inventory inventory)
-        {
-            if (inventory.GetItemCount(RoR2Content.Items.Ghost) <= 0) return;
-            if (inventory.GetItemCount(RoR2Content.Items.ExtraLifeConsumed) > 0
-             && inventory.GetItemCount(RoR2Content.Items.ExtraLife) <= 0) {
-                inventory.GiveItem(RoR2Content.Items.ExtraLife.itemIndex);
-            }
-        }
-
-        internal static CharacterMaster SpawnJellyfish(CharacterBody body, bool eternal = true)
-        {
-            CharacterSpawnCard card = Addressables.LoadAssetAsync<CharacterSpawnCard>("RoR2/Base/Jellyfish/cscJellyfish.asset").WaitForCompletion();
-            CharacterMaster master = SpawnAtBody(card, body)?.GetComponent<CharacterMaster>();
-            if (master == null) return null;
-
-            if (eternal) {
-                master.inventory?.GiveItem(RoR2Content.Items.ExtraLife.itemIndex);
-                master.inventory?.GiveItem(RoR2Content.Items.Ghost);
-                Chat.SendBroadcastChat(new Chat.SimpleChatMessage { baseToken = $"<style=cWorldEvent>An eternal {master.GetBody()?.GetDisplayName()} joins the fray...</style>" });
-            }
-
-            return master;
         }
     }
 }

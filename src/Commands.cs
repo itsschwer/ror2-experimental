@@ -108,15 +108,6 @@ namespace Experimental
                     case "blueportal":
                         Debug.SpawnBluePortal(target);
                         return;
-                    case "j":
-                    case "jelly":
-                        Debug.SpawnJellyfish(target);
-                        return;
-                    case "e":
-                    case "beetle":
-                        SpawnCard card = Addressables.LoadAssetAsync<SpawnCard>("RoR2/Base/Beetle/cscBeetle.asset").WaitForCompletion();
-                        Debug.SpawnAtBody(card, target, TeamIndex.Monster);
-                        return;
                 }
             }
 
