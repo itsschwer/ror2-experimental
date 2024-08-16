@@ -3,6 +3,7 @@ using RoR2;
 using PressureDrop;
 using UnityEngine.AddressableAssets;
 using System.Linq;
+using Experimental.Debugging;
 
 namespace Experimental
 {
@@ -14,7 +15,6 @@ namespace Experimental
             ChatCommander.Register("/f", ForceStage);
             ChatCommander.Register("/ne", DisableEnemySpawns);
             ChatCommander.Register("/s", Spawn);
-            ChatCommander.Register("/i", SpawnCommandCube);
 
             if (WalkUI.DamageLogLoaded) ChatCommander.Register("/w", WalkUI.Walk);
         }
@@ -25,7 +25,6 @@ namespace Experimental
             ChatCommander.Unregister("/f", ForceStage);
             ChatCommander.Unregister("/ne", DisableEnemySpawns);
             ChatCommander.Unregister("/s", Spawn);
-            ChatCommander.Unregister("/i", SpawnCommandCube);
 
             ChatCommander.Unregister("/w", WalkUI.Walk);
         }
@@ -36,7 +35,6 @@ namespace Experimental
             ChatCommander.Output($"  <style=cSub>/f</style>: forces a stage change.");
             ChatCommander.Output($"  <style=cSub>/ne</style>: toggles enemy spawns.");
             ChatCommander.Output($"  <style=cSub>/s</style>: spawns an object.");
-            ChatCommander.Output($"  <style=cSub>/i</style>: spawns an Command Cube.");
         }
 
         private static bool GetUserBody(NetworkUser user, out CharacterBody body)
@@ -124,56 +122,6 @@ namespace Experimental
 
             ChatCommander.OutputFail(args[0],
                 "{ <style=cSub>scrapper</style> | <style=cSub>printer</style> | <style=cSub>cauldron</style> | <style=cSub>blueportal</style> }");
-        }
-
-        private static void SpawnCommandCube(NetworkUser user, string[] args)
-        {
-            if (!GetUserBody(user, out CharacterBody target)) return;
-
-            if (args.Length == 2) {
-                System.Func<ItemDef, bool> predicate = null;
-                switch (args[1].ToLowerInvariant()) {
-                    default: break;
-                    case "w":
-                    case "white":
-                        predicate = (def => def.tier == ItemTier.Tier1);
-                        break;
-                    case "g":
-                    case "green":
-                        predicate = (def => def.tier == ItemTier.Tier2);
-                        break;
-                    case "r":
-                    case "red":
-                        predicate = (def => def.tier == ItemTier.Tier3);
-                        break;
-                    case "y":
-                    case "yellow":
-                        predicate = (def => def.tier == ItemTier.Boss);
-                        break;
-                    case "l":
-                    case "lunar":
-                        predicate = (def => def.tier == ItemTier.Lunar);
-                        break;
-                    case "v":
-                    case "void":
-                        predicate = (def => PressureDrop.Drop.IsVoidTier(def.tier));
-                        break;
-                    case "o":
-                    case "orange":
-                    case "e":
-                    case "equip":
-                    case "equipment":
-                        Debug.SpawnCommandCube(target.footPosition, Debug.GetEquipmentPickupOptions());
-                        return;
-                }
-                if (predicate != null) {
-                    Debug.SpawnCommandCube(target.footPosition, predicate);
-                    return;
-                }
-            }
-
-            ChatCommander.OutputFail(args[0],
-                "{ <style=cSub>white</style> | <style=cSub>green</style> | <style=cSub>red</style> | <style=cSub>yellow</style> | <style=cSub>lunar</style> | <style=cSub>void</style> | <style=cSub>equipment</style> }");
         }
     }
 }

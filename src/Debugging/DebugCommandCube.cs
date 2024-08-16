@@ -2,27 +2,24 @@
 using RoR2;
 using System.Linq;
 
-namespace Experimental
+namespace Experimental.Debugging
 {
-    public static partial class Debug
+    public static class CommandCube
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("BepInEx.Analyzers", "Publicizer001")] // Accessing a member that was not originally public
-        public static void SpawnCommandCube(UnityEngine.Vector3 position, PickupPickerController.Option[] options)
+        public static void Spawn(UnityEngine.Vector3 position, System.Func<ItemDef, bool> predicate) => Spawn(position, GetPickupOptions(predicate));
+
+        public static void Spawn(UnityEngine.Vector3 position, PickupPickerController.Option[] options)
         {
+            // Refer to RoR2.PickupDropletController.CreateCommandCube()
             UnityEngine.GameObject obj = UnityEngine.Object.Instantiate(RoR2.Artifacts.CommandArtifactManager.commandCubePrefab, position, UnityEngine.Quaternion.identity);
             obj.GetComponent<PickupPickerController>().SetOptionsInternal(options);
             if (options.Length > 0) obj.GetComponent<PickupIndexNetworker>().NetworkpickupIndex = options[0].pickupIndex;
             UnityEngine.Networking.NetworkServer.Spawn(obj);
         }
 
-        public static void SpawnCommandCube(UnityEngine.Vector3 position, System.Func<ItemDef, bool> predicate)
-        {
-            SpawnCommandCube(position, GetPickupOptions(predicate));
-        }
-
-        // RoR2.PickupPickerController.SetTestOptions()
         public static PickupPickerController.Option[] GetPickupOptions(System.Func<ItemDef, bool> predicate)
         {
+            // Logic from RoR2.PickupPickerController.SetTestOptions()
             return (from index in ItemCatalog.allItems
                     select ItemCatalog.GetItemDef(index) into def
                     where predicate.Invoke(def)
@@ -34,21 +31,15 @@ namespace Experimental
                     }).ToArray();
         }
 
-        // RoR2.PickupPickerController.GetOptionsFromPickupIndex()
         public static PickupPickerController.Option[] GetEquipmentPickupOptions()
         {
             PickupIndex[] equip = PickupTransmutationManager.GetGroupFromPickupIndex(PickupCatalog.FindPickupIndex(RoR2Content.Equipment.Blackhole.equipmentIndex));
             PickupIndex[] lunar = PickupTransmutationManager.GetGroupFromPickupIndex(PickupCatalog.FindPickupIndex(RoR2Content.Equipment.Meteor.equipmentIndex));
-
+            // Refer to RoR2.PickupPickerController.GetOptionsFromPickupIndex()
             PickupPickerController.Option[] result = new PickupPickerController.Option[equip.Length + lunar.Length];
             for (int i = 0; i < result.Length; i++) {
-                PickupIndex index = PickupIndex.none;
-
-                int j = i - equip.Length;
-
-                if (i < equip.Length) index = equip[i];
-                else if (j < lunar.Length) index = lunar[j];
-
+                // Convert and combine the two arrays
+                PickupIndex index = (i < equip.Length) ? equip[i] : lunar[i - equip.Length];
                 result[i] = new PickupPickerController.Option { available = true, pickupIndex = index };
             }
             return result;

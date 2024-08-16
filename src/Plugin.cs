@@ -1,6 +1,9 @@
 using BepInEx;
 using HarmonyLib;
 
+using Input = UnityEngine.Input;
+using Key = UnityEngine.KeyCode;
+
 namespace Experimental
 {
     [BepInDependency(DamageLog.Plugin.GUID, BepInDependency.DependencyFlags.SoftDependency)]
@@ -19,9 +22,6 @@ namespace Experimental
             Log.Init(Logger);
             new Harmony(Info.Metadata.GUID).PatchAll();
             Log.Message($"~awake.");
-#if DEBUG
-            RoR2.Inventory.onInventoryChangedGlobal += Debug.EternalGhost;
-#endif
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Unity Message")]
@@ -41,6 +41,23 @@ namespace Experimental
             Commands.Unregister();
 #endif
         }
+
+#if DEBUG
+        private void Update()
+        {
+            var target = RoR2.LocalUserManager.GetFirstLocalUser()?.cachedBody;
+            if (!target) return;
+
+            if (Input.GetKeyDown(Key.F9)) Debugging.CommandCube.Spawn(target.footPosition, Debugging.CommandCube.GetPickupOptions(def => def.tier == RoR2.ItemTier.Tier1));
+            if (Input.GetKeyDown(Key.F10)) Debugging.CommandCube.Spawn(target.footPosition, Debugging.CommandCube.GetPickupOptions(def => def.tier == RoR2.ItemTier.Tier2));
+            if (Input.GetKeyDown(Key.F11)) Debugging.CommandCube.Spawn(target.footPosition, Debugging.CommandCube.GetPickupOptions(def => def.tier == RoR2.ItemTier.Tier3));
+            if (Input.GetKeyDown(Key.F12)) Debugging.CommandCube.Spawn(target.footPosition, Debugging.CommandCube.GetPickupOptions(def => def.tier == RoR2.ItemTier.Boss));
+
+            if (Input.GetKeyDown(Key.F8)) Debugging.CommandCube.Spawn(target.footPosition, Debugging.CommandCube.GetEquipmentPickupOptions());
+            if (Input.GetKeyDown(Key.F7)) Debugging.CommandCube.Spawn(target.footPosition, Debugging.CommandCube.GetPickupOptions(def => def.tier == RoR2.ItemTier.Lunar));
+            if (Input.GetKeyDown(Key.F6)) Debugging.CommandCube.Spawn(target.footPosition, Debugging.CommandCube.GetPickupOptions(def => PressureDrop.Drop.IsVoidTier(def.tier)));
+        }
+#endif
 
         public static int GetClientPingMilliseconds()
         {
