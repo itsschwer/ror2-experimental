@@ -10,7 +10,7 @@ namespace Experimental
     internal class NewtAlternative
     {
         private static NewtAlternative _instance;
-        private static NewtAlternative Self => _instance ??= new NewtAlternative();
+        private static NewtAlternative Instance => _instance ??= new NewtAlternative();
 
         private readonly List<int> purchased = [];
 
@@ -20,30 +20,30 @@ namespace Experimental
             else { purchased.Add(budIndex); return true; }
         }
 
-        // Patches -----------------------------------------
+        // Patches =============================================================
 
         [HarmonyPostfix, HarmonyPatch(typeof(Stage), nameof(Stage.Start))]
-        private static void OnStageStart()
+        private static void Stage_Start()
         {
             if (!NetworkServer.active) return;
 
             // new run or looped | RoR2.Achievements.LoopOnceAchievement.Check()
             if (Run.instance.stageClearCount == 0 || Run.instance.loopClearCount > 0) {
-                Self.purchased.Clear();
+                Instance.purchased.Clear();
                 Log.Info($"{nameof(NewtAlternative)}> Resetting lunar bud availability.");
             }
-            else Log.Info($"{nameof(NewtAlternative)}> {Self.purchased.Count} lunar buds locked | {Run.instance.stageClearCount} stages cleared"); ;
+            else Log.Info($"{nameof(NewtAlternative)}> {Instance.purchased.Count} lunar buds locked | {Run.instance.stageClearCount} stages cleared"); ;
         }
 
         [HarmonyPostfix, HarmonyPatch(typeof(PurchaseInteraction), nameof(PurchaseInteraction.Awake))]
-        private static void Awake(PurchaseInteraction __instance)
+        private static void PurchaseInteraction_Awake(PurchaseInteraction __instance)
         {
             if (!NetworkServer.active) return;
-            if (__instance.displayNameToken == "LUNAR_TERMINAL_NAME") { LunarBudAwake(__instance); return; }
+            if (__instance.displayNameToken == "LUNAR_TERMINAL_NAME") { LunarBud_Awake(__instance); return; }
             if (__instance.displayNameToken == "NEWT_STATUE_NAME" && __instance.GetComponent<PortalStatueBehavior>() != null) { __instance.Networkcost = 0; return; }
         }
 
-        private static void LunarBudAwake(PurchaseInteraction lunarBud)
+        private static void LunarBud_Awake(PurchaseInteraction lunarBud)
         {
             if (!NetworkServer.active) return;
 
@@ -60,7 +60,7 @@ namespace Experimental
                  */
             }
 #endif
-            if (!Self.Purchased(idx)) return;
+            if (!Instance.Purchased(idx)) return;
 
             lunarBud.SetAvailable(false); // Interactable state
             ShopTerminalBehavior terminal = lunarBud.GetComponent<ShopTerminalBehavior>();
@@ -68,14 +68,14 @@ namespace Experimental
         }
 
         [HarmonyPostfix, HarmonyPatch(typeof(PurchaseInteraction), nameof(PurchaseInteraction.OnInteractionBegin))]
-        private static void OnInteractionBegin(PurchaseInteraction __instance, Interactor activator)
+        private static void PurchaseInteraction_OnInteractionBegin(PurchaseInteraction __instance, Interactor activator)
         {
             if (!NetworkServer.active) return;
             if (__instance.displayNameToken != "LUNAR_TERMINAL_NAME") return;
             if (!__instance.CanBeAffordedByInteractor(activator)) return;
 
             int idx = (__instance.transform.parent.name == "LunarTable") ? __instance.transform.GetSiblingIndex() : -1;
-            Self.MarkPurchased(idx);
+            Instance.MarkPurchased(idx);
         }
     }
 }
