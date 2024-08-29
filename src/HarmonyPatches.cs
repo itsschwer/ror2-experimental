@@ -13,8 +13,9 @@ namespace SprintingOnTheScoreboard.Harmony
         }
 #endif
         [HarmonyPostfix, HarmonyPatch(typeof(RoR2.PlayerCharacterMasterController), nameof(RoR2.PlayerCharacterMasterController.CanSendBodyInput))]
-        private static void PlayerCharacterMasterController_CanSendBodyInput(out bool onlyAllowMovement)
+        private static void PlayerCharacterMasterController_CanSendBodyInput(bool __result, ref bool onlyAllowMovement)
         {
+            if (!__result) return;
             onlyAllowMovement = false;
         }
     }

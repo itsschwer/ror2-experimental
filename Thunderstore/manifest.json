@@ -3,7 +3,7 @@
 	"name": "SprintingOnTheScoreboard",
 	"version_number": "1.0.0",
 	"website_url": "https://github.com/itsschwer/",
-	"description": "Re-enables sprinting (and jumping, and other body inputs) while the scoreboard is open. (please don't make me fall out of the sky when looking at the scoreboard as artificer)",
+	"description": "Re-enables sprinting (and jumping, and other body inputs) while the scoreboard is open. — (please don't make me fall out of the sky when looking at the scoreboard as artificer)",
 	"dependencies": [
 		"bbepis-BepInExPack-5.4.2117"
 	]
