@@ -31,5 +31,5 @@ private static void PlayerCharacterMasterController_CanSendBodyInput(bool __resu
         - appears to be client-side *(i.e. not required by host; host having it does not affect others)*
         - appears to generate a lot of the following log message in the console on the host player (not sure of cause/fix):
             ```
-            [Warning: Unity Log] Instance not found when handling Command message [netId=157]
+            [Warning: Unity Log] Instance not found when handling Command message [netId=   ]
             ```
