@@ -17,7 +17,7 @@
 
     <ItemGroup>
         <Reference Include="letsgogambling">
-            <HintPath>..\food\letsgogambling.dll</HintPath>
+            <HintPath>$(HOMEDRIVE)\$(HOMEPATH)\AppData\Roaming\r2modmanPlus-local\RiskOfRain2\cache\PopcornFactory-Lets_Go_Gambling_SFX_Mod\1.0.1\letsgogambling.dll</HintPath>
             <Private>false</Private>
         </Reference>
     </ItemGroup>

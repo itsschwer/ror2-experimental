@@ -31,7 +31,7 @@ namespace Eater.IL
                     x => x.MatchLdcI4(gambling_awyeahyeah)
                 ).RemoveRange(OPCODE_COUNT);
 
-                Log.Info($"Applied ILHook to {method.DeclaringType.FullName}.{method.Name}");
+                Plugin.Logger.LogInfo($"Applied ILHook to {method.DeclaringType.FullName}.{method.Name}");
             });
         }
     }

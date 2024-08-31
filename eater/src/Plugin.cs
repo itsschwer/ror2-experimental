@@ -12,15 +12,18 @@ namespace Eater
         public const string Name = "eater";
         public const string Version = "0.0.0";
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Unity Message")]
+        internal new static BepInEx.Logging.ManualLogSource Logger { get; private set; }
+
         private void Awake()
         {
-            Log.Init(Logger);
+            // Use Plugin.GUID instead of Plugin.Name as source name
+            BepInEx.Logging.Logger.Sources.Remove(base.Logger);
+            Logger = BepInEx.Logging.Logger.CreateLogSource(Plugin.GUID);
 
             LetsGoGamblingSuccessSoundEater.Apply();
             DynamicSkinsAccessoriesArgumentNullEater.Apply();
 
-            Log.Message("~awake.");
+            Logger.LogMessage("~awake.");
         }
     }
 }

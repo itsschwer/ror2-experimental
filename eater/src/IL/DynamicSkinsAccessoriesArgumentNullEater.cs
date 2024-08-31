@@ -24,7 +24,7 @@ namespace Eater.IL
             foreach (Assembly assembly in AppDomain.CurrentDomain.GetAssemblies()) {
                 Type type = assembly.GetType(target);
                 if (type != null) {
-                    Log.Info($"Found dynamic skin in {assembly.FullName}");
+                    Plugin.Logger.LogInfo($"Found dynamic skin in {assembly.FullName}");
                     MethodInfo method = type.GetMethod("SkinDefApply", BindingFlags.Instance | BindingFlags.NonPublic);
                     if (method != null) {
                         Apply(method);
@@ -53,7 +53,7 @@ namespace Eater.IL
                 );
                 c.MarkLabel(catchEnd); // Setup label at end of catch block
 
-                Log.Info($"Applied ILHook to {method.DeclaringType.FullName}.{method.Name}");
+                Plugin.Logger.LogInfo($"Applied ILHook to {method.DeclaringType.FullName}.{method.Name}");
             });
         }
     }
