@@ -10,11 +10,16 @@ namespace SprintingOnTheScoreboard
         public const string Name = "SprintingOnTheScoreboard";
         public const string Version = "1.0.0";
 
+        internal new static BepInEx.Logging.ManualLogSource Logger { get; private set; }
+
         private void Awake()
         {
-            Log.Init(Logger);
+            // Use Plugin.GUID instead of Plugin.Name as source name
+            BepInEx.Logging.Logger.Sources.Remove(base.Logger);
+            Logger = BepInEx.Logging.Logger.CreateLogSource(Plugin.GUID);
+
             new HarmonyLib.Harmony(Info.Metadata.GUID).PatchAll();
-            Log.Message($"~awake.");
+            Logger.LogMessage("~awake.");
         }
     }
 }
