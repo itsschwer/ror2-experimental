@@ -2,6 +2,7 @@
 using MonoMod.RuntimeDetour;
 using MonoMod.Cil;
 using Mono.Cecil.Cil;
+using System.Reflection;
 
 namespace Experimental.Debugging
 {
@@ -9,12 +10,12 @@ namespace Experimental.Debugging
     {
         internal static void Apply()
         {
-            System.Reflection.MethodInfo method = HarmonyLib.AccessTools.DeclaredPropertyGetter(typeof(bool), nameof(RoR2.Run.instance.spawnWithPod));
+            MethodInfo method = typeof(RoR2.Run).GetProperty(nameof(RoR2.Run.spawnWithPod)).GetGetMethod();
             ILHook hook = new(method, (il) => {
                 ILCursor c = new(il);
                 bool matched = c.TryGotoNext(
-                    x => x.MatchCall<RoR2.Run>(nameof(RoR2.Run.instance)),
-                    x => x.MatchLdfld<int>(nameof(RoR2.Run.stageClearCount)),
+                    x => x.MatchCall<RoR2.Run>($"get_{nameof(RoR2.Run.instance)}"),
+                    x => x.MatchLdfld<RoR2.Run>(nameof(RoR2.Run.stageClearCount)),
                     x => x.MatchLdcI4(0),
                     x => x.MatchCeq(),
                     x => x.MatchRet()
@@ -22,7 +23,7 @@ namespace Experimental.Debugging
 
                 if (matched) {
                     c.RemoveRange(4);
-                    c.Emit(OpCodes.Ldc_I4_1);
+                    c.Emit(OpCodes.Ldc_I4_0);
 
                     Plugin.Logger.LogInfo($"{nameof(NoDropPods)}: Applied ILHook to {method.DeclaringType.FullName}.{method.Name}");
                 }
