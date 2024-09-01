@@ -16,7 +16,6 @@ use keys `F6`–`F12` to spawn a command cube with:
 - `F12`: all yellow items
 
 ### todo: clean up
-- `WalkUI`
 - changing stages
 - toggling enemy spawning
 - spawning interactables
