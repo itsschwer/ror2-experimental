@@ -5,6 +5,10 @@
 
 ## debugging
 
+### patches
+- no drop pods
+- all damage to players is non-lethal
+
 ### spawn a command cube
 use keys `F6`–`F12` to spawn a command cube with:
 - `F6`: all void items
