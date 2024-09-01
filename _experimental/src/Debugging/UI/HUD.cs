@@ -10,7 +10,7 @@ namespace Experimental.Debugging.UI
         {
             if (HUD.hud != null) return;
 
-            Plugin.Logger.LogDebug("Adding to HUD.");
+            Plugin.Logger.LogDebug("Initialising debugging HUD.");
             hud.gameObject.AddComponent<HUD>();
             HUD.hud = hud;
         }
@@ -28,10 +28,12 @@ namespace Experimental.Debugging.UI
 
         private new GameObject gameObject;
         private Canvas canvas;
+        private bool hide;
+        private RoR2.UI.HGTextMeshProUGUI topLeft;
         private RoR2.UI.HGTextMeshProUGUI bottomRight;
 
         private CommandCubeControls commandCubeControls = new();
-        private Action<object> toggleEnemySpawning= new(KeyCode.F1, (_) => Misc.ToggleEnemySpawning(), "Toggle Enemy Spawning");
+        private Action<object> toggleEnemySpawning= new(KeyCode.F5, (_) => Misc.ToggleEnemySpawning(), "Toggle Enemy Spawning");
 
         private void Start() => CreateUI(hud.mainContainer);
 
@@ -42,18 +44,30 @@ namespace Experimental.Debugging.UI
             gameObject.GetComponent<CanvasGroup>().alpha = 0.5f;
             RectTransform rect = gameObject.GetComponent<RectTransform>();
             rect.SetParent(parent.transform);
-            rect.ResetRectTransform().AnchorStretchStretch(new Vector2(-784, -400));
+            rect.ResetRectTransform().AnchorStretchStretch(new Vector2(-800, -400));
 
-            bottomRight = AddChild<RoR2.UI.HGTextMeshProUGUI>(rect, "hint");
+            topLeft = AddChild<RoR2.UI.HGTextMeshProUGUI>(rect, nameof(topLeft));
+            topLeft.alignment = TMPro.TextAlignmentOptions.TopLeft;
+            topLeft.fontSize = 20;
+            topLeft.text = $"<style=cWorldEvent>{Plugin.GUID} · {Plugin.Version} · DEBUGGING HUD</style>";
+
+            bottomRight = AddChild<RoR2.UI.HGTextMeshProUGUI>(rect, nameof(bottomRight));
+            bottomRight.alignment = TMPro.TextAlignmentOptions.BottomRight;
+            bottomRight.fontSize = 18;
         }
 
         private void Update()
         {
+            // Scoreboard visibility logic from RoR2.UI.HUD.Update()
+            bool scoreboardVisible = (hud.localUserViewer?.inputPlayer != null && hud.localUserViewer.inputPlayer.GetButton("info"));
+            if (Input.GetKeyDown(KeyCode.KeypadPlus)) hide = !hide;
+            canvas.enabled = !scoreboardVisible && !hide;
+
             System.Text.StringBuilder sb = new();
 
-            if (hud?.localUserViewer?.cachedBody) {
+            if (hud.cameraRigController?.targetBody) {
                 for (int i = 0; i < commandCubeControls.controls.Count; i++) {
-                    commandCubeControls.controls[i].PerformIfPossible(hud.localUserViewer.cachedBody);
+                    commandCubeControls.controls[i].PerformIfPossible(hud.cameraRigController.targetBody);
                     sb.AppendLine(commandCubeControls.controls[i].ToString());
                 }
 

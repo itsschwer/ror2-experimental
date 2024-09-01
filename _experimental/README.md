@@ -9,18 +9,18 @@
 - no drop pods
 - all damage to players is non-lethal
 
-### spawn a command cube
-use keys `F6`–`F12` to spawn a command cube with:
-- `F6`: all void items
-- `F7`: all lunar items *(no equipment)*
-- `F8`: all equipment *(including lunar)*
-- `F9`: all white items
-- `F10`: all green items
-- `F11`: all red items
-- `F12`: all yellow items
+### actions
+- `F5`: toggle enemy spawning
+- ***spawn a command cube** with*:
+    - `F6`: all white items
+    - `F7`: all green items
+    - `F8`: all red items
+    - `F9`: all yellow items
+    - `F10`: all void items
+    - `F11`: all lunar items *(no equipment)*
+    - `F12`: all equipment *(including lunar)*
 
 ### todo: clean up
 - changing stages
-- toggling enemy spawning
 - spawning interactables
 - spawning enemies
