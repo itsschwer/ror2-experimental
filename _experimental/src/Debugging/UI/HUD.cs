@@ -34,7 +34,7 @@ namespace Experimental.Debugging.UI
         private RoR2.UI.HGTextMeshProUGUI controlDescriptions;
 
         private CommandCubeControls commandCubeControls = new();
-        private Action<object> toggleEnemySpawning= new(KeyCode.F5, (_) => Misc.ToggleEnemySpawning(), "Toggle Enemy Spawning");
+        private Action<object> toggleEnemySpawning= new(KeyCode.F5, (_) => Misc.ToggleEnemySpawning(), "<style=cEvent>Toggle Enemy Spawning</style>");
 
         private void Start() => CreateUI(hud.mainContainer);
 

@@ -9,26 +9,34 @@ namespace Experimental.Debugging.UI
         public readonly List<Action<RoR2.CharacterBody>> controls = [
             new(KeyCode.F6,
                 (body) => CommandCube.Spawn(body.footPosition, CommandCube.GetPickupOptions(def => def.tier == RoR2.ItemTier.Tier1)),
-                "Spawn White Command Cube"),
+                GenerateColoredString("White Command Cube", RoR2.ItemTier.Tier1)),
             new(KeyCode.F7,
                 (body) => CommandCube.Spawn(body.footPosition, CommandCube.GetPickupOptions(def => def.tier == RoR2.ItemTier.Tier2)),
-                "Spawn Green Command Cube"),
+                GenerateColoredString("Green Command Cube", RoR2.ItemTier.Tier2)),
             new(KeyCode.F8,
                 (body) => CommandCube.Spawn(body.footPosition, CommandCube.GetPickupOptions(def => def.tier == RoR2.ItemTier.Tier3)),
-                "Spawn Red Command Cube"),
+                GenerateColoredString("Red Command Cube", RoR2.ItemTier.Tier3)),
             new(KeyCode.F9,
                 (body) => CommandCube.Spawn(body.footPosition, CommandCube.GetPickupOptions(def => def.tier == RoR2.ItemTier.Boss)),
-                "Spawn Yellow Command Cube"),
+                GenerateColoredString("Yellow Command Cube", RoR2.ItemTier.Boss)),
             new(KeyCode.F10,
                 (body) => CommandCube.Spawn(body.footPosition, CommandCube.GetPickupOptions(def => PressureDrop.Drop.IsVoidTier(def.tier))),
-                "Spawn Void Command Cube"),
+                GenerateColoredString("Void Command Cube", RoR2.ItemTier.VoidBoss)),
             new(KeyCode.F11,
                 (body) => CommandCube.Spawn(body.footPosition, CommandCube.GetPickupOptions(def => def.tier == RoR2.ItemTier.Lunar)),
-                "Spawn Lunar Command Cube"),
+                GenerateColoredString("Lunar Command Cube", RoR2.ItemTier.Lunar)),
             new(KeyCode.F12,
                 (body) => CommandCube.Spawn(body.footPosition, CommandCube.GetEquipmentPickupOptions()),
-                "Spawn Equipment Command Cube"),
+                GenerateColoredString("Equipment Command Cube", RoR2.RoR2Content.Equipment.DeathProjectile.colorIndex)),
         ];
+
+        private static string GenerateColoredString(string str, RoR2.ItemTier tier)
+            => GenerateColoredString(str, RoR2.ItemTierCatalog.GetItemTierDef(tier).colorIndex);
+        private static string GenerateColoredString(string str, RoR2.ColorCatalog.ColorIndex colorIndex)
+        {
+            Color32 color = RoR2.ColorCatalog.GetColor(colorIndex);
+            return RoR2.Util.GenerateColoredString(str, color);
+        }
     }
 }
 #endif
