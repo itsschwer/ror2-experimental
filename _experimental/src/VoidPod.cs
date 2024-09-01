@@ -12,10 +12,14 @@ namespace Experimental
         [HarmonyPostfix, HarmonyPatch(typeof(CharacterBody), nameof(CharacterBody.Awake))]
         private static void ReplacePreferredPodPrefab(CharacterBody __instance)
         {
-            GameObject prefab = Addressables.LoadAssetAsync<GameObject>("RoR2/DLC1/VoidSurvivor/VoidSurvivorBody.prefab").WaitForCompletion();
-            CharacterBody body = prefab?.GetComponent<CharacterBody>();
-            // __instance.preferredPodPrefab = body.preferredPodPrefab;
-            __instance.preferredPodPrefab = null;
+            if (false) {
+                GameObject prefab = Addressables.LoadAssetAsync<GameObject>("RoR2/DLC1/VoidSurvivor/VoidSurvivorBody.prefab").WaitForCompletion();
+                CharacterBody body = prefab?.GetComponent<CharacterBody>();
+                __instance.preferredPodPrefab = body.preferredPodPrefab;
+            }
+            else {
+                __instance.preferredPodPrefab = null;
+            }
         }
     }
 }

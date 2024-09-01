@@ -24,7 +24,7 @@ namespace Experimental.Debugging
                     select ItemCatalog.GetItemDef(index) into def
                     where predicate.Invoke(def)
                     select def).Select(delegate(ItemDef def) {
-                        PickupPickerController.Option result = default(PickupPickerController.Option);
+                        PickupPickerController.Option result = default;
                         result.pickupIndex = PickupCatalog.FindPickupIndex(def.itemIndex);
                         result.available = true;
                         return result;
