@@ -14,7 +14,7 @@ re-enables sprinting (and jumping, and other body inputs) while the scoreboard i
 - ping
 
 ## implementation
-- IL hooking `RoR2.PlayerCharacterMasterController.Update` may be preferrable to limit the set of body inputs that are modified?
+- IL hooking `RoR2.PlayerCharacterMasterController.Update` may be preferrable to limit the set of body inputs that are allowed?
 ```cs
 [HarmonyPostfix, HarmonyPatch(typeof(RoR2.PlayerCharacterMasterController), nameof(RoR2.PlayerCharacterMasterController.CanSendBodyInput))]
 private static void PlayerCharacterMasterController_CanSendBodyInput(bool __result, ref bool onlyAllowMovement)
@@ -25,8 +25,7 @@ private static void PlayerCharacterMasterController_CanSendBodyInput(bool __resu
 ```
 
 ## notes
-- haven't uploaded the source code yet — please report any issues to https://github.com/itsschwer/ror2-experimental/issues
-- not thoroughly tested
+- not thoroughly tested *— please report any issues to https://github.com/itsschwer/ror2-experimental/issues*
     - works in multiplayer
         - appears to be client-side *(i.e. not required by host; host having it does not affect others)*
         - appears to generate a lot of the following log message in the console on the host player (not sure of cause/fix):
