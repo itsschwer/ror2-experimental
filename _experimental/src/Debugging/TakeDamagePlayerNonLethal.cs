@@ -20,7 +20,8 @@ namespace Experimental.Debugging
                     var combo = damageTypeCombo.GetValue(damageInfo);
                     var value = (DamageType)damageType.GetValue(combo);
                     damageType.SetValue(combo, value |= DamageType.NonLethal);
-                    Plugin.Logger.LogWarning($"{value} | {(DamageType)damageType.GetValue(damageTypeCombo.GetValue(damageInfo))}");
+                    damageTypeCombo.SetValue(damageInfo, combo);
+                    Plugin.Logger.LogWarning($"{value} | {(DamageType)damageType.GetValue(combo)} | {(DamageType)damageType.GetValue(damageTypeCombo.GetValue(damageInfo))}");
                 }
             }
         }
