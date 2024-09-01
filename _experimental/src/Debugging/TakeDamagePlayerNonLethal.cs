@@ -15,13 +15,10 @@ namespace Experimental.Debugging
                     MakeNonLethal(damageInfo);
                 }
                 catch (System.MissingFieldException) {
-                    // DamageType value = (DamageType)damageType.GetValue(damageInfo);
-                    // damageType.SetValue(damageInfo, value |= DamageType.NonLethal);
-                    var combo = damageTypeCombo.GetValue(damageInfo);
-                    var value = (DamageType)damageType.GetValue(combo);
+                    object combo = damageTypeCombo.GetValue(damageInfo);
+                    DamageType value = (DamageType)damageType.GetValue(combo);
                     damageType.SetValue(combo, value |= DamageType.NonLethal);
                     damageTypeCombo.SetValue(damageInfo, combo);
-                    Plugin.Logger.LogWarning($"{value} | {(DamageType)damageType.GetValue(combo)} | {(DamageType)damageType.GetValue(damageTypeCombo.GetValue(damageInfo))}");
                 }
             }
         }
