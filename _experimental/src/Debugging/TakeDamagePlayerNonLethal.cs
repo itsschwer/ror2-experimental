@@ -15,10 +15,10 @@ namespace Experimental.Debugging
                     MakeNonLethal(damageInfo);
                 }
                 catch (System.MissingFieldException) {
-                    object combo = damageTypeCombo.GetValue(damageInfo);
-                    DamageType value = (DamageType)damageType.GetValue(combo);
-                    damageType.SetValue(combo, value |= DamageType.NonLethal);
-                    damageTypeCombo.SetValue(damageInfo, combo);
+                    object combo = DamageTypeCombo_Field.GetValue(damageInfo);
+                    DamageType value = (DamageType)DamageType_Field.GetValue(combo);
+                    DamageType_Field.SetValue(combo, value |= DamageType.NonLethal);
+                    DamageTypeCombo_Field.SetValue(damageInfo, combo);
                 }
             }
         }
@@ -27,25 +27,25 @@ namespace Experimental.Debugging
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
         private static void MakeNonLethal(DamageInfo damageInfo) => damageInfo.damageType |= DamageType.NonLethal;
 
-        private static System.Reflection.FieldInfo _damageType;
-        private static System.Reflection.FieldInfo damageType {
+        private static System.Reflection.FieldInfo _DamageType_Field;
+        private static System.Reflection.FieldInfo DamageType_Field {
             get {
-                if (_damageType == null) {
+                if (_DamageType_Field == null) {
                     Plugin.Logger.LogWarning($"{nameof(System.MissingFieldException)}: Using Seekers of the Storm version of {nameof(DamageInfo)}.{nameof(DamageInfo.damageType)}");
                     // DamageInfo -> DamageTypeCombo -> DamageType
-                    _damageType = _damageTypeCombo.FieldType.GetField(nameof(DamageInfo.damageType));
+                    _DamageType_Field = DamageTypeCombo_Field.FieldType.GetField(nameof(DamageInfo.damageType));
                 }
-                return _damageType;
+                return _DamageType_Field;
             }
         }
 
-        private static System.Reflection.FieldInfo _damageTypeCombo;
-        private static System.Reflection.FieldInfo damageTypeCombo {
+        private static System.Reflection.FieldInfo _DamageTypeCombo_Field;
+        private static System.Reflection.FieldInfo DamageTypeCombo_Field {
             get {
-                if (_damageTypeCombo == null) {
-                    _damageTypeCombo = typeof(DamageInfo).GetField(nameof(DamageInfo.damageType));
+                if (_DamageTypeCombo_Field == null) {
+                    _DamageTypeCombo_Field = typeof(DamageInfo).GetField(nameof(DamageInfo.damageType));
                 }
-                return _damageTypeCombo;
+                return _DamageTypeCombo_Field;
             }
         }
     }
