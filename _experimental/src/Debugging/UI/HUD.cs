@@ -30,7 +30,8 @@ namespace Experimental.Debugging.UI
         private Canvas canvas;
         private bool hide;
         private RoR2.UI.HGTextMeshProUGUI topLeft;
-        private RoR2.UI.HGTextMeshProUGUI bottomRight;
+        private RoR2.UI.HGTextMeshProUGUI controlKeys;
+        private RoR2.UI.HGTextMeshProUGUI controlDescriptions;
 
         private CommandCubeControls commandCubeControls = new();
         private Action<object> toggleEnemySpawning= new(KeyCode.F5, (_) => Misc.ToggleEnemySpawning(), "Toggle Enemy Spawning");
@@ -44,16 +45,28 @@ namespace Experimental.Debugging.UI
             gameObject.GetComponent<CanvasGroup>().alpha = 0.5f;
             RectTransform rect = gameObject.GetComponent<RectTransform>();
             rect.SetParent(parent.transform);
-            rect.ResetRectTransform().AnchorStretchStretch(new Vector2(-800, -400));
+            rect.ResetRectTransform().AnchorStretchStretch(new Vector2(-800, -380));
 
             topLeft = AddChild<RoR2.UI.HGTextMeshProUGUI>(rect, nameof(topLeft));
             topLeft.alignment = TMPro.TextAlignmentOptions.TopLeft;
             topLeft.fontSize = 20;
             topLeft.text = $"<style=cWorldEvent>{Plugin.GUID} · {Plugin.Version} · DEBUGGING HUD</style>";
 
-            bottomRight = AddChild<RoR2.UI.HGTextMeshProUGUI>(rect, nameof(bottomRight));
-            bottomRight.alignment = TMPro.TextAlignmentOptions.BottomRight;
-            bottomRight.fontSize = 18;
+            const float controlKeysWidth = 40;
+            const float controlFontSize = 18;
+            controlKeys = AddChild<RoR2.UI.HGTextMeshProUGUI>(rect, nameof(controlKeys));
+            controlKeys.alignment = TMPro.TextAlignmentOptions.BottomRight;
+            controlKeys.fontSize = controlFontSize;
+            RectTransform ck = (RectTransform)controlKeys.transform;
+            ck.sizeDelta = Vector2.left * (rect.rect.width -  controlKeysWidth);
+            ck.localPosition = ck.sizeDelta / -2;
+
+            controlDescriptions = AddChild<RoR2.UI.HGTextMeshProUGUI>(rect, nameof(controlDescriptions));
+            controlDescriptions.alignment = TMPro.TextAlignmentOptions.BottomRight;
+            controlDescriptions.fontSize = controlFontSize;
+            RectTransform cd = (RectTransform)controlDescriptions.transform;
+            cd.sizeDelta = Vector2.right * -controlKeysWidth;
+            cd.localPosition = cd.sizeDelta / 2;
         }
 
         private void Update()
@@ -63,19 +76,23 @@ namespace Experimental.Debugging.UI
             if (Input.GetKeyDown(KeyCode.KeypadPlus)) hide = !hide;
             canvas.enabled = !scoreboardVisible && !hide;
 
-            System.Text.StringBuilder sb = new();
+            System.Text.StringBuilder keyString = new();
+            System.Text.StringBuilder descriptionString = new();
 
             if (hud.cameraRigController?.targetBody) {
                 for (int i = 0; i < commandCubeControls.controls.Count; i++) {
                     commandCubeControls.controls[i].PerformIfPossible(hud.cameraRigController.targetBody);
-                    sb.AppendLine(commandCubeControls.controls[i].ToString());
+                    keyString.AppendLine(commandCubeControls.controls[i].key.ToString());
+                    descriptionString.AppendLine(commandCubeControls.controls[i].description);
                 }
 
                 toggleEnemySpawning.PerformIfPossible(null);
-                sb.AppendLine().AppendLine(toggleEnemySpawning.ToString());
+                keyString.AppendLine().AppendLine(toggleEnemySpawning.key.ToString());
+                descriptionString.AppendLine().AppendLine(toggleEnemySpawning.description);
             }
 
-            bottomRight.text = sb.ToString();
+            controlKeys.text = keyString.ToString();
+            controlDescriptions.text = descriptionString.ToString();
         }
     }
 }

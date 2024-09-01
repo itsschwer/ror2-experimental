@@ -4,12 +4,7 @@
     {
         public readonly UnityEngine.KeyCode key = key;
         private readonly System.Action<T> action = action;
-        private readonly string description = description;
-
-        public override string ToString()
-        {
-            return $"{description}\t{key}";
-        }
+        public readonly string description = description;
 
         public bool PerformIfPossible(T target)
         {
