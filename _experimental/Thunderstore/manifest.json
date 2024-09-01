@@ -2,10 +2,10 @@
 	"author": "itsschwer",
 	"name": "experimental",
 	"version_number": "0.0.0",
-	"website_url": "",
+	"website_url": "https://github.com/itsschwer/ror2-experimental",
 	"description": "",
 	"dependencies": [
 		"bbepis-BepInExPack-5.4.2113",
-		"itsschwer-PressureDrop-1.1.1"
+		"itsschwer-PressureDrop-1.4.0"
 	]
 }
