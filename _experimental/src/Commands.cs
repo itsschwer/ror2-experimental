@@ -1,7 +1,6 @@
 ﻿#if DEBUG
 using RoR2;
 using PressureDrop;
-using UnityEngine.AddressableAssets;
 using System.Linq;
 using Experimental.Debugging;
 
@@ -13,7 +12,6 @@ namespace Experimental
         {
             ChatCommander.Register("/?", Help);
             ChatCommander.Register("/f", ForceStage);
-            ChatCommander.Register("/ne", DisableEnemySpawns);
             ChatCommander.Register("/s", Spawn);
 
             ChatCommander.Register("/walkui", WalkUI.Walk);
@@ -23,7 +21,6 @@ namespace Experimental
         {
             ChatCommander.Unregister("/?", Help);
             ChatCommander.Unregister("/f", ForceStage);
-            ChatCommander.Unregister("/ne", DisableEnemySpawns);
             ChatCommander.Unregister("/s", Spawn);
 
             ChatCommander.Unregister("/walkui", WalkUI.Walk);
@@ -33,7 +30,6 @@ namespace Experimental
         {
             ChatCommander.Output($"<style=cWorldEvent>{Plugin.GUID}</style> chat commands:");
             ChatCommander.Output($"  <style=cSub>/f</style>: forces a stage change.");
-            ChatCommander.Output($"  <style=cSub>/ne</style>: toggles enemy spawns.");
             ChatCommander.Output($"  <style=cSub>/s</style>: spawns an object.");
         }
 
@@ -69,17 +65,6 @@ namespace Experimental
             }
 
             ChatCommander.OutputFail(args[0], "invalid scene name.");
-        }
-
-        private static void DisableEnemySpawns(NetworkUser user, string[] args)
-        {
-            if (args.Length == 1) {
-                bool wasDisabled = CombatDirector.cvDirectorCombatDisable.GetString() != "0";
-                CombatDirector.cvDirectorCombatDisable.SetBool(!wasDisabled);
-                if (wasDisabled) ChatCommander.Output("Enemy spawns enabled.");
-                else ChatCommander.Output("Enemy spawns disabled.");
-            }
-            else ChatCommander.OutputFail(args[0], "expects zero arguments.");
         }
 
         private static void Spawn(NetworkUser user, string[] args)
