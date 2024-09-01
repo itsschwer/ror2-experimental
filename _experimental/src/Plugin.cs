@@ -24,6 +24,9 @@ namespace Experimental
             BepInEx.Logging.Logger.Sources.Remove(base.Logger);
             Logger = BepInEx.Logging.Logger.CreateLogSource(Plugin.GUID);
 
+#if DEBUG
+            Debugging.NoDropPods.Apply();
+#endif
             new Harmony(Info.Metadata.GUID).PatchAll();
 
             Logger.LogMessage($"~awake.");
