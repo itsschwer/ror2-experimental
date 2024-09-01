@@ -16,30 +16,33 @@ namespace Experimental
         public const string Name = "experimental";
         public const string Version = "0.0.0";
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Unity Message")]
+        internal new static BepInEx.Logging.ManualLogSource Logger { get; private set; }
+
         private void Awake()
         {
-            Log.Init(Logger);
+            // Use Plugin.GUID instead of Plugin.Name as source name
+            BepInEx.Logging.Logger.Sources.Remove(base.Logger);
+            Logger = BepInEx.Logging.Logger.CreateLogSource(Plugin.GUID);
+
             new Harmony(Info.Metadata.GUID).PatchAll();
-            Log.Message($"~awake.");
+
+            Logger.LogMessage($"~awake.");
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Unity Message")]
         private void OnEnable()
         {
-            Log.Message($"~enabled.");
 #if DEBUG
             Commands.Register();
 #endif
+            Logger.LogMessage($"~enabled.");
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Unity Message")]
         private void OnDisable()
         {
-            Log.Message($"~disabled.");
 #if DEBUG
             Commands.Unregister();
 #endif
+            Logger.LogMessage($"~disabled.");
         }
 
 #if DEBUG

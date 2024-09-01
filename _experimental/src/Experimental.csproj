@@ -17,11 +17,11 @@
 
     <ItemGroup>
         <Reference Include="PressureDrop">
-            <HintPath>..\..\pressure-drop\src\bin\Release\netstandard2.0\PressureDrop.dll</HintPath>
+            <HintPath>$(USERPROFILE)\AppData\Roaming\r2modmanPlus-local\RiskOfRain2\cache\itsschwer-PressureDrop\1.4.0\plugins\PressureDrop\PressureDrop.dll</HintPath>
             <Private>false</Private>
         </Reference>
         <Reference Include="DamageLog">
-            <HintPath>..\..\damage-log\src\bin\Release\netstandard2.0\DamageLog.dll</HintPath>
+            <HintPath>$(USERPROFILE)\AppData\Roaming\r2modmanPlus-local\RiskOfRain2\cache\itsschwer-DamageLog\1.1.3\plugins\DamageLog\DamageLog.dll</HintPath>
             <Private>false</Private>
         </Reference>
     </ItemGroup>

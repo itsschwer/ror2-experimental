@@ -30,9 +30,9 @@ namespace Experimental
             // new run or looped | RoR2.Achievements.LoopOnceAchievement.Check()
             if (Run.instance.stageClearCount == 0 || Run.instance.loopClearCount > 0) {
                 Instance.purchased.Clear();
-                Log.Info($"{nameof(NewtAlternative)}> Resetting lunar bud availability.");
+                Plugin.Logger.LogInfo($"{nameof(NewtAlternative)}> Resetting lunar bud availability.");
             }
-            else Log.Info($"{nameof(NewtAlternative)}> {Instance.purchased.Count} lunar buds locked | {Run.instance.stageClearCount} stages cleared"); ;
+            else Plugin.Logger.LogInfo($"{nameof(NewtAlternative)}> {Instance.purchased.Count} lunar buds locked | {Run.instance.stageClearCount} stages cleared"); ;
         }
 
         [HarmonyPostfix, HarmonyPatch(typeof(PurchaseInteraction), nameof(PurchaseInteraction.Awake))]
@@ -51,7 +51,7 @@ namespace Experimental
             if (idx < 0) return;
 #if DEBUG
             for (int i = 0; i < lunarBud.onPurchase.GetPersistentEventCount(); i++) {
-                Log.Info($"[{i}] {lunarBud.onPurchase.GetPersistentMethodName(i)} | {lunarBud.onPurchase.GetPersistentTarget(i)}");
+                Plugin.Logger.LogInfo($"[{i}] {lunarBud.onPurchase.GetPersistentMethodName(i)} | {lunarBud.onPurchase.GetPersistentTarget(i)}");
                 /* PurchaseInteraction.SetAvailable()
                  * ShopTerminalBehaviour.DropPickup() -> ShopTerminalBehaviour.SetHasBeenPurchased(true)
                  * ShopTerminalBehaviour.SetNoPickup()
