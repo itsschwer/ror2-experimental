@@ -26,7 +26,7 @@ namespace Experimental.Debugging
             }
 
             PressureDrop.ChatCommander.OutputFail(args[0],
-                "( <style=cSub>diff</style> | <style=cSub>obj</style> | <style=cSub>dmg</style> )");
+                "(<style=cSub>diff</style> | <style=cSub>obj</style> | <style=cSub>dmg</style>)");
         }
 
         public static void Walk(Transform child, StringBuilder sb, int level = 0)
