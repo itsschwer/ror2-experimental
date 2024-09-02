@@ -29,10 +29,10 @@
     <PropertyGroup>
         <RootDir>../</RootDir>
         <ProductDir>$(RootDir)Thunderstore/</ProductDir>
-        <PluginDir>$(ProductDir)plugins/$(SolutionName)/</PluginDir>
+        <PluginDir>$(ProductDir)plugins/$(MSBuildProjectName)/</PluginDir>
     </PropertyGroup>
 
-    <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Target Name="PackageProduct" AfterTargets="Build">
         <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(PluginDir)" />
         <Copy SourceFiles="$(RootDir)README.md;$(RootDir)CHANGELOG.md;" DestinationFolder="$(ProductDir)" ContinueOnError="true" />
 
