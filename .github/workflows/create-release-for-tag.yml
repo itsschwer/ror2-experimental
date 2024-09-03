@@ -8,16 +8,29 @@ on:
         description: 'Only create debug artifact'
         required: false
         type: boolean
+      subdir:
+        description: 'Subdirectory to target (including trailing slash)'
+        required: false
+        type: string
+        default: "./"
   workflow_call:
     inputs:
       debug:
         description: 'Only create debug artifact'
         required: false
         type: boolean
+      subdir:
+        description: 'Subdirectory to target (including trailing slash)'
+        required: false
+        type: string
+        default: "./"
 
 jobs:
   create-artifact:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ${{ inputs.subdir }}
     steps:
       - uses: actions/checkout@v4
 
@@ -88,5 +101,8 @@ jobs:
       - uses: ncipollo/release-action@v1
         with:
           artifacts: ${{ needs.create-artifact.outputs.name }}.zip
-          tag: ${{ needs.create-artifact.outputs.version }}
+          tag: ${{ github.ref_name }}
           updateOnlyUnreleased: true
+          allowUpdates: true
+          prerelease: true
+          omitPrereleaseDuringUpdate: true
