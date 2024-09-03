@@ -12,11 +12,11 @@ on:
         description: 'Subdirectory to target'
         required: false
         type: string
+        default: "./"
       tag:
         description: 'Tag to target'
         required: false
         type: string
-        default: "./"
   workflow_call:
     inputs:
       debug:
@@ -27,11 +27,11 @@ on:
         description: 'Subdirectory to target'
         required: false
         type: string
+        default: "./"
       tag:
         description: 'Tag to target'
         required: false
         type: string
-        default: "./"
 
 jobs:
   create-artifact:
