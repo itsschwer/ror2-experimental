@@ -11,7 +11,7 @@ namespace PLUGIN_NAME
         public const string Name = "PLUGIN_NAME";
         public const string Version = "0.0.0";
 
-        public static new BepInEx.Logging.ManualLogSource Logger { get; private set; }
+        internal static new BepInEx.Logging.ManualLogSource Logger { get; private set; }
 
         private void Awake()
         {

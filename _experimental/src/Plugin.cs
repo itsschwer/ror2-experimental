@@ -13,7 +13,7 @@ namespace Experimental
         public const string Name = "experimental";
         public const string Version = "0.0.0";
 
-        internal new static BepInEx.Logging.ManualLogSource Logger { get; private set; }
+        internal static new BepInEx.Logging.ManualLogSource Logger { get; private set; }
 
         private void Awake()
         {

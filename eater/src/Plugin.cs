@@ -12,7 +12,7 @@ namespace Eater
         public const string Name = "eater";
         public const string Version = "0.0.0";
 
-        internal new static BepInEx.Logging.ManualLogSource Logger { get; private set; }
+        internal static new BepInEx.Logging.ManualLogSource Logger { get; private set; }
 
         private void Awake()
         {
