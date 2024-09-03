@@ -1,6 +1,6 @@
 # Modified copy of https://github.com/itsschwer/pressure-drop/blob/ca25e860bcf7769c1d65b5db410ca6ef9774a292/.github/workflows/create-release.yml
 name: create-release-for-tag
-run-name: Creating a release targeting '${{ inputs.subdir }}' tag (${{ inputs.tag }})
+run-name: Creating a release targeting '${{ inputs.subdir }}' @ tag (${{ inputs.tag }})
 on:
   workflow_dispatch:
     inputs:
@@ -16,6 +16,7 @@ on:
         description: 'Tag to target'
         required: false
         type: string
+        default: "./"
   workflow_call:
     inputs:
       debug:
@@ -30,6 +31,7 @@ on:
         description: 'Tag to target'
         required: false
         type: string
+        default: "./"
 
 jobs:
   create-artifact:
