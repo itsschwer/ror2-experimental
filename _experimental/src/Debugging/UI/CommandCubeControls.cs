@@ -28,6 +28,12 @@ namespace Experimental.Debugging.UI
             new(KeyCode.F12,
                 (body) => CommandCube.Spawn(body.footPosition, CommandCube.GetEquipmentPickupOptions()),
                 GenerateColoredString("Equipment Command Cube", RoR2.RoR2Content.Equipment.DeathProjectile.colorIndex)),
+            new(KeyCode.KeypadDivide,
+                (body) => CommandCube.Spawn(body.footPosition, CommandCube.GetPickupOptions(def => def.tier == RoR2.ItemTier.NoTier)),
+                GenerateColoredString("NoTier Command Cube", RoR2.ItemTier.NoTier)),
+            new(KeyCode.KeypadMultiply,
+                (body) => CommandCube.Spawn(body.footPosition, CommandCube.GetPickupOptions(def => def.tier == RoR2.ItemTier.AssignedAtRuntime)),
+                GenerateColoredString("AssignedAtRuntime Command Cube", RoR2.ItemTier.AssignedAtRuntime))
         ];
 
         private static string GenerateColoredString(string str, RoR2.ItemTier tier)
