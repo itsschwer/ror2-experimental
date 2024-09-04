@@ -49,7 +49,7 @@ namespace Experimental.Debugging
         {
             if (TeleporterInteraction.instance == null) return;
 
-            TeleporterInteraction.instance.holdoutZoneController.charge = 1;
+            TeleporterInteraction.instance.holdoutZoneController.charge = 0.99f;
         }
     }
 }
