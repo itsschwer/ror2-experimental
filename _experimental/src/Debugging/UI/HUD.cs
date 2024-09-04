@@ -59,7 +59,7 @@ namespace Experimental.Debugging.UI
 
             stageSelect = AddChild<RoR2.UI.HGTextMeshProUGUI>(rect, nameof(stageSelect));
             stageSelect.alignment = TMPro.TextAlignmentOptions.TopRight;
-            stageSelect.fontSize = 20;
+            stageSelect.fontSize = 18;
 
             const float controlKeysWidth = 40;
             const float controlFontSize = 18;
@@ -116,9 +116,11 @@ namespace Experimental.Debugging.UI
             topLeft.text = $"{Heading}\n\n\n{Misc.CurrentHUDShowString}";
 
             System.Text.StringBuilder sb = new();
+            sb.Append("<style=cEvent>");
             sb.AppendLine($"/setstage: {Stage.GetDisplayName(Stage.setStage)}");
             sb.AppendLine($"Run next stage: {Stage.GetDisplayName(RoR2.Run.instance.nextStageScene)}");
             sb.AppendLine($"Stage next stage: {Stage.GetDisplayName(RoR2.Stage.instance.nextStage)}");
+            sb.Append("</style>");
             stageSelect.text = sb.ToString();
         }
     }
