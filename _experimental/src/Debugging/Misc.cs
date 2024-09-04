@@ -44,5 +44,12 @@ namespace Experimental.Debugging
             string status = TakeDamagePlayerNonLethal.Active ? "enabled" : "disabled";
             ChatCommander.Output($"Player immortality {status}.");
         }
+
+        public static void ForceChargeTeleporter()
+        {
+            if (TeleporterInteraction.instance == null) return;
+
+            TeleporterInteraction.instance.holdoutZoneController.charge = 1;
+        }
     }
 }
