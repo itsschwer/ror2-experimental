@@ -49,6 +49,7 @@ namespace Experimental.Debugging.UI
             rect.ResetRectTransform().AnchorStretchStretch(new Vector2(-800, -380));
 
             topLeft = AddChild<RoR2.UI.HGTextMeshProUGUI>(rect, nameof(topLeft));
+            topLeft.enableWordWrapping = false;
             topLeft.alignment = TMPro.TextAlignmentOptions.TopLeft;
             topLeft.fontSize = 20;
             topLeft.text = $"<style=cWorldEvent>{Plugin.GUID} · {Plugin.Version} · DEBUGGING HUD</style>";
@@ -56,6 +57,7 @@ namespace Experimental.Debugging.UI
             const float controlKeysWidth = 40;
             const float controlFontSize = 18;
             controlKeys = AddChild<RoR2.UI.HGTextMeshProUGUI>(rect, nameof(controlKeys));
+            controlKeys.enableWordWrapping = false;
             controlKeys.alignment = TMPro.TextAlignmentOptions.BottomRight;
             controlKeys.fontSize = controlFontSize;
             RectTransform ck = (RectTransform)controlKeys.transform;
@@ -63,6 +65,7 @@ namespace Experimental.Debugging.UI
             ck.localPosition = ck.sizeDelta / -2;
 
             controlDescriptions = AddChild<RoR2.UI.HGTextMeshProUGUI>(rect, nameof(controlDescriptions));
+            controlDescriptions.enableWordWrapping = false;
             controlDescriptions.alignment = TMPro.TextAlignmentOptions.BottomRight;
             controlDescriptions.fontSize = controlFontSize;
             RectTransform cd = (RectTransform)controlDescriptions.transform;
