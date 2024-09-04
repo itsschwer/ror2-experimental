@@ -45,7 +45,7 @@ namespace Experimental.Debugging
         }
 
         public static string GetDisplayName(SceneDef scene)
-            => scene ? "none" : $"{scene.cachedName} ({Language.GetString(scene.nameToken)})";
+            => scene ? $"{scene.cachedName} ({Language.GetString(scene.nameToken)})" : "none";
 
         public static string StyleStageNamesForShow()
         {

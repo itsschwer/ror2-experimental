@@ -19,7 +19,7 @@
             "\t\t- arena (Void Fog (portrait, tooltip colour, text colour))\n" +
             "\t- damage types:\n" +
             "\t\t- player damage (tooltip colour, text colour)\n" +
-            "\t\t- fall damage (portrait, tooltip colour, text colour)" +
+            "\t\t- fall damage (portrait, tooltip colour, text colour)\n" +
             "\t- Attacker counts as separate damage source if became Voidtouched\n" +
             "\t- Reset Damage Log on revive";
     }
