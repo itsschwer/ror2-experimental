@@ -7,10 +7,17 @@ namespace Experimental.Debugging
     [HarmonyPatch]
     internal static class TakeDamagePlayerNonLethal
     {
+        private static bool _active = true;
+        public static bool Active => _active;
+        public static void SetActive(bool active)
+        {
+            _active = active;
+        }
+
         [HarmonyPrefix, HarmonyPatch(typeof(HealthComponent), nameof(HealthComponent.TakeDamage))]
         private static void HealthComponent_TakeDamage_NonLethalToPlayers(HealthComponent __instance, ref DamageInfo damageInfo)
         {
-            if (__instance.body.isPlayerControlled) {
+            if (__instance.body.isPlayerControlled && _active) {
                 try {
                     MakeNonLethal(damageInfo);
                 }

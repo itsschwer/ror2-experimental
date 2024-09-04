@@ -13,5 +13,12 @@ namespace Experimental.Debugging
             if (wasDisabled) ChatCommander.Output("Enemy spawning enabled.");
             else ChatCommander.Output("Enemy spawning disabled.");
         }
+
+        public static void TogglePlayerImmortality()
+        {
+            TakeDamagePlayerNonLethal.SetActive(!TakeDamagePlayerNonLethal.Active);
+            string status = TakeDamagePlayerNonLethal.Active ? "enabled" : "disabled";
+            ChatCommander.Output($"Player immortality {status}.");
+        }
     }
 }

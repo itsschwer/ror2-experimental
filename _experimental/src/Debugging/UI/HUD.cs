@@ -34,7 +34,8 @@ namespace Experimental.Debugging.UI
         private RoR2.UI.HGTextMeshProUGUI controlDescriptions;
 
         private CommandCubeControls commandCubeControls = new();
-        private Action<object> toggleEnemySpawning= new(KeyCode.F5, (_) => Misc.ToggleEnemySpawning(), "<style=cEvent>Toggle Enemy Spawning</style>");
+        private Action<object> toggleEnemySpawning = new(KeyCode.F5, (_) => Misc.ToggleEnemySpawning(), "<style=cEvent>Toggle Enemy Spawning</style>");
+        private Action<object> togglePlayerImmortality = new(KeyCode.F4, (_) => Misc.TogglePlayerImmortality(), "<style=cEvent>Toggle Player Immortality</style>");
 
         private void Start() => CreateUI(hud.mainContainer);
 
@@ -89,6 +90,9 @@ namespace Experimental.Debugging.UI
                 toggleEnemySpawning.PerformIfPossible(null);
                 keyString.AppendLine().AppendLine(toggleEnemySpawning.key.ToString());
                 descriptionString.AppendLine().AppendLine(toggleEnemySpawning.description);
+                togglePlayerImmortality.PerformIfPossible(null);
+                keyString.AppendLine(togglePlayerImmortality.key.ToString());
+                descriptionString.AppendLine(togglePlayerImmortality.description);
             }
 
             controlKeys.text = keyString.ToString();
