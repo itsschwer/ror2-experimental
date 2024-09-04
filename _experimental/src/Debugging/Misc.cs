@@ -5,6 +5,30 @@ namespace Experimental.Debugging
 {
     internal static class Misc
     {
+        public static string CurrentHUDShowString;
+
+        public static void ShowParse(NetworkUser user, string[] args)
+        {
+            if (args.Length == 2) {
+                switch (args[1]) {
+                    default: break;
+                    case "clear":
+                        CurrentHUDShowString = "";
+                        return;
+                    case "stages":
+                        CurrentHUDShowString = Stage.StyleStageNamesForShow();
+                        return;
+                    case "PressureDrop":
+                        CurrentHUDShowString = Cheatsheet.PressureDrop;
+                        return;
+                    case "DamageLog":
+                        CurrentHUDShowString = Cheatsheet.DamageLog;
+                        return;
+                }
+            }
+            ChatCommander.OutputFail(args[0], "(clear | stages | PressureDrop | DamageLog)");
+        }
+
         public static void ToggleEnemySpawning()
         {
             bool wasDisabled = CombatDirector.cvDirectorCombatDisable.GetString() != "0";

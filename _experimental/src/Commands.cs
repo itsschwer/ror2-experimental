@@ -8,6 +8,7 @@ namespace Experimental
     {
         public static void Register()
         {
+            ChatCommander.Register("/show", Debugging.Misc.ShowParse);
             ChatCommander.Register("/setstage", Debugging.Stage.SetStage);
             ChatCommander.Register("/s", Spawn);
 
@@ -16,6 +17,7 @@ namespace Experimental
 
         public static void Unregister()
         {
+            ChatCommander.Unregister("/show", Debugging.Misc.ShowParse);
             ChatCommander.Unregister("/setstage", Debugging.Stage.SetStage);
             ChatCommander.Unregister("/s", Spawn);
 

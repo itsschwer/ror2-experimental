@@ -29,6 +29,8 @@ namespace Experimental.Debugging.UI
         private new GameObject gameObject;
         private Canvas canvas;
         private bool hide;
+
+        private const string Heading = $"<style=cWorldEvent>{Plugin.GUID} · {Plugin.Version} · DEBUGGING HUD</style>";
         private RoR2.UI.HGTextMeshProUGUI topLeft;
         private RoR2.UI.HGTextMeshProUGUI stageSelect;
         private RoR2.UI.HGTextMeshProUGUI controlKeys;
@@ -51,10 +53,9 @@ namespace Experimental.Debugging.UI
             rect.ResetRectTransform().AnchorStretchStretch(new Vector2(-800, -380));
 
             topLeft = AddChild<RoR2.UI.HGTextMeshProUGUI>(rect, nameof(topLeft));
-            topLeft.enableWordWrapping = false;
             topLeft.alignment = TMPro.TextAlignmentOptions.TopLeft;
             topLeft.fontSize = 20;
-            topLeft.text = $"<style=cWorldEvent>{Plugin.GUID} · {Plugin.Version} · DEBUGGING HUD</style>";
+            topLeft.text = Heading;
 
             stageSelect = AddChild<RoR2.UI.HGTextMeshProUGUI>(rect, nameof(stageSelect));
             stageSelect.alignment = TMPro.TextAlignmentOptions.TopRight;
@@ -111,6 +112,8 @@ namespace Experimental.Debugging.UI
             controlDescriptions.text = descriptionString.ToString();
 
             if (!canvas.enabled) return;
+
+            topLeft.text = $"{Heading}\n\n\n{Misc.CurrentHUDShowString}";
 
             System.Text.StringBuilder sb = new();
             sb.AppendLine($"/setstage: {Stage.GetDisplayName(Stage.setStage)}");
