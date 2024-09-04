@@ -30,12 +30,14 @@ namespace Experimental.Debugging.UI
         private Canvas canvas;
         private bool hide;
         private RoR2.UI.HGTextMeshProUGUI topLeft;
+        private RoR2.UI.HGTextMeshProUGUI stageSelect;
         private RoR2.UI.HGTextMeshProUGUI controlKeys;
         private RoR2.UI.HGTextMeshProUGUI controlDescriptions;
 
         private CommandCubeControls commandCubeControls = new();
         private Action<object> toggleEnemySpawning = new(KeyCode.F5, (_) => Misc.ToggleEnemySpawning(), "<style=cEvent>Toggle Enemy Spawning</style>");
         private Action<object> togglePlayerImmortality = new(KeyCode.F4, (_) => Misc.TogglePlayerImmortality(), "<style=cEvent>Toggle Player Immortality</style>");
+        private Action<object> forceStage = new(KeyCode.F1, (_) => Stage.ForceStage(Stage.setStage ?? RoR2.Run.instance.nextStageScene), "<style=cEvent>Force Stage</style>");
 
         private void Start() => CreateUI(hud.mainContainer);
 
@@ -53,6 +55,10 @@ namespace Experimental.Debugging.UI
             topLeft.alignment = TMPro.TextAlignmentOptions.TopLeft;
             topLeft.fontSize = 20;
             topLeft.text = $"<style=cWorldEvent>{Plugin.GUID} · {Plugin.Version} · DEBUGGING HUD</style>";
+
+            stageSelect = AddChild<RoR2.UI.HGTextMeshProUGUI>(rect, nameof(stageSelect));
+            stageSelect.alignment = TMPro.TextAlignmentOptions.TopRight;
+            stageSelect.fontSize = 20;
 
             const float controlKeysWidth = 40;
             const float controlFontSize = 18;
@@ -90,9 +96,12 @@ namespace Experimental.Debugging.UI
                     descriptionString.AppendLine(commandCubeControls.controls[i].description);
                 }
 
+                forceStage.PerformIfPossible(null);
+                keyString.AppendLine().AppendLine(forceStage.key.ToString());
+                descriptionString.AppendLine().AppendLine(forceStage.description);
                 toggleEnemySpawning.PerformIfPossible(null);
-                keyString.AppendLine().AppendLine(toggleEnemySpawning.key.ToString());
-                descriptionString.AppendLine().AppendLine(toggleEnemySpawning.description);
+                keyString.AppendLine(toggleEnemySpawning.key.ToString());
+                descriptionString.AppendLine(toggleEnemySpawning.description);
                 togglePlayerImmortality.PerformIfPossible(null);
                 keyString.AppendLine(togglePlayerImmortality.key.ToString());
                 descriptionString.AppendLine(togglePlayerImmortality.description);
@@ -100,6 +109,14 @@ namespace Experimental.Debugging.UI
 
             controlKeys.text = keyString.ToString();
             controlDescriptions.text = descriptionString.ToString();
+
+            if (!canvas.enabled) return;
+
+            System.Text.StringBuilder sb = new();
+            sb.AppendLine($"/setstage: {Stage.GetDisplayName(Stage.setStage)}");
+            sb.AppendLine($"Run next stage: {Stage.GetDisplayName(RoR2.Run.instance.nextStageScene)}");
+            sb.AppendLine($"Stage next stage: {Stage.GetDisplayName(RoR2.Stage.instance.nextStage)}");
+            stageSelect.text = sb.ToString();
         }
     }
 }
