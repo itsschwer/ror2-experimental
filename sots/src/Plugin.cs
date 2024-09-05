@@ -20,7 +20,11 @@ namespace SprintingOnTheScoreboard
 
             try {
                 new HarmonyLib.Harmony(Info.Metadata.GUID).PatchAll();
+#if DEBUG
+                Logger.LogMessage("Successfully patched. [config:Debug]");
+#else
                 Logger.LogMessage("Successfully patched.");
+#endif
             }
             catch (HarmonyLib.HarmonyException e) when (e.InnerException?.InnerException?.InnerException != null && e.InnerException.InnerException.InnerException.Message.Contains("Parameter \"onlyAllowMovement\" not found in method static bool RoR2.PlayerCharacterMasterController::CanSendBodyInput")) {
                 // HarmonyLib.HarmonyException: IL Compile Error (unknown location) ---> HarmonyLib.HarmonyException: IL Compile Error (unknown location) ---> HarmonyLib.HarmonyException: IL Compile Error (unknown location) ---> System.Exception: Parameter "onlyAllowMovement" not found

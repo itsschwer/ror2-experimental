@@ -32,3 +32,4 @@ private static void PlayerCharacterMasterController_CanSendBodyInput(bool __resu
             ```
             [Warning: Unity Log] Instance not found when handling Command message [netId=   ]
             ```
+            - only if client who has it installed is playing with a host who does not have it installed?
