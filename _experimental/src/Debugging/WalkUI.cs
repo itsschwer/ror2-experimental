@@ -10,6 +10,8 @@ namespace Experimental.Debugging
     {
         internal static void Walk(RoR2.NetworkUser _, string[] args)
         {
+            if (!UnityEngine.Networking.NetworkServer.active) return;
+
             if (args.Length == 2) {
                 switch (args[1]) {
                     default: break;

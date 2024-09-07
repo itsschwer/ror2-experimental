@@ -9,6 +9,8 @@ namespace Experimental.Debugging
 
         public static void ShowParse(NetworkUser user, string[] args)
         {
+            if (!UnityEngine.Networking.NetworkServer.active) return;
+
             if (args.Length == 2) {
                 switch (args[1]) {
                     default: break;
