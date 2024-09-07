@@ -59,7 +59,7 @@ namespace Experimental.Debugging
             if (TeleporterInteraction.instance == null) return;
 
             TeleporterInteraction.instance.AddShrineStack();
-            Chat.SendBroadcastChat(new Chat.SimpleChatMessage { baseToken = "SHRINE_BOSS_USE_MESSAGE", paramTokens = ["UNIDENTIFIED_KILLER_NAME"] });
+            Chat.SendBroadcastChat(new Chat.SimpleChatMessage { baseToken = "SHRINE_BOSS_USE_MESSAGE", paramTokens = [Language.GetString("UNIDENTIFIED_KILLER_NAME")] });
             // Effect from RoR2.ShrineBossBehaviour.AddShrineStack()
             EffectManager.SpawnEffect(LegacyResourcesAPI.Load<UnityEngine.GameObject>("Prefabs/Effects/ShrineUseEffect"), new EffectData {
                 origin = TeleporterInteraction.instance.transform.position,
