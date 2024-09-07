@@ -43,6 +43,8 @@ namespace Experimental.Debugging.UI
         private Action<object> forceChargeTeleporter = new(KeyCode.F2, (_) => Misc.ForceChargeTeleporter(), "<style=cEvent>Force Charge Teleporter</style>");
         private Action<object> forceStage = new(KeyCode.F1, (_) => Stage.ForceStage(Stage.setStage ?? RoR2.Run.instance.nextStageScene), "<style=cEvent>Force Stage</style>");
 
+        private Action<object> clearChat = new(KeyCode.PageUp, (_) => RoR2.Chat.Clear(), "<style=cEvent>Clear Chat</style>");
+
         private void Start() => CreateUI(hud.mainContainer);
 
         private void CreateUI(GameObject parent)
@@ -89,6 +91,8 @@ namespace Experimental.Debugging.UI
             if (Input.GetKeyDown(KeyCode.KeypadPlus)) hide = !hide;
             canvas.enabled = !scoreboardVisible && !hide;
 
+            clearChat.PerformIfPossible(null);
+
             System.Text.StringBuilder keyString = new();
             System.Text.StringBuilder descriptionString = new();
 
@@ -98,23 +102,23 @@ namespace Experimental.Debugging.UI
                     keyString.AppendLine(commandCubeControls.controls[i].key.ToString());
                     descriptionString.AppendLine(commandCubeControls.controls[i].description);
                 }
-
-                forceStage.PerformIfPossible(null);
-                keyString.AppendLine().AppendLine(forceStage.key.ToString());
-                descriptionString.AppendLine().AppendLine(forceStage.description);
-                forceChargeTeleporter.PerformIfPossible(null);
-                keyString.AppendLine(forceChargeTeleporter.key.ToString());
-                descriptionString.AppendLine(forceChargeTeleporter.description);
-                addMountainStack.PerformIfPossible(null);
-                keyString.AppendLine(addMountainStack.key.ToString());
-                descriptionString.AppendLine(addMountainStack.description);
-                toggleEnemySpawning.PerformIfPossible(null);
-                keyString.AppendLine(toggleEnemySpawning.key.ToString());
-                descriptionString.AppendLine(toggleEnemySpawning.description);
-                togglePlayerImmortality.PerformIfPossible(null);
-                keyString.AppendLine(togglePlayerImmortality.key.ToString());
-                descriptionString.AppendLine(togglePlayerImmortality.description);
             }
+
+            forceStage.PerformIfPossible(null);
+            keyString.AppendLine().AppendLine(forceStage.key.ToString());
+            descriptionString.AppendLine().AppendLine(forceStage.description);
+            forceChargeTeleporter.PerformIfPossible(null);
+            keyString.AppendLine(forceChargeTeleporter.key.ToString());
+            descriptionString.AppendLine(forceChargeTeleporter.description);
+            addMountainStack.PerformIfPossible(null);
+            keyString.AppendLine(addMountainStack.key.ToString());
+            descriptionString.AppendLine(addMountainStack.description);
+            toggleEnemySpawning.PerformIfPossible(null);
+            keyString.AppendLine(toggleEnemySpawning.key.ToString());
+            descriptionString.AppendLine(toggleEnemySpawning.description);
+            togglePlayerImmortality.PerformIfPossible(null);
+            keyString.AppendLine(togglePlayerImmortality.key.ToString());
+            descriptionString.AppendLine(togglePlayerImmortality.description);
 
             controlKeys.text = keyString.ToString();
             controlDescriptions.text = descriptionString.ToString();
