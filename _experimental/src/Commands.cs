@@ -8,6 +8,7 @@ namespace Experimental
     {
         public static void Register()
         {
+            ChatCommander.Register("/clear", ClearChat);
             ChatCommander.Register("/show", Debugging.Misc.ShowParse);
             ChatCommander.Register("/setstage", Debugging.Stage.SetStage);
             ChatCommander.Register("/s", Spawn);
@@ -17,6 +18,7 @@ namespace Experimental
 
         public static void Unregister()
         {
+            ChatCommander.Unregister("/clear", ClearChat);
             ChatCommander.Unregister("/show", Debugging.Misc.ShowParse);
             ChatCommander.Unregister("/setstage", Debugging.Stage.SetStage);
             ChatCommander.Unregister("/s", Spawn);
@@ -30,6 +32,12 @@ namespace Experimental
             if (Run.instance == null) return false;
             body = user?.GetCurrentBody();
             return (body != null);
+        }
+
+        private static void ClearChat(NetworkUser user, string[] args)
+        {
+            if (!UnityEngine.Networking.NetworkServer.active) return;
+            Chat.Clear();
         }
 
         private static void Spawn(NetworkUser user, string[] args)
