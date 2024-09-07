@@ -1,6 +1,13 @@
 ## <mark>**Deprecation Notice**</mark>
 <mark>***This mod is no longer necessary, as the change appears to be reverted in patch `v1.3.2`.***</mark>
 
+- while deprecated, the latest version of this mod can still be used if playing on `v1.3.1`
+    - this mod should have no effect if left installed on `v1.3.2`
+        - uninstalling is recommended to clean up mod lists
+
+### technical
+- `onlyAllowMovement` appears to always be discarded now
+
 # Sprinting on the Scoreboard
 > *please don't make me fall out of the sky when looking at the scoreboard as artificer*
 
