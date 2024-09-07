@@ -87,6 +87,8 @@ namespace Experimental.UI
 
         private void Update()
         {
+            if (RoR2.Run.instance == null) return;
+
             // Scoreboard visibility logic from RoR2.UI.HUD.Update()
             bool scoreboardVisible = hud.localUserViewer?.inputPlayer != null && hud.localUserViewer.inputPlayer.GetButton("info");
             if (Input.GetKeyDown(KeyCode.KeypadPlus)) hide = !hide;
