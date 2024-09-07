@@ -1,9 +1,9 @@
 ﻿{
 	"author": "itsschwer",
 	"name": "SprintingOnTheScoreboard",
-	"version_number": "1.0.0",
+	"version_number": "1.0.1",
 	"website_url": "https://github.com/itsschwer/ror2-experimental/tree/main/sots",
-	"description": "[SotS] Re-enables sprinting (and jumping, and other body inputs) while the scoreboard is open. — (please don't make me fall out of the sky when looking at the scoreboard as artificer)",
+	"description": "[SotS v1.3.1] Re-enables sprinting (and jumping, and other body inputs) while the scoreboard is open. — (please don't make me fall out of the sky when looking at the scoreboard as artificer)",
 	"dependencies": [
 		"bbepis-BepInExPack-5.4.2117"
 	]

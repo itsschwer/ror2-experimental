@@ -1,7 +1,10 @@
+## <mark>**Deprecation Notice**</mark>
+<mark>***This mod is no longer necessary, as the change appears to be reverted in patch `v1.3.2`.***</mark>
+
 # Sprinting on the Scoreboard
 > *please don't make me fall out of the sky when looking at the scoreboard as artificer*
 
-> Only for the *Seekers of the Storm* patch!
+> Only for the *Seekers of the Storm*<sup>*(v1.3.1)*</sup> patch!
 
 re-enables sprinting (and jumping, and other body inputs) while the scoreboard is open.
 

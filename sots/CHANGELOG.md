@@ -1,3 +1,5 @@
+### 1.0.1
+- <mark>***Add deprecation notice***</mark>
 - Start assembly versioning
 - Upload source code
 - Use GitHub Actions to generate releases
