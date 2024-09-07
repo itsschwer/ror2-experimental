@@ -39,6 +39,7 @@ namespace Experimental.Debugging.UI
         private CommandCubeControls commandCubeControls = new();
         private Action<object> toggleEnemySpawning = new(KeyCode.F5, (_) => Misc.ToggleEnemySpawning(), "<style=cEvent>Toggle Enemy Spawning</style>");
         private Action<object> togglePlayerImmortality = new(KeyCode.F4, (_) => Misc.TogglePlayerImmortality(), "<style=cEvent>Toggle Player Immortality</style>");
+        private Action<object> addMountainStack = new(KeyCode.F3, (_) => Misc.AddMountainStack(), "<style=cEvent>Add Mountain Shrine Stack</style>");
         private Action<object> forceChargeTeleporter = new(KeyCode.F2, (_) => Misc.ForceChargeTeleporter(), "<style=cEvent>Force Charge Teleporter</style>");
         private Action<object> forceStage = new(KeyCode.F1, (_) => Stage.ForceStage(Stage.setStage ?? RoR2.Run.instance.nextStageScene), "<style=cEvent>Force Stage</style>");
 
@@ -104,6 +105,9 @@ namespace Experimental.Debugging.UI
                 forceChargeTeleporter.PerformIfPossible(null);
                 keyString.AppendLine(forceChargeTeleporter.key.ToString());
                 descriptionString.AppendLine(forceChargeTeleporter.description);
+                addMountainStack.PerformIfPossible(null);
+                keyString.AppendLine(addMountainStack.key.ToString());
+                descriptionString.AppendLine(addMountainStack.description);
                 toggleEnemySpawning.PerformIfPossible(null);
                 keyString.AppendLine(toggleEnemySpawning.key.ToString());
                 descriptionString.AppendLine(toggleEnemySpawning.description);

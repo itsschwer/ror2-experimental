@@ -53,5 +53,20 @@ namespace Experimental.Debugging
 
             TeleporterInteraction.instance.holdoutZoneController.charge = 0.99f;
         }
+
+        public static void AddMountainStack()
+        {
+            if (TeleporterInteraction.instance == null) return;
+
+            TeleporterInteraction.instance.AddShrineStack();
+            Chat.SendBroadcastChat(new Chat.SimpleChatMessage { baseToken = "SHRINE_BOSS_USE_MESSAGE", paramTokens = ["UNIDENTIFIED_KILLER_NAME"] });
+            // Effect from RoR2.ShrineBossBehaviour.AddShrineStack()
+            EffectManager.SpawnEffect(LegacyResourcesAPI.Load<UnityEngine.GameObject>("Prefabs/Effects/ShrineUseEffect"), new EffectData {
+                origin = TeleporterInteraction.instance.transform.position,
+                rotation = UnityEngine.Quaternion.identity,
+                scale = 1f,
+                color = new UnityEngine.Color(0.7372549f, 77f / 85f, 0.94509804f)
+            }, transmit: true);
+        }
     }
 }
