@@ -1,0 +1,10 @@
+﻿{
+	"author": "itsschwer",
+	"name": "NewtAlternative",
+	"version_number": "0.0.0",
+	"website_url": "https://github.com/itsschwer/ror2-experimental/tree/main/newt",
+	"description": "Makes the Bazaar Between Time less exploitable by making it so that (each of the) lunar buds can only be opened once per loop — [ server-side ]",
+	"dependencies": [
+		"bbepis-BepInExPack-5.4.2113"
+	]
+}

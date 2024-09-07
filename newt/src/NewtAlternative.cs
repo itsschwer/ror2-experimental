@@ -1,10 +1,9 @@
-﻿#if NEWT_ALTERNATIVE
-using HarmonyLib;
+﻿using HarmonyLib;
 using RoR2;
 using System.Collections.Generic;
 using UnityEngine.Networking;
 
-namespace Experimental
+namespace NewtAlternative
 {
     [HarmonyPatch]
     internal class NewtAlternative
@@ -79,4 +78,3 @@ namespace Experimental
         }
     }
 }
-#endif

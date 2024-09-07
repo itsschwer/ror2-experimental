@@ -1,5 +1,5 @@
 # Newt Alternative
-*less exploitable bazaar — \[server-side \]*
+A \[ server-side / host-only \] mod that aims to make the *Bazaar Between Time* less exploitable.
 
 *[ **!** ]* not thoroughly tested; untested in multiplayer
 
@@ -9,11 +9,3 @@
 2. newt altars cost 0 lunar coins
     - counterbalance the lunar bud nerf
     - make seeking newt altars a bit more enticing
-
-## setup
-mainly made up of Harmony patches, so create a `BaseUnityPlugin` with:
-```cs
-private void Awake() {
-    new Harmony(Info.Metadata.GUID).PatchAll();
-}
-```
