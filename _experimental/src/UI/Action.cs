@@ -1,4 +1,4 @@
-﻿namespace Experimental.Debugging.UI
+﻿namespace Experimental.UI
 {
     internal sealed class Action<T>(UnityEngine.KeyCode key, System.Action<T> action, string description)
     {

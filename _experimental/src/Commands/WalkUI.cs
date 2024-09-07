@@ -1,10 +1,9 @@
-﻿#if DEBUG
-using RoR2.UI;
+﻿using RoR2.UI;
 using UnityEngine.UI;
 using UnityEngine;
 using System.Text;
 
-namespace Experimental.Debugging
+namespace Experimental.Commands
 {
     public static class WalkUI
     {
@@ -56,4 +55,3 @@ namespace Experimental.Debugging
         }
     }
 }
-#endif

@@ -1,8 +1,7 @@
-﻿#if DEBUG
-using HarmonyLib;
+﻿using HarmonyLib;
 using RoR2;
 
-namespace Experimental.Debugging
+namespace Experimental.Patches
 {
     [HarmonyPatch]
     internal static class TakeDamagePlayerNonLethal
@@ -57,4 +56,3 @@ namespace Experimental.Debugging
         }
     }
 }
-#endif

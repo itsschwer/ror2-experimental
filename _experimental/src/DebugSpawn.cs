@@ -1,5 +1,4 @@
-﻿#if DEBUG
-using RoR2;
+﻿using RoR2;
 using RoR2.Navigation;
 using UnityEngine.AddressableAssets;
 using UnityEngine;
@@ -78,4 +77,3 @@ namespace Experimental
         }
     }
 }
-#endif

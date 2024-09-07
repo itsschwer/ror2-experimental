@@ -1,8 +1,7 @@
-﻿#if DEBUG
-using RoR2;
+﻿using RoR2;
 using System.Linq;
 
-namespace Experimental.Debugging
+namespace Experimental.Helpers
 {
     public static class CommandCube
     {
@@ -46,4 +45,3 @@ namespace Experimental.Debugging
         }
     }
 }
-#endif

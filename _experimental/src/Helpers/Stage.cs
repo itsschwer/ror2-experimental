@@ -2,7 +2,7 @@
 using RoR2;
 using System.Linq;
 
-namespace Experimental.Debugging
+namespace Experimental.Helpers
 {
     internal static class Stage
     {
@@ -27,7 +27,7 @@ namespace Experimental.Debugging
             UnityEngine.Networking.NetworkManager.singleton.ServerChangeScene(scene.cachedName);
         }
 
-        internal static void SetStage(NetworkUser user, string[] args)
+        internal static void SetStage(NetworkUser _, string[] args)
         {
             if (args.Length == 2) {
                 SceneDef chosen = null;
@@ -50,7 +50,7 @@ namespace Experimental.Debugging
         public static string GetDisplayName(SceneDef scene)
             => scene ? $"{scene.cachedName} ({Language.GetString(scene.nameToken)})" : "none";
 
-        public static string StyleStageNamesForShow()
+        public static string DumpStyledDisplayNames()
         {
             System.Text.StringBuilder sb = new();
 

@@ -21,11 +21,10 @@ namespace Experimental
             BepInEx.Logging.Logger.Sources.Remove(base.Logger);
             Logger = BepInEx.Logging.Logger.CreateLogSource(Plugin.GUID);
 
-#if DEBUG
-            Debugging.NoDropPods.Apply();
-            RoR2.UI.HUD.shouldHudDisplay += Debugging.UI.HUD.Instantiate;
-            Commands.Register();
-#endif
+            RoR2.UI.HUD.shouldHudDisplay += UI.HUD.Instantiate;
+            Patches.NoDropPods.Apply();
+            Commands.Commands.Register();
+
             new Harmony(Info.Metadata.GUID).PatchAll();
 
             Logger.LogMessage("~awake.");

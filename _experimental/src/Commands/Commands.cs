@@ -1,27 +1,28 @@
-﻿#if DEBUG
-using RoR2;
+﻿using RoR2;
 using PressureDrop;
 
-namespace Experimental
+namespace Experimental.Commands
 {
     internal static class Commands
     {
         public static void Register()
         {
-            ChatCommander.Register("/show", Debugging.Misc.ShowParse);
-            ChatCommander.Register("/setstage", Debugging.Stage.SetStage);
+            ChatCommander.Register("/show", Cheatsheet.Parse);
+            ChatCommander.Register("/setstage", Helpers.Stage.SetStage);
+
             ChatCommander.Register("/s", Spawn);
 
-            ChatCommander.Register("/walkui", Debugging.WalkUI.Walk);
+            ChatCommander.Register("/walkui", WalkUI.Walk);
         }
 
         public static void Unregister()
         {
-            ChatCommander.Unregister("/show", Debugging.Misc.ShowParse);
-            ChatCommander.Unregister("/setstage", Debugging.Stage.SetStage);
+            ChatCommander.Unregister("/show", Cheatsheet.Parse);
+            ChatCommander.Unregister("/setstage", Helpers.Stage.SetStage);
+
             ChatCommander.Unregister("/s", Spawn);
 
-            ChatCommander.Unregister("/walkui", Debugging.WalkUI.Walk);
+            ChatCommander.Unregister("/walkui", WalkUI.Walk);
         }
 
         private static bool GetUserBody(NetworkUser user, out CharacterBody body)
@@ -70,4 +71,3 @@ namespace Experimental
         }
     }
 }
-#endif

@@ -1,8 +1,8 @@
-﻿#if DEBUG
+﻿using Experimental.Helpers;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Experimental.Debugging.UI
+namespace Experimental.UI
 {
     internal sealed class CommandCubeControls
     {
@@ -45,4 +45,3 @@ namespace Experimental.Debugging.UI
         }
     }
 }
-#endif

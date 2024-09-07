@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using Experimental.Helpers;
+using UnityEngine;
 
-namespace Experimental.Debugging.UI
+namespace Experimental.UI
 {
     internal sealed class HUD : MonoBehaviour
     {
@@ -36,14 +37,14 @@ namespace Experimental.Debugging.UI
         private RoR2.UI.HGTextMeshProUGUI controlKeys;
         private RoR2.UI.HGTextMeshProUGUI controlDescriptions;
 
-        private CommandCubeControls commandCubeControls = new();
-        private Action<object> toggleEnemySpawning = new(KeyCode.F5, (_) => Misc.ToggleEnemySpawning(), "<style=cEvent>Toggle Enemy Spawning</style>");
-        private Action<object> togglePlayerImmortality = new(KeyCode.F4, (_) => Misc.TogglePlayerImmortality(), "<style=cEvent>Toggle Player Immortality</style>");
-        private Action<object> addMountainStack = new(KeyCode.F3, (_) => Misc.AddMountainStack(), "<style=cEvent>Add Mountain Shrine Stack</style>");
-        private Action<object> forceChargeTeleporter = new(KeyCode.F2, (_) => Misc.ForceChargeTeleporter(), "<style=cEvent>Force Charge Teleporter</style>");
-        private Action<object> forceStage = new(KeyCode.F1, (_) => Stage.ForceStage(Stage.setStage ?? RoR2.Run.instance.nextStageScene), "<style=cEvent>Force Stage</style>");
+        private readonly CommandCubeControls commandCubeControls = new();
+        private readonly Action<object> toggleEnemySpawning = new(KeyCode.F5, (_) => Misc.ToggleEnemySpawning(), "<style=cEvent>Toggle Enemy Spawning</style>");
+        private readonly Action<object> togglePlayerImmortality = new(KeyCode.F4, (_) => Misc.TogglePlayerImmortality(), "<style=cEvent>Toggle Player Immortality</style>");
+        private readonly Action<object> addMountainStack = new(KeyCode.F3, (_) => Misc.AddMountainStack(), "<style=cEvent>Add Mountain Shrine Stack</style>");
+        private readonly Action<object> forceChargeTeleporter = new(KeyCode.F2, (_) => Misc.ForceChargeTeleporter(), "<style=cEvent>Force Charge Teleporter</style>");
+        private readonly Action<object> forceStage = new(KeyCode.F1, (_) => Stage.ForceStage(Stage.setStage ?? RoR2.Run.instance.nextStageScene), "<style=cEvent>Force Stage</style>");
 
-        private Action<object> clearChat = new(KeyCode.PageUp, (_) => RoR2.Chat.Clear(), "<style=cEvent>Clear Chat</style>");
+        private readonly Action<object> clearChat = new(KeyCode.PageUp, (_) => RoR2.Chat.Clear(), "<style=cEvent>Clear Chat</style>");
 
         private void Start() => CreateUI(hud.mainContainer);
 
@@ -72,7 +73,7 @@ namespace Experimental.Debugging.UI
             controlKeys.alignment = TMPro.TextAlignmentOptions.BottomRight;
             controlKeys.fontSize = controlFontSize;
             RectTransform ck = (RectTransform)controlKeys.transform;
-            ck.sizeDelta = Vector2.left * (rect.rect.width -  controlKeysWidth);
+            ck.sizeDelta = Vector2.left * (rect.rect.width - controlKeysWidth);
             ck.localPosition = ck.sizeDelta / -2;
 
             controlDescriptions = AddChild<RoR2.UI.HGTextMeshProUGUI>(rect, nameof(controlDescriptions));
@@ -87,7 +88,7 @@ namespace Experimental.Debugging.UI
         private void Update()
         {
             // Scoreboard visibility logic from RoR2.UI.HUD.Update()
-            bool scoreboardVisible = (hud.localUserViewer?.inputPlayer != null && hud.localUserViewer.inputPlayer.GetButton("info"));
+            bool scoreboardVisible = hud.localUserViewer?.inputPlayer != null && hud.localUserViewer.inputPlayer.GetButton("info");
             if (Input.GetKeyDown(KeyCode.KeypadPlus)) hide = !hide;
             canvas.enabled = !scoreboardVisible && !hide;
 
@@ -96,8 +97,10 @@ namespace Experimental.Debugging.UI
             System.Text.StringBuilder keyString = new();
             System.Text.StringBuilder descriptionString = new();
 
-            if (hud.cameraRigController?.targetBody) {
-                for (int i = 0; i < commandCubeControls.controls.Count; i++) {
+            if (hud.cameraRigController?.targetBody)
+            {
+                for (int i = 0; i < commandCubeControls.controls.Count; i++)
+                {
                     commandCubeControls.controls[i].PerformIfPossible(hud.cameraRigController.targetBody);
                     keyString.AppendLine(commandCubeControls.controls[i].key.ToString());
                     descriptionString.AppendLine(commandCubeControls.controls[i].description);
@@ -125,7 +128,7 @@ namespace Experimental.Debugging.UI
 
             if (!canvas.enabled) return;
 
-            topLeft.text = $"{Heading}\n\n\n{Misc.CurrentHUDShowString}";
+            topLeft.text = $"{Heading}\n\n\n{Cheatsheet.currentDisplay}";
 
             System.Text.StringBuilder sb = new();
             sb.Append("<style=cEvent>");

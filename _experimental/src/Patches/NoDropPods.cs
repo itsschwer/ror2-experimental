@@ -1,10 +1,9 @@
-﻿#if DEBUG
-using MonoMod.RuntimeDetour;
+﻿using MonoMod.RuntimeDetour;
 using MonoMod.Cil;
 using Mono.Cecil.Cil;
 using System.Reflection;
 
-namespace Experimental.Debugging
+namespace Experimental.Patches
 {
     internal static class NoDropPods
     {
@@ -32,4 +31,3 @@ namespace Experimental.Debugging
         }
     }
 }
-#endif
