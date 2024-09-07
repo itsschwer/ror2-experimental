@@ -58,11 +58,15 @@ namespace Experimental
                     case "blueportal":
                         Debug.SpawnBluePortal(target);
                         return;
+                    case "d":
+                    case "damage":
+                        Debug.SpawnDamagingInteractables(target);
+                        return;
                 }
             }
 
             ChatCommander.OutputFail(args[0],
-                "{ <style=cSub>scrapper</style> | <style=cSub>printer</style> | <style=cSub>cauldron</style> | <style=cSub>blueportal</style> }");
+                "(<style=cSub>scrapper</style> | <style=cSub>printer</style> | <style=cSub>cauldron</style> | <style=cSub>blueportal</style> | <style=cSub>damage</style>)");
         }
     }
 }

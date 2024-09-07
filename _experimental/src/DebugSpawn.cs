@@ -9,14 +9,41 @@ namespace Experimental
     public static class Debug
     {
         public static void SpawnScrapper(CharacterBody body)
-            => SpawnAtBody(LoadInteractableSpawnCard("RoR2/Base/Scrapper/iscScrapper.asset"), body);
+            => SpawnAtBody(Addressables.LoadAssetAsync<InteractableSpawnCard>("RoR2/Base/Scrapper/iscScrapper.asset").WaitForCompletion(), body);
         public static void SpawnPrinter(CharacterBody body)
-            => SpawnAtBody(LoadInteractableSpawnCard("RoR2/Base/DuplicatorLarge/iscDuplicatorLarge.asset"), body);
+            => SpawnAtBody(Addressables.LoadAssetAsync<InteractableSpawnCard>("RoR2/Base/DuplicatorLarge/iscDuplicatorLarge.asset").WaitForCompletion(), body);
         public static void SpawnCauldron(CharacterBody body)
             => SpawnAtBody(CreateCauldronSpawnCard(), body);
         public static void SpawnBluePortal(CharacterBody body)
             => SpawnAtBody(Addressables.LoadAssetAsync<SpawnCard>("RoR2/Base/PortalShop/iscShopPortal.asset").WaitForCompletion(), body);
 
+        public static void SpawnDamagingInteractables(CharacterBody body)
+        {
+            const string shrineBlood = "RoR2/Base/ShrineBlood/iscShrineBloodSnowy.asset";
+            const string voidChest = "RoR2/DLC1/VoidChest/iscVoidChest.asset";
+            const string voidPotential = "RoR2/DLC1/VoidTriple/iscVoidTriple.asset";
+
+            const float angle = 135f / 3f;
+
+            Vector3 forward = body.inputBank.aimDirection;
+            forward.y = 0;
+            forward.Normalize();
+            forward *= 4;
+
+            Spawn(Addressables.LoadAssetAsync<InteractableSpawnCard>(shrineBlood).WaitForCompletion(), body.footPosition + forward);
+            Spawn(Addressables.LoadAssetAsync<InteractableSpawnCard>(voidChest).WaitForCompletion(), body.footPosition + (Quaternion.AngleAxis(angle, Vector3.up) * forward));
+            Spawn(Addressables.LoadAssetAsync<InteractableSpawnCard>(voidPotential).WaitForCompletion(), body.footPosition + (Quaternion.AngleAxis(-angle, Vector3.up) * forward));
+        }
+
+        public static GameObject Spawn(SpawnCard spawnCard, Vector3 position)
+        {
+            DirectorPlacementRule placement = new DirectorPlacementRule {
+                position = position,
+                placementMode = DirectorPlacementRule.PlacementMode.Direct
+            };
+            GameObject obj = DirectorCore.instance.TrySpawnObject(new DirectorSpawnRequest(spawnCard, placement, RoR2Application.rng));
+            return obj;
+        }
 
         public static GameObject SpawnAtBody(SpawnCard spawnCard, CharacterBody body, TeamIndex? teamIndexOverride = null)
         {
@@ -29,20 +56,6 @@ namespace Experimental
             GameObject obj = DirectorCore.instance.TrySpawnObject(new DirectorSpawnRequest(spawnCard, placement, RoR2Application.rng) {
                 teamIndexOverride = teamIndexOverride ?? body.master.teamIndex });
             return obj;
-        }
-
-        // https://github.com/Goorakh/RiskOfChaos/blob/149f6e103588a66ae83c5539f6f778fd2d405915/RiskOfChaos/EffectDefinitions/World/Spawn/SpawnRandomInteractable.cs#L23-L35
-        private static InteractableSpawnCard LoadInteractableSpawnCard(string assetPath)
-        {
-            InteractableSpawnCard spawn = Addressables.LoadAssetAsync<InteractableSpawnCard>(assetPath).WaitForCompletion();
-            // Ignore Artifact of Sacrifice
-            if (spawn.skipSpawnWhenSacrificeArtifactEnabled) {
-                // Create modified copy
-                spawn = ScriptableObject.Instantiate(spawn);
-                spawn.skipSpawnWhenSacrificeArtifactEnabled = false;
-            }
-
-            return spawn;
         }
 
         // https://github.com/Goorakh/RiskOfChaos/blob/149f6e103588a66ae83c5539f6f778fd2d405915/RiskOfChaos/EffectDefinitions/World/Spawn/SpawnRandomInteractable.cs#L47-L63
