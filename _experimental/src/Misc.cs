@@ -43,5 +43,24 @@ namespace Experimental
                 color = new UnityEngine.Color(0.7372549f, 77f / 85f, 0.94509804f)
             }, transmit: true);
         }
+
+        public static void AddBeamsToPressurePlates()
+        {
+            if (TeleporterInteraction.instance == null) return;
+
+            UnityEngine.Transform fx = TeleporterInteraction.instance.transform.Find("TeleporterBaseMesh/BuiltInEffects"); // Teleporter1(Clone)
+            UnityEngine.Transform particleSphere = fx.Find("PassiveParticle, Sphere");
+            UnityEngine.Transform particleCenter = fx.Find("PassiveParticle, Center");
+            fx = fx.Find("ChargingEffect/BetweenProngs/Loop");
+            UnityEngine.Transform core = fx.Find("Core");
+            UnityEngine.Transform beam = fx.Find("Beam");
+
+            foreach (PressurePlateController p in UnityEngine.Object.FindObjectsOfType<PressurePlateController>()) {
+                UnityEngine.GameObject.Instantiate(particleSphere, p.transform);
+                UnityEngine.GameObject.Instantiate(particleCenter, p.transform);
+                UnityEngine.GameObject.Instantiate(core, p.transform);
+                UnityEngine.GameObject.Instantiate(beam, p.transform);
+            }
+        }
     }
 }

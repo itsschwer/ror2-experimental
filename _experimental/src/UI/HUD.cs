@@ -45,6 +45,7 @@ namespace Experimental.UI
         private readonly Action<object> forceStage = new(KeyCode.F1, (_) => Stage.ForceStage(Stage.setStage ?? RoR2.Run.instance.nextStageScene), "<style=cEvent>Force Stage</style>");
 
         private readonly Action<object> clearChat = new(KeyCode.PageUp, (_) => RoR2.Chat.Clear(), "<style=cEvent>Clear Chat</style>");
+        private readonly Action<object> addBeamsToPressurePlates = new(KeyCode.PageDown, (_) => Misc.AddBeamsToPressurePlates(), "<style=cEvent>Add Beams To Pressure Plates</style>");
 
         private void Start() => CreateUI(hud.mainContainer);
 
@@ -95,6 +96,7 @@ namespace Experimental.UI
             canvas.enabled = !scoreboardVisible && !hide;
 
             clearChat.PerformIfPossible(null);
+            addBeamsToPressurePlates.PerformIfPossible(null);
 
             System.Text.StringBuilder keyString = new();
             System.Text.StringBuilder descriptionString = new();
