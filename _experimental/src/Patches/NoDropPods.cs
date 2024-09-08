@@ -24,9 +24,9 @@ namespace Experimental.Patches
                     c.RemoveRange(4);
                     c.Emit(OpCodes.Ldc_I4_0);
 
-                    Plugin.Logger.LogInfo($"{nameof(NoDropPods)}: Applied ILHook to {method.DeclaringType.FullName}.{method.Name}");
+                    Plugin.Logger.LogInfo($"{nameof(NoDropPods)}> ILHook to {method.DeclaringType.FullName}.{method.Name} applied.");
                 }
-                else Plugin.Logger.LogWarning($"{nameof(NoDropPods)}: Failed to apply ILHook to {method.DeclaringType.FullName}.{method.Name}");
+                else Plugin.Logger.LogWarning($"{nameof(NoDropPods)}> ILHook to {method.DeclaringType.FullName}.{method.Name} failed.");
             });
         }
     }
