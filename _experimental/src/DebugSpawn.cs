@@ -7,31 +7,57 @@ namespace Experimental
 {
     public static class Debug
     {
-        public static void SpawnScrapper(CharacterBody body)
-            => SpawnAtBody(Addressables.LoadAssetAsync<InteractableSpawnCard>("RoR2/Base/Scrapper/iscScrapper.asset").WaitForCompletion(), body);
-        public static void SpawnPrinter(CharacterBody body)
-            => SpawnAtBody(Addressables.LoadAssetAsync<InteractableSpawnCard>("RoR2/Base/DuplicatorLarge/iscDuplicatorLarge.asset").WaitForCompletion(), body);
-        public static void SpawnCauldron(CharacterBody body)
-            => SpawnAtBody(CreateCauldronSpawnCard(), body);
         public static void SpawnBluePortal(CharacterBody body)
             => SpawnAtBody(Addressables.LoadAssetAsync<SpawnCard>("RoR2/Base/PortalShop/iscShopPortal.asset").WaitForCompletion(), body);
 
-        public static void SpawnDamagingInteractables(CharacterBody body)
+        public static void SpawnItemCostInteractables(CharacterBody body)
         {
-            const string shrineBlood = "RoR2/Base/ShrineBlood/iscShrineBloodSnowy.asset";
-            const string voidChest = "RoR2/DLC1/VoidChest/iscVoidChest.asset";
-            const string voidPotential = "RoR2/DLC1/VoidTriple/iscVoidTriple.asset";
-
-            const float angle = 135f / 3f;
+            InteractableSpawnCard[] spawnCards = [
+                CreateCauldronSpawnCard("RoR2/Base/LunarCauldrons/LunarCauldron, RedToWhite Variant.prefab"),
+                CreateCauldronSpawnCard("RoR2/Base/LunarCauldrons/LunarCauldron, WhiteToGreen.prefab"),
+                CreateCauldronSpawnCard(),
+                Addressables.LoadAssetAsync<InteractableSpawnCard>("RoR2/Base/ShrineCleanse/iscShrineCleanseSnowy.asset").WaitForCompletion(),
+                Addressables.LoadAssetAsync<InteractableSpawnCard>("RoR2/Base/Scrapper/iscScrapper.asset").WaitForCompletion(),
+                Addressables.LoadAssetAsync<InteractableSpawnCard>("RoR2/Base/DuplicatorLarge/iscDuplicator.asset").WaitForCompletion(),
+                Addressables.LoadAssetAsync<InteractableSpawnCard>("RoR2/Base/DuplicatorLarge/iscDuplicatorLarge.asset").WaitForCompletion(),
+                Addressables.LoadAssetAsync<InteractableSpawnCard>("RoR2/Base/DuplicatorLarge/iscDuplicatorMilitary.asset").WaitForCompletion(),
+                Addressables.LoadAssetAsync<InteractableSpawnCard>("RoR2/Base/DuplicatorLarge/iscDuplicatorWild.asset").WaitForCompletion()
+            ];
 
             Vector3 forward = body.inputBank.aimDirection;
             forward.y = 0;
             forward.Normalize();
             forward *= 4;
 
-            Spawn(Addressables.LoadAssetAsync<InteractableSpawnCard>(shrineBlood).WaitForCompletion(), body.footPosition + forward);
-            Spawn(Addressables.LoadAssetAsync<InteractableSpawnCard>(voidChest).WaitForCompletion(), body.footPosition + (Quaternion.AngleAxis(angle, Vector3.up) * forward));
-            Spawn(Addressables.LoadAssetAsync<InteractableSpawnCard>(voidPotential).WaitForCompletion(), body.footPosition + (Quaternion.AngleAxis(-angle, Vector3.up) * forward));
+            SpawnInteractables(spawnCards, body.footPosition, forward, 135);
+        }
+
+        public static void SpawnDamagingInteractables(CharacterBody body)
+        {
+            InteractableSpawnCard[] spawnCards = [
+                Addressables.LoadAssetAsync<InteractableSpawnCard>("RoR2/DLC1/VoidChest/iscVoidChest.asset").WaitForCompletion(),
+                Addressables.LoadAssetAsync<InteractableSpawnCard>("RoR2/Base/ShrineBlood/iscShrineBloodSnowy.asset").WaitForCompletion(),
+                Addressables.LoadAssetAsync<InteractableSpawnCard>("RoR2/DLC1/VoidTriple/iscVoidTriple.asset").WaitForCompletion()
+            ];
+
+            Vector3 forward = body.inputBank.aimDirection;
+            forward.y = 0;
+            forward.Normalize();
+            forward *= 4;
+
+            SpawnInteractables(spawnCards, body.footPosition, forward, 135);
+        }
+
+        public static void SpawnInteractables(InteractableSpawnCard[] spawnCards, Vector3 position, Vector3 forward, float arcDegrees)
+        {
+            float angle = arcDegrees / spawnCards.Length;
+            Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.up);
+            Vector3 offset = Quaternion.AngleAxis(-arcDegrees / 2, Vector3.up) * forward;
+
+            for (int i = 0; i < spawnCards.Length; i++) {
+                Spawn(spawnCards[i], position + offset);
+                offset = rotation * offset;
+            }
         }
 
         public static GameObject Spawn(SpawnCard spawnCard, Vector3 position)

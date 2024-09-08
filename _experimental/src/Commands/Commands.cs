@@ -40,34 +40,27 @@ namespace Experimental.Commands
             if (args.Length == 2) {
                 switch (args[1].ToLowerInvariant()) {
                     default: break;
-                    case "s":
-                    case "scrapper":
-                        Debug.SpawnScrapper(target);
-                        return;
-                    case "p":
-                    case "printer":
-                        Debug.SpawnPrinter(target);
-                        return;
-                    case "c":
-                    case "cauldron":
-                    case "forge":
-                        Debug.SpawnCauldron(target);
-                        return;
                     case "b":
                     case "blue":
                     case "portal":
                     case "blueportal":
                         Debug.SpawnBluePortal(target);
                         return;
+                    case "i":
+                    case "item":
+                    case "itemcost":
+                        Debug.SpawnItemCostInteractables(target);
+                        return;
                     case "d":
                     case "damage":
+                    case "damaging":
                         Debug.SpawnDamagingInteractables(target);
                         return;
                 }
             }
 
             ChatCommander.OutputFail(args[0],
-                "(<style=cSub>scrapper</style> | <style=cSub>printer</style> | <style=cSub>cauldron</style> | <style=cSub>blueportal</style> | <style=cSub>damage</style>)");
+                "(<style=cSub>blueportal</style> | <style=cSub>itemcost</style> | <style=cSub>damaging</style>)");
         }
     }
 }
