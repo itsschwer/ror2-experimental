@@ -55,7 +55,12 @@ namespace Experimental
             Vector3 offset = Quaternion.AngleAxis(-arcDegrees / 2, Vector3.up) * forward;
 
             for (int i = 0; i < spawnCards.Length; i++) {
-                Spawn(spawnCards[i], position + offset);
+                try {
+                    Spawn(spawnCards[i], position + offset);
+                }
+                catch {
+                    Plugin.Logger.LogError($"{i} | {spawnCards[i]}");
+                }
                 offset = rotation * offset;
             }
         }
