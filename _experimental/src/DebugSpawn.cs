@@ -18,18 +18,18 @@ namespace Experimental
                 CreateCauldronSpawnCard(),
                 Addressables.LoadAssetAsync<InteractableSpawnCard>("RoR2/Base/ShrineCleanse/iscShrineCleanseSnowy.asset").WaitForCompletion(),
                 Addressables.LoadAssetAsync<InteractableSpawnCard>("RoR2/Base/Scrapper/iscScrapper.asset").WaitForCompletion(),
-                Addressables.LoadAssetAsync<InteractableSpawnCard>("RoR2/Base/DuplicatorLarge/iscDuplicator.asset").WaitForCompletion(),
+                Addressables.LoadAssetAsync<InteractableSpawnCard>("RoR2/Base/Duplicator/iscDuplicator.asset").WaitForCompletion(),
                 Addressables.LoadAssetAsync<InteractableSpawnCard>("RoR2/Base/DuplicatorLarge/iscDuplicatorLarge.asset").WaitForCompletion(),
-                Addressables.LoadAssetAsync<InteractableSpawnCard>("RoR2/Base/DuplicatorLarge/iscDuplicatorMilitary.asset").WaitForCompletion(),
-                Addressables.LoadAssetAsync<InteractableSpawnCard>("RoR2/Base/DuplicatorLarge/iscDuplicatorWild.asset").WaitForCompletion()
+                Addressables.LoadAssetAsync<InteractableSpawnCard>("RoR2/Base/DuplicatorMilitary/iscDuplicatorMilitary.asset").WaitForCompletion(),
+                Addressables.LoadAssetAsync<InteractableSpawnCard>("RoR2/Base/DuplicatorWild/iscDuplicatorWild.asset").WaitForCompletion()
             ];
 
             Vector3 forward = body.inputBank.aimDirection;
             forward.y = 0;
             forward.Normalize();
-            forward *= 4;
+            forward *= 5;
 
-            SpawnInteractables(spawnCards, body.footPosition, forward, 135);
+            SpawnInteractables(spawnCards, body.footPosition, forward, 360);
         }
 
         public static void SpawnDamagingInteractables(CharacterBody body)
