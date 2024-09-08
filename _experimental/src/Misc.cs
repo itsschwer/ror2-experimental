@@ -48,18 +48,17 @@ namespace Experimental
         {
             if (TeleporterInteraction.instance == null) return;
 
-            UnityEngine.Transform fx = TeleporterInteraction.instance.transform.Find("TeleporterBaseMesh/BuiltInEffects"); // Teleporter1(Clone)
-            UnityEngine.Transform particleSphere = fx.Find("PassiveParticle, Sphere");
-            UnityEngine.Transform particleCenter = fx.Find("PassiveParticle, Center");
-            fx = fx.Find("ChargingEffect/BetweenProngs/Loop");
-            UnityEngine.Transform core = fx.Find("Core");
-            UnityEngine.Transform beam = fx.Find("Beam");
+            UnityEngine.Transform beam = TeleporterInteraction.instance.transform.Find("TeleporterBaseMesh/BuiltInEffects/ChargingEffect/BetweenProngs/Loop/Beam");
 
             foreach (PressurePlateController p in UnityEngine.Object.FindObjectsOfType<PressurePlateController>()) {
-                UnityEngine.GameObject.Instantiate(particleSphere, p.transform);
-                UnityEngine.GameObject.Instantiate(particleCenter, p.transform);
-                UnityEngine.GameObject.Instantiate(core, p.transform);
-                UnityEngine.GameObject.Instantiate(beam, p.transform);
+                UnityEngine.GameObject.Instantiate(beam, p.transform.position, UnityEngine.Quaternion.identity, p.transform);
+
+                EffectManager.SpawnEffect(LegacyResourcesAPI.Load<UnityEngine.GameObject>("Prefabs/Effects/ShrineUseEffect"), new EffectData {
+                    origin = p.transform.position,
+                    rotation = p.transform.rotation,
+                    scale = 1f,
+                    color = new UnityEngine.Color(0.7372549f, 77f / 85f, 0.94509804f)
+                }, transmit: true);
             }
         }
     }
