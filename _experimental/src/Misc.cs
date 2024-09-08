@@ -59,6 +59,8 @@ namespace Experimental
                     scale = 1f,
                     color = new UnityEngine.Color(0.7372549f, 77f / 85f, 0.94509804f)
                 }, transmit: true);
+
+                ChestRevealer.RevealedObject.RevealObject(p.gameObject, float.MaxValue);
             }
         }
     }
