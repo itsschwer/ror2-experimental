@@ -1,0 +1,10 @@
+﻿{
+	"author": "itsschwer",
+	"name": "RestoreScoreboard",
+	"version_number": "1.0.0",
+	"website_url": "https://github.com/itsschwer/ror2-experimental/tree/main/sots-scoreboard",
+	"description": "[SotS] Brings back missing scoreboard strips for dead players — [ client-side ]",
+	"dependencies": [
+		"bbepis-BepInExPack-5.4.2117"
+	]
+}
