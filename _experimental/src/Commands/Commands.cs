@@ -1,6 +1,5 @@
 ﻿using RoR2;
 using PressureDrop;
-using System.Linq;
 
 namespace Experimental.Commands
 {
@@ -56,30 +55,6 @@ namespace Experimental.Commands
                     case "damage":
                     case "damaging":
                         Debug.SpawnDamagingInteractables(target);
-                        return;
-                    case "p":
-                        Drop.DropStyleChest(target.transform,
-                            new ItemDef[] {
-                                DLC2Content.Items.BoostAllStats,
-                                DLC2Content.Items.DelayedDamage,
-                                DLC2Content.Items.ExtraShrineItem,
-                                DLC2Content.Items.ExtraStatsOnLevelUp,
-                                DLC2Content.Items.GoldOnStageStart,
-                                DLC2Content.Items.IncreaseDamageOnMultiKill,
-                                DLC2Content.Items.IncreasePrimaryDamage,
-                                DLC2Content.Items.KnockBackHitEnemies,
-                                DLC2Content.Items.LowerHealthHigherDamage,
-                                DLC2Content.Items.LowerPricedChests,
-                                DLC2Content.Items.LowerPricedChestsConsumed,
-                                DLC2Content.Items.MeteorAttackOnHighDamage,
-                                DLC2Content.Items.NegateAttack,
-                                DLC2Content.Items.OnLevelUpFreeUnlock,
-                                DLC2Content.Items.ResetChests,
-                                DLC2Content.Items.StunAndPierce,
-                                DLC2Content.Items.TeleportOnLowHealth,
-                                DLC2Content.Items.TeleportOnLowHealthConsumed,
-                                DLC2Content.Items.TriggerEnemyDebuffs,
-                            }.Select(x => PickupCatalog.FindPickupIndex(x.itemIndex)).ToArray(), 1);
                         return;
                 }
             }
