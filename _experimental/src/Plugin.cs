@@ -27,16 +27,20 @@ namespace Experimental
 
             new Harmony(Info.Metadata.GUID).PatchAll();
 
+            RoR2.RoR2Application.onLoad += Dump;
+
             Logger.LogMessage("~awake.");
         }
 
-        private void Start()
+        private static void Dump()
         {
             foreach (RoR2.ItemDef item in RoR2.ItemCatalog.allItemDefs) {
                 string line = Dumps.PickupItemInfo.Dump(RoR2.PickupCatalog.GetPickupDef(RoR2.PickupCatalog.FindPickupIndex(item.itemIndex)), out bool hiddenOrCantRemove);
                 if (hiddenOrCantRemove) Logger.LogDebug(line);
                 else Logger.LogWarning(line);
             }
+
+            RoR2.RoR2Application.onLoad -= Dump;
         }
 
         public static int GetClientPingMilliseconds()
