@@ -30,6 +30,15 @@ namespace Experimental
             Logger.LogMessage("~awake.");
         }
 
+        private void Start()
+        {
+            foreach (RoR2.ItemDef item in RoR2.ItemCatalog.allItemDefs) {
+                string line = Dumps.PickupItemInfo.Dump(RoR2.PickupCatalog.GetPickupDef(RoR2.PickupCatalog.FindPickupIndex(item.itemIndex)), out bool hiddenOrCantRemove);
+                if (hiddenOrCantRemove) Logger.LogDebug(line);
+                else Logger.LogWarning(line);
+            }
+        }
+
         public static int GetClientPingMilliseconds()
         {
             // Thrayonlosa | QolElements.PingHud.GetPing()
