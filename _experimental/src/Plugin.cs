@@ -36,8 +36,8 @@ namespace Experimental
         {
             foreach (RoR2.ItemDef item in RoR2.ItemCatalog.allItemDefs) {
                 string line = Dumps.PickupItemInfo.Dump(RoR2.PickupCatalog.GetPickupDef(RoR2.PickupCatalog.FindPickupIndex(item.itemIndex)), out bool hiddenOrCantRemove);
-                if (hiddenOrCantRemove) Logger.LogDebug(line);
-                else Logger.LogWarning(line);
+                if (hiddenOrCantRemove) Logger.LogWarning(line);
+                else Logger.LogDebug(line);
             }
 
             RoR2.RoR2Application.onLoad -= Dump;
