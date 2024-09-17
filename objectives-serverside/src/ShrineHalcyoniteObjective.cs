@@ -38,8 +38,8 @@ namespace ObjectivesServerside
             if (obj) {
                 if (self.parentShrineReference != null) {
                     if (self.parentShrineReference.purchaseInteraction != null) {
-                        obj.objectiveToken = $"Charge the {Language.GetString(self.parentShrineReference.purchaseInteraction.displayNameToken)} ({self.parentShrineReference.goldMaterialModifier})";
-                        Plugin.Logger.LogDebug($"halcyon {self.parentShrineReference.goldMaterialModifier}");
+                        float estimatedChargePercent = (self.parentShrineReference.goldMaterialModifier + 2.2f) / (9.6f + 2.2f);
+                        obj.objectiveToken = $"Charge the {Language.GetString(self.parentShrineReference.purchaseInteraction.displayNameToken)} ({estimatedChargePercent:0.0%})";
                     }
                     else Plugin.Logger.LogWarning("halcyon no purchase interaction");
                 }
