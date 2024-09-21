@@ -25,7 +25,7 @@ namespace ObjectivesServerside
             orig(self);
 
             var obj = self.gameObject.AddComponent<GenericObjectiveProvider>();
-            obj.objectiveToken = $"Charge the {Language.GetString(self.parentShrineReference.purchaseInteraction.displayNameToken)}";
+            obj.objectiveToken = $"Charge the <style=cShrine>{Language.GetString(self.parentShrineReference.purchaseInteraction.displayNameToken)}</style>";
 
             Plugin.Logger.LogDebug("halcyon start");
         }
@@ -38,9 +38,9 @@ namespace ObjectivesServerside
             if (obj) {
                 if (self.parentShrineReference != null) {
                     if (self.parentShrineReference.purchaseInteraction != null) {
-                        if (self.parentShrineReference.purchaseInteraction.available) {
+                        if (self.parentShrineReference.isDraining) {
                             float estimatedChargePercent = (self.parentShrineReference.goldMaterialModifier + 2.2f) / (9.6f + 2.2f);
-                            obj.objectiveToken = $"Charge the {Language.GetString(self.parentShrineReference.purchaseInteraction.displayNameToken)} ({UnityEngine.Mathf.Clamp01(estimatedChargePercent):0.0%})";
+                            obj.objectiveToken = $"Charge the <style=cShrine>{Language.GetString(self.parentShrineReference.purchaseInteraction.displayNameToken)}</style> ({UnityEngine.Mathf.Clamp01(estimatedChargePercent):0%})";
                         }
                     }
                     else Plugin.Logger.LogWarning("halcyon no purchase interaction");
@@ -54,10 +54,11 @@ namespace ObjectivesServerside
             orig(self);
 
             var old = self.gameObject.GetComponent<GenericObjectiveProvider>();
+            old.objectiveToken = $"Charge the <style=cShrine>{Language.GetString(self.parentShrineReference.purchaseInteraction.displayNameToken)}</style> ({1:0%})"; // Ensure 100% is displayed
             UnityEngine.Object.Destroy(old); // Mark the charge objective as completed
             var obj = self.gameObject.AddComponent<GenericObjectiveProvider>();
             if (obj) {
-                obj.objectiveToken = $"Defeat the guardian of the {Language.GetString(self.parentShrineReference.purchaseInteraction.displayNameToken)}";
+                obj.objectiveToken = $"Defeat the guardian of the <style=cShrine>{Language.GetString(self.parentShrineReference.purchaseInteraction.displayNameToken)}</style>";
             }
 
             Plugin.Logger.LogDebug("halcyon fight");
