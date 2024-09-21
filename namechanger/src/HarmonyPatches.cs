@@ -7,13 +7,12 @@ namespace NameChanger.Patches
     internal static class HarmonyPatches
     {
         [HarmonyPostfix]
-        [HarmonyPatch(typeof(NetworkUser), nameof(NetworkUser.GetNetworkPlayerName))]
-        private static void NetworkUser_GetNetworkPlayerName(NetworkUser __instance, ref NetworkPlayerName __result)
+        [HarmonyPatch(typeof(NetworkPlayerName), nameof(NetworkPlayerName.GetResolvedName))]
+        private static void NetworkPlayerName_GetResolvedName(NetworkPlayerName __instance, ref string __result)
         {
-            bool isClient = LocalUserManager.GetFirstLocalUser()?.currentNetworkUser == __instance;
+            bool isClient = LocalUserManager.GetFirstLocalUser().currentNetworkUser.GetNetworkPlayerName().playerId == __instance.playerId;
             if (isClient && !string.IsNullOrWhiteSpace(Plugin.Config.NameReplacement)) {
-                __result.nameOverride = Plugin.Config.NameReplacement;
-                __result = __result;
+                __result = Plugin.Config.NameReplacement;
             }
         }
     }
