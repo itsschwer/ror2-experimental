@@ -24,7 +24,7 @@ namespace ObjectivesServerside
         {
             orig(self);
 
-            var obj = self.gameObject.GetComponent<GenericObjectiveProvider>() ?? self.gameObject.AddComponent<GenericObjectiveProvider>();
+            var obj = self.gameObject.AddComponent<GenericObjectiveProvider>();
             obj.objectiveToken = $"Charge the {Language.GetString(self.parentShrineReference.purchaseInteraction.displayNameToken)}";
 
             Plugin.Logger.LogDebug("halcyon start");
@@ -38,8 +38,10 @@ namespace ObjectivesServerside
             if (obj) {
                 if (self.parentShrineReference != null) {
                     if (self.parentShrineReference.purchaseInteraction != null) {
-                        float estimatedChargePercent = (self.parentShrineReference.goldMaterialModifier + 2.2f) / (9.6f + 2.2f);
-                        obj.objectiveToken = $"Charge the {Language.GetString(self.parentShrineReference.purchaseInteraction.displayNameToken)} ({estimatedChargePercent:0.0%})";
+                        if (self.parentShrineReference.purchaseInteraction.available) {
+                            float estimatedChargePercent = (self.parentShrineReference.goldMaterialModifier + 2.2f) / (9.6f + 2.2f);
+                            obj.objectiveToken = $"Charge the {Language.GetString(self.parentShrineReference.purchaseInteraction.displayNameToken)} ({UnityEngine.Mathf.Clamp01(estimatedChargePercent):0.0%})";
+                        }
                     }
                     else Plugin.Logger.LogWarning("halcyon no purchase interaction");
                 }
@@ -51,7 +53,9 @@ namespace ObjectivesServerside
         {
             orig(self);
 
-            var obj = self.gameObject.GetComponent<GenericObjectiveProvider>();
+            var old = self.gameObject.GetComponent<GenericObjectiveProvider>();
+            UnityEngine.Object.Destroy(old); // Mark the charge objective as completed
+            var obj = self.gameObject.AddComponent<GenericObjectiveProvider>();
             if (obj) {
                 obj.objectiveToken = $"Defeat the guardian of the {Language.GetString(self.parentShrineReference.purchaseInteraction.displayNameToken)}";
             }
