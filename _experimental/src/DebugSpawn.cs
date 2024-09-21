@@ -2,6 +2,7 @@
 using RoR2.Navigation;
 using UnityEngine.AddressableAssets;
 using UnityEngine;
+using System.Linq;
 
 namespace Experimental
 {
@@ -9,6 +10,19 @@ namespace Experimental
     {
         public static void SpawnBluePortal(CharacterBody body)
             => SpawnAtBody(Addressables.LoadAssetAsync<SpawnCard>("RoR2/Base/PortalShop/iscShopPortal.asset").WaitForCompletion(), body);
+
+        public static void SpawnEquipmentDrones(CharacterBody body)
+        {
+            InteractableSpawnCard card = Addressables.LoadAssetAsync<InteractableSpawnCard>("RoR2/Base/Drones/iscBrokenEquipmentDrone.asset").WaitForCompletion();
+            InteractableSpawnCard[] cards = Enumerable.Repeat(card, 10).ToArray();
+
+            Vector3 forward = body.inputBank.aimDirection;
+            forward.y = 0;
+            forward.Normalize();
+            forward *= 5;
+
+            SpawnInteractables(cards, body.footPosition, forward, 360);
+        }
 
         public static void SpawnItemCostInteractables(CharacterBody body)
         {

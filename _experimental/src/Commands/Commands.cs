@@ -56,6 +56,9 @@ namespace Experimental.Commands
                     case "damaging":
                         Debug.SpawnDamagingInteractables(target);
                         return;
+                    case "e":
+                        Debug.SpawnEquipmentDrones(target);
+                        return;
                 }
             }
 

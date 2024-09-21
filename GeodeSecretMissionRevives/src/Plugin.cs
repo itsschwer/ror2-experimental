@@ -6,6 +6,7 @@ using UnityEngine;
 
 namespace GeodeSecretMissionRevives
 {
+    [HarmonyPatch]
     [BepInPlugin(GUID, Name, Version)]
     public sealed class Plugin : BaseUnityPlugin
     {
@@ -22,14 +23,14 @@ namespace GeodeSecretMissionRevives
             BepInEx.Logging.Logger.Sources.Remove(base.Logger);
             Logger = BepInEx.Logging.Logger.CreateLogSource(Plugin.GUID);
 
-            Harmony harmony = new Harmony(Info.Metadata.GUID);
-            harmony.Patch(typeof(GeodeSecretMissionRewardState).GetMethod(nameof(GeodeSecretMissionRewardState.DropRewards)), postfix: new HarmonyMethod(typeof(Plugin).GetMethod(nameof(RewardRevive))));
+            new Harmony(Info.Metadata.GUID).PatchAll();
 
             Logger.LogMessage("~awake.");
         }
 
 
-        private static void RewardRevive(GeodeSecretMissionRewardState __instance)
+        [HarmonyPostfix, HarmonyPatch(typeof(GeodeSecretMissionRewardState), nameof(GeodeSecretMissionRewardState.DropRewards))]
+        private static void GeodeSecretMissionRewardState_DropRewards(GeodeSecretMissionRewardState __instance)
         {
             Vector3 position = __instance.geodeSecretMissionController.rewardSpawnLocation.transform.position;
             Quaternion rotation = Quaternion.identity;
