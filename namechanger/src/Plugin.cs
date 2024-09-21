@@ -9,7 +9,7 @@ namespace NameChanger
         public const string GUID = Author + "." + Name;
         public const string Author = "itsschwer";
         public const string Name = "NameChanger";
-        public const string Version = "0.0.0";
+        public const string Version = "0.0.1";
 
         internal static new BepInEx.Logging.ManualLogSource Logger { get; private set; }
 
