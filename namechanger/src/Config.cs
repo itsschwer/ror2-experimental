@@ -19,8 +19,9 @@ namespace NameChanger
 
         private void NameReplacement_SettingChanged(object sender, System.EventArgs e)
         {
-            RoR2.NetworkUser user = RoR2.LocalUserManager.GetFirstLocalUser()?.currentNetworkUser;
-            user?.UpdateUserName();
+            foreach (RoR2.NetworkUser user in RoR2.NetworkUser.readOnlyInstancesList) {
+                user.UpdateUserName();
+            }
         }
     }
 }
