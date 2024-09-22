@@ -39,6 +39,21 @@ namespace GeodeSecretMissionRevives
                 if (user.master.IsDeadAndOutOfLivesServer()) {
                     user.master.Respawn(position, rotation);
                 }
+
+                foreach (MinionOwnership minion in user.master.minionOwnership.group.members) {
+                    CharacterMaster master = minion.GetComponent<CharacterMaster>();
+                    if (master != null) {
+                        CharacterBody body = master.GetBody();
+                        if (body != null) {
+                            // Logic from RoR2.Items.MinionLeashBodyBehhaviour
+                            TeleportHelper.TeleportBody(body, position);
+                            GameObject teleportEffectPrefab = Run.instance.GetTeleportEffectPrefab(body.gameObject);
+                            if (teleportEffectPrefab != null) {
+                                EffectManager.SimpleEffect(teleportEffectPrefab, position, rotation, true);
+                            }
+                        }
+                    }
+                }
             }
 
             foreach (PurchaseInteraction purchaseInteraction in InstanceTracker.GetInstancesList<PurchaseInteraction>()) {
