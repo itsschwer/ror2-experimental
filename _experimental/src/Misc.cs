@@ -29,6 +29,12 @@ namespace Experimental
             TeleporterInteraction.instance.holdoutZoneController.charge = 0.99f;
         }
 
+        public static void ForceMoonEscapeSequence()
+        {
+            EscapeSequenceController esc = UnityEngine.Object.FindObjectOfType<EscapeSequenceController>();
+            esc?.onEnterMainEscapeSequence?.Invoke();
+        }
+
         public static void AddMountainStack()
         {
             if (TeleporterInteraction.instance == null) return;

@@ -46,6 +46,7 @@ namespace Experimental.UI
 
         private readonly Action<object> clearChat = new(KeyCode.PageUp, (_) => RoR2.Chat.Clear(), "<style=cEvent>Clear Chat</style>");
         private readonly Action<object> addBeamsToPressurePlates = new(KeyCode.PageDown, (_) => Misc.AddBeamsToPressurePlates(), "<style=cEvent>Add Beams To Pressure Plates</style>");
+        private readonly Action<object> forceMoonEscapeSequence = new(KeyCode.End, (_) => Misc.ForceMoonEscapeSequence(), "<style=cEvent>Force Moon Escape Sequence</style>");
 
         private void Start() => CreateUI(hud.mainContainer);
 
@@ -97,6 +98,7 @@ namespace Experimental.UI
 
             clearChat.PerformIfPossible(null);
             addBeamsToPressurePlates.PerformIfPossible(null);
+            forceMoonEscapeSequence.PerformIfPossible(null);
 
             System.Text.StringBuilder keyString = new();
             System.Text.StringBuilder descriptionString = new();

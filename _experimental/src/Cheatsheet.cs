@@ -29,6 +29,7 @@ namespace Experimental
                 "stages" => Stage.DumpStyledDisplayNames(),
                 "PressureDrop" => PressureDrop,
                 "DamageLog" => DamageLog,
+                "ServerSider" => ServerSider,
                 _ => null,
             };
         }
@@ -57,5 +58,11 @@ namespace Experimental
             "\t\t- fall damage (portrait, tooltip colour, text colour)\n" +
             "\t- attacker counts as separate damage source if became Voidtouched\n" +
             "\t- reset Damage Log on revive";
+
+        public const string ServerSider =
+            "ServerSider:\n" +
+            "\t- moon2 (rescue ship loop portal)" +
+            "\t\t- force escape sequence" +
+            "\t- arena (void field fog tweak)";
     }
 }
