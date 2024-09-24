@@ -6,5 +6,15 @@ A collection of smaller, experimental mods so I don't have to make a separate re
 - [`__template`](./__template/) — a very minimal mod template for copy-paste setup
 - [`_experimental`](./_experimental/) — for debugging and testing ideas
 - [`eater`](./eater/) — personal mod for modifying other mods
-- [`newt`](./newt/) — experimental mod to counteract lunar coin editing
+
+### released
 - [`sots`](./sots/) — *SprintingOnTheScoreboard ([thunderstore.io](https://thunderstore.io/package/itsschwer/SprintingOnTheScoreboard/))*
+- [`sots-scoreboard`](./sots-scoreboard/) — *RestoreScoreboard ([thunderstore.io](https://thunderstore.io/package/itsschwer/RestoreScoreboard/))*
+- [`namechanger`](./namechanger/) — *NameChanger ([thunderstore.io](https://thunderstore.io/package/itsschwer/NameChanger/))*
+
+### concepts
+- [`newt`](./newt/) — experimental mod to counteract lunar coin editing
+- survivor allies?
+    - https://thunderstore.io/package/RandomlyAwesome/Fetch_a_friend_Quest/
+    - https://thunderstore.io/package/nayDPz/Dancer/ → [LockedMageTracker.cs](https://github.com/nayDPz/DancerROR2/blob/a425db6fc176e704e5b5c78d2b767ea19f6b4294/Dancer/Modules/Components/LockedMageTracker.cs)
+    - rare drop pod interactables that spawn in a random survivor as an ally?
