@@ -8,7 +8,7 @@ namespace Experimental
     {
         public static void ToggleEnemySpawning()
         {
-            bool wasDisabled = CombatDirector.cvDirectorCombatDisable.GetString() != "0";
+            bool wasDisabled = CombatDirector.cvDirectorCombatDisable.value;
             CombatDirector.cvDirectorCombatDisable.SetBool(!wasDisabled);
 
             if (wasDisabled) ChatCommander.Output("Enemy spawning enabled.");
