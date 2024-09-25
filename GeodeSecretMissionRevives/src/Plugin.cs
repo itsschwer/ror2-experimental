@@ -40,13 +40,14 @@ namespace GeodeSecretMissionRevives
                     user.master.Respawn(position, rotation);
                 }
 
-                foreach (MinionOwnership minion in user.master.minionOwnership.group.members) {
-                    CharacterMaster master = minion.GetComponent<CharacterMaster>();
-                    if (master != null) {
-                        CharacterBody body = master.GetBody();
+                MinionOwnership.MinionGroup group = MinionOwnership.MinionGroup.FindGroup(user.master.netId);
+                if (group != null && group.members != null) {
+                    foreach (MinionOwnership minion in group.members) {
+                        CharacterBody body = minion?.GetComponent<CharacterMaster>()?.GetBody();
                         if (body != null) {
+                            Vector2 offset = Random.insideUnitCircle * 10;
                             // Logic from RoR2.Items.MinionLeashBodyBehhaviour
-                            TeleportHelper.TeleportBody(body, position);
+                            TeleportHelper.TeleportBody(body, position + new Vector3(offset.x, 0, offset.y));
                             GameObject teleportEffectPrefab = Run.instance.GetTeleportEffectPrefab(body.gameObject);
                             if (teleportEffectPrefab != null) {
                                 EffectManager.SimpleEffect(teleportEffectPrefab, position, rotation, true);
