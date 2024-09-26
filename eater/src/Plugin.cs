@@ -3,7 +3,9 @@ using Eater.IL;
 
 namespace Eater
 {
+#if LETSGOGAMBLING
     [BepInDependency(LetsGoGambling.LetsGoGamblingPlugin.MODUID, BepInDependency.DependencyFlags.SoftDependency)]
+#endif
     [BepInPlugin(GUID, Name, Version)]
     public sealed class Plugin : BaseUnityPlugin
     {
@@ -20,8 +22,10 @@ namespace Eater
             BepInEx.Logging.Logger.Sources.Remove(base.Logger);
             Logger = BepInEx.Logging.Logger.CreateLogSource(Plugin.GUID);
 
-            LetsGoGamblingSuccessSoundEater.Apply();
             DynamicSkinsAccessoriesArgumentNullEater.Apply();
+#if LETSGOGAMBLING
+            LetsGoGamblingSuccessSoundEater.Apply();
+#endif
 
             Logger.LogMessage("~awake.");
         }

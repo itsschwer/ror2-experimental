@@ -1,4 +1,5 @@
-﻿using LetsGoGambling;
+﻿#if LETSGOGAMBLING
+using LetsGoGambling;
 using MonoMod.Cil;
 using MonoMod.RuntimeDetour;
 using System.Reflection;
@@ -36,3 +37,4 @@ namespace Eater.IL
         }
     }
 }
+#endif
