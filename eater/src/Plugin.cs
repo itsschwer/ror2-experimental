@@ -26,6 +26,7 @@ namespace Eater
 #if LETSGOGAMBLING
             LetsGoGamblingSuccessSoundEater.Apply();
 #endif
+            UnityExplorerEater.Apply();
 
             Logger.LogMessage("~awake.");
         }
