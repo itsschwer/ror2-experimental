@@ -13,7 +13,14 @@
         <PackageReference Include="BepInEx.Core" Version="5.4.21" />
         <PackageReference Include="RiskOfRain2.GameLibs" Version="1.2.4-r.0" />
         <PackageReference Include="UnityEngine.Modules" Version="2019.4.26" />
+        <PackageReference Include="MMHOOK.RoR2" Version="2022.9.20">
+            <NoWarn>NU1701</NoWarn>
+        </PackageReference>
     </ItemGroup>
+
+    <PropertyGroup>
+        <!-- <DefineConstants>LETSGOGAMBLING</DefineConstants> -->
+    </PropertyGroup>
 
     <ItemGroup>
         <Reference Include="letsgogambling">
@@ -24,11 +31,18 @@
 
     <PropertyGroup>
         <RootDir>../</RootDir>
-        <ProductDir>$(RootDir)Thunderstore/</ProductDir>
+        <ProductDir>$(RootDir)Release/</ProductDir>
         <PluginDir>$(ProductDir)plugins/$(MSBuildProjectName)/</PluginDir>
         <PluginSrcPath>$(RootDir)src/Plugin.cs</PluginSrcPath>
         <PluginVersionPattern>const\s+string\s+Version\s*=\s*"([.\d\w-+]+)"</PluginVersionPattern>
     </PropertyGroup>
+
+    <ItemGroup>
+        <AdditionalFiles Include="$(RootDir)README.md" />
+        <AdditionalFiles Include="$(RootDir)CHANGELOG.md" />
+        <AdditionalFiles Include="$(RootDir)Thunderstore/manifest.json" />
+        <AdditionalFiles Include="$(RootDir)Thunderstore/icon.png" Visible="false" />
+    </ItemGroup>
 
     <Target Name="SetAssemblyVersion" BeforeTargets="BeforeCompile">
         <Message Importance="Low" Text="Version property (before): $(VersionPrefix) | $(Version)" />
@@ -50,7 +64,7 @@
 
     <Target Name="PackageProduct" AfterTargets="Build">
         <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(PluginDir)" />
-        <Copy SourceFiles="$(RootDir)README.md;$(RootDir)CHANGELOG.md;" DestinationFolder="$(ProductDir)" ContinueOnError="true" />
+        <Copy SourceFiles="@(AdditionalFiles)" DestinationFolder="$(ProductDir)" ContinueOnError="true" />
 
         <ConvertToAbsolutePath Paths="$(ProductDir)">
             <Output TaskParameter="AbsolutePaths" PropertyName="AbsoluteProductDir" />
