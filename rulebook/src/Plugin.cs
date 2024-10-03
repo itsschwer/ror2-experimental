@@ -32,15 +32,6 @@ namespace RulebookItemBlacklist
             foreach (RuleCategoryDef category in RuleCatalog.allCategoryDefs) {
                 if (category.displayToken == "RULE_HEADER_ITEMS" || category.displayToken == "RULE_HEADER_EQUIPMENT") {
                     category.hiddenTest = DontHide;
-                    /*
-                    foreach (RuleDef rule in category.children) {
-                        RuleChoiceDef on = rule.FindChoice("On");
-                        RuleChoiceDef off = rule.FindChoice("Off");
-
-                        on.onlyShowInGameBrowserIfNonDefault = false;
-                        // off.onlyShowInGameBrowserIfNonDefault = false;
-                    }
-                    */
                 }
                 else if (category.displayToken == "RULE_HEADER_MISC") {
                     foreach (RuleDef rule in category.children) {

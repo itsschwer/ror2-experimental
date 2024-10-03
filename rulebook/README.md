@@ -1,10 +1,19 @@
 # rulebook item blacklist
 
+- exposes item rules
+    - always show the item icon (instead of a padlock icon when disabled)
+- exposes equipment rules
+- exposes stage order rule (meander)
+<!--  -->
+- modifies item and equipment rule summaries to only show disabled items and equipment (to reduce scrolling)
+
 ## todo
 - resize vote grid to fit screen
 - save and load blacklist to and from config
 
 ## see also
+
+### alternatives
 - [RulebookUnlocker](https://thunderstore.io/package/Anreol/RulebookUnlocker/) <sup>[*src*](https://github.com/Anreol/RulebookUnlocker)</sup> by [Anreol](https://thunderstore.io/package/Anreol/) — a less "invasive" implementation; prevents blacklisting items in Eclipse
 - [ItemBlacklist](https://thunderstore.io/package/Thrayonlosa/ItemBlacklist/) by [Thrayonlosa](https://thunderstore.io/package/Thrayonlosa/) — a more "advanced" implementation:
     - contains a separate Printer blacklist
