@@ -8,8 +8,8 @@
 - modifies item and equipment rule summaries to only show disabled items and equipment (to reduce scrolling)
 
 ## todo
-- resize vote grid to fit screen
-- save and load blacklist to and from config
+- add scroll bar to vote popout panel when there are too many choices?
+- save and load blacklist to and from config?
 
 ## see also
 
