@@ -1,0 +1,16 @@
+# rulebook item blacklist
+
+## todo
+- resize vote grid to fit screen
+- save and load blacklist to and from config
+
+## see also
+- [RulebookUnlocker](https://thunderstore.io/package/Anreol/RulebookUnlocker/) <sup>[*src*](https://github.com/Anreol/RulebookUnlocker)</sup> by [Anreol](https://thunderstore.io/package/Anreol/) — a less "invasive" implementation; prevents blacklisting items in Eclipse
+- [ItemBlacklist](https://thunderstore.io/package/Thrayonlosa/ItemBlacklist/) by [Thrayonlosa](https://thunderstore.io/package/Thrayonlosa/) — a more "advanced" implementation:
+    - contains a separate Printer blacklist
+    - applies blacklist to yellow (boss) items
+    - allows changing the blacklist mid-run (via console commands)
+    - fixes Halcyon Shrines failing to drop rewards if too many *Seekers of the Storm* items are disabled
+
+### technical
+- [R2API Rulebook](https://thunderstore.io/package/RiskofThunder/R2API_Rulebook/) <sup>[*src*](https://github.com/risk-of-thunder/R2API/blob/3d211189e043abaf597491fec93457c5f8a0ca24/R2API.Rules/RuleCatalogExtras.cs#L209)</sup> by [RiskofThunder](https://thunderstore.io/package/RiskofThunder/) — used as a reference for finding an entry point into modifying the `RuleCatalog`

@@ -1,0 +1,10 @@
+﻿{
+	"author": "itsschwer",
+	"name": "RulebookItemBlacklist",
+	"version_number": "0.0.0",
+	"website_url": "https://github.com/itsschwer/ror2-experimental/tree/main/rulebook",
+	"description": "",
+	"dependencies": [
+		"bbepis-BepInExPack-5.4.2113"
+	]
+}
