@@ -6,7 +6,6 @@ namespace Experimental.Helpers
 {
     internal static class Stage
     {
-        internal static bool advanceRng;
         internal static SceneDef setStage;
 
         private static SceneDef[] _stages;
@@ -24,7 +23,7 @@ namespace Experimental.Helpers
         {
             if (Run.instance == null) return;
 
-            if (advanceRng) Run.instance.GenerateStageRNG();
+            Run.instance.GenerateStageRNG();
             UnityEngine.Networking.NetworkManager.singleton.ServerChangeScene(scene.cachedName);
         }
 
@@ -43,12 +42,9 @@ namespace Experimental.Helpers
                 else if (args[1] == "clear") {
                     setStage = null;
                 }
-                else if (args[1] == "rng") {
-                    advanceRng = !advanceRng;
-                }
                 else ChatCommander.OutputFail(args[0], "invalid scene name.");
             }
-            else ChatCommander.OutputFail(args[0], "(<stage-scene-name> | clear | rng)");
+            else ChatCommander.OutputFail(args[0], "(<stage-scene-name> | clear)");
         }
 
         public static string GetDisplayName(SceneDef scene)
