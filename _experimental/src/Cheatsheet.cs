@@ -61,8 +61,8 @@ namespace Experimental
 
         public const string ServerSider =
             "ServerSider:\n" +
-            "\t- moon2 (rescue ship loop portal)" +
-            "\t\t- force escape sequence" +
+            "\t- moon2 (rescue ship loop portal)\n" +
+            "\t\t- force escape sequence\n" +
             "\t- arena (void field fog tweak)";
     }
 }
