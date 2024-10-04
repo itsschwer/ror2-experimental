@@ -1,4 +1,5 @@
-﻿using HarmonyLib;
+﻿#if DEBUG
+using HarmonyLib;
 using RoR2;
 
 namespace Experimental.Patches
@@ -16,3 +17,4 @@ namespace Experimental.Patches
         }
     }
 }
+#endif
