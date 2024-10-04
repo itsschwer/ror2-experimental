@@ -146,6 +146,7 @@ namespace Experimental.UI
             sb.AppendLine($"/setstage: {Stage.GetDisplayName(Stage.setStage)}");
             sb.AppendLine($"Run next stage: {Stage.GetDisplayName(RoR2.Run.instance.nextStageScene)}");
             sb.AppendLine($"Stage next stage: {Stage.GetDisplayName(RoR2.Stage.instance.nextStage)}");
+            sb.AppendLine($"GenerateStageRNG: {Stage.advanceRng}");
             sb.Append("</style>");
             stageSelect.text = sb.ToString();
 
