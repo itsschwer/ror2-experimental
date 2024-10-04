@@ -33,6 +33,7 @@ namespace Experimental.UI
 
         private const string Heading = $"<style=cWorldEvent>{Plugin.GUID} · {Plugin.Version} · DEBUGGING HUD</style>";
         private RoR2.UI.HGTextMeshProUGUI topLeft;
+        private RoR2.UI.HGTextMeshProUGUI botLeft;
         private RoR2.UI.HGTextMeshProUGUI stageSelect;
         private RoR2.UI.HGTextMeshProUGUI controlKeys;
         private RoR2.UI.HGTextMeshProUGUI controlDescriptions;
@@ -63,6 +64,10 @@ namespace Experimental.UI
             topLeft.alignment = TMPro.TextAlignmentOptions.TopLeft;
             topLeft.fontSize = 20;
             topLeft.text = Heading;
+
+            botLeft = AddChild<RoR2.UI.HGTextMeshProUGUI>(rect, nameof(botLeft));
+            botLeft.alignment = TMPro.TextAlignmentOptions.BottomLeft;
+            botLeft.fontSize = 18;
 
             stageSelect = AddChild<RoR2.UI.HGTextMeshProUGUI>(rect, nameof(stageSelect));
             stageSelect.alignment = TMPro.TextAlignmentOptions.TopRight;
@@ -143,6 +148,17 @@ namespace Experimental.UI
             sb.AppendLine($"Stage next stage: {Stage.GetDisplayName(RoR2.Stage.instance.nextStage)}");
             sb.Append("</style>");
             stageSelect.text = sb.ToString();
+
+            RoR2.CharacterBody body = hud.localUserViewer?.cameraRigController?.targetBody;
+            if (body) {
+                System.Text.StringBuilder gps = new();
+                gps.AppendLine($"Foot Position: {body.footPosition}");
+                if (body.inputBank) {
+                    gps.AppendLine($"Aim Direction: {body.inputBank.aimDirection}");
+                    gps.AppendLine($"\t{Quaternion.Euler(body.inputBank.aimDirection)}");
+                }
+                botLeft.text = gps.ToString();
+            }
         }
     }
 }
