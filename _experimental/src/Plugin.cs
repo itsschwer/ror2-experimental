@@ -40,6 +40,8 @@ namespace Experimental
                 else Logger.LogDebug(line);
             }
 
+            Logger.LogDebug(Dumps.Layers.Dump());
+
             RoR2.RoR2Application.onLoad -= Dump;
         }
 
