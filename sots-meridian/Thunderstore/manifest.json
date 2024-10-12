@@ -1,9 +1,9 @@
 ﻿{
 	"author": "itsschwer",
-	"name": "GeodeSecretMissionRevives",
+	"name": "MeridianPrimePrime",
 	"version_number": "0.0.0",
-	"website_url": "https://github.com/itsschwer/ror2-experimental/tree/main/GeodeSecretMissionRevives",
-	"description": "",
+	"website_url": "https://github.com/itsschwer/ror2-experimental/tree/main/sots-meridian",
+	"description": "[SotS : tweak] Makes Prime Meridian less painful in multiplayer by adding a revival method — [ server-side ]",
 	"dependencies": [
 		"bbepis-BepInExPack-5.4.2117"
 	]

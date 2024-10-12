@@ -51,7 +51,7 @@ namespace GeodeSecretMissionRevives
                         CharacterBody body = minion?.GetComponent<CharacterMaster>()?.GetBody();
                         if (body != null) {
                             Vector2 offset = Random.insideUnitCircle * 10;
-                            // Logic from RoR2.Items.MinionLeashBodyBehhaviour
+                            // Logic from RoR2.Items.MinionLeashBodyBehaviour
                             TeleportHelper.TeleportBody(body, position + new Vector3(offset.x, 0, offset.y));
                             GameObject teleportEffectPrefab = Run.instance.GetTeleportEffectPrefab(body.gameObject);
                             if (teleportEffectPrefab != null) {
