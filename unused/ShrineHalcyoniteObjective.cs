@@ -30,7 +30,7 @@ namespace itsschwer.Junk
             var obj = self.gameObject.AddComponent<GenericObjectiveProvider>();
             obj.objectiveToken = $"Charge the <style=cShrine>{Language.GetString(self.parentShrineReference.purchaseInteraction.displayNameToken)}</style>";
 
-            Plugin.Logger.LogDebug("halcyon start");
+            Plugin.Logger.LogDebug($"{nameof(ShrineHalcyoniteObjective)}> halcyon start");
         }
 
         private static void ShrineHalcyoniteBaseState_FixedUpdate(On.EntityStates.ShrineHalcyonite.ShrineHalcyoniteBaseState.orig_FixedUpdate orig, EntityStates.ShrineHalcyonite.ShrineHalcyoniteBaseState self)
@@ -46,9 +46,9 @@ namespace itsschwer.Junk
                             obj.objectiveToken = $"Charge the <style=cShrine>{Language.GetString(self.parentShrineReference.purchaseInteraction.displayNameToken)}</style> ({UnityEngine.Mathf.Clamp01(estimatedChargePercent):0%})";
                         }
                     }
-                    else Plugin.Logger.LogWarning("halcyon no purchase interaction");
+                    else Plugin.Logger.LogWarning($"{nameof(ShrineHalcyoniteObjective)}> missing: {nameof(self.parentShrineReference.purchaseInteraction)}");
                 }
-                else Plugin.Logger.LogWarning("halcyon no shrine");
+                else Plugin.Logger.LogWarning($"{nameof(ShrineHalcyoniteObjective)}> missing: {nameof(self.parentShrineReference)}");
             }
         }
 
@@ -64,7 +64,8 @@ namespace itsschwer.Junk
                 obj.objectiveToken = $"Defeat the guardian of the <style=cShrine>{Language.GetString(self.parentShrineReference.purchaseInteraction.displayNameToken)}</style>";
             }
 
-            Plugin.Logger.LogDebug("halcyon fight");
+            float estimatedChargePercent = (self.parentShrineReference.goldMaterialModifier + 2.2f) / (9.6f + 2.2f);
+            Plugin.Logger.LogDebug($"{nameof(ShrineHalcyoniteObjective)}> halcyon fight: {estimatedChargePercent:0%}");
         }
 
         private static void ShrineHalcyoniteFinished_OnEnter(On.EntityStates.ShrineHalcyonite.ShrineHalcyoniteFinished.orig_OnEnter orig, EntityStates.ShrineHalcyonite.ShrineHalcyoniteFinished self)
@@ -73,7 +74,7 @@ namespace itsschwer.Junk
 
             UnityEngine.Object.Destroy(self.gameObject.GetComponent<GenericObjectiveProvider>());
 
-            Plugin.Logger.LogDebug("halcyon end");
+            Plugin.Logger.LogDebug($"{nameof(ShrineHalcyoniteObjective)}> halcyon end");
         }
     }
 }
