@@ -25,6 +25,11 @@ namespace GeodeSecretMissionRevives
 
             new Harmony(Info.Metadata.GUID).PatchAll();
 
+#if INCLUDE_UNUSED
+            itsschwer.Junk.ShrineHalcyoniteObjective.Enable();
+            itsschwer.Junk.ShuffleEliteTiers.Init();
+#endif
+
             Logger.LogMessage("~awake.");
         }
 
