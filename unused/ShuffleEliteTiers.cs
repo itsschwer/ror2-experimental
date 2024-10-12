@@ -21,7 +21,7 @@ namespace itsschwer.Junk
             CombatDirector.EliteTierDef gildedTier = null;
             CombatDirector.EliteTierDef loopTier = null;
 
-            if (CombatDirector.eliteTiers == null) { Plugin.Logger.LogError("No elite tiers!"); return; }
+            if (CombatDirector.eliteTiers == null) { Plugin.Logger.LogError($"{nameof(ShuffleEliteTiers)}> No elite tiers!"); return; }
             foreach (CombatDirector.EliteTierDef tier in CombatDirector.eliteTiers) {
                 if (baseTier == null) {
                     if (tier.eliteTypes.Contains(RoR2Content.Elites.Fire) && !tier.eliteTypes.Contains(DLC2Content.Elites.Aurelionite)) {
