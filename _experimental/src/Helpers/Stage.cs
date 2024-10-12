@@ -50,13 +50,15 @@ namespace Experimental.Helpers
         public static string GetDisplayName(SceneDef scene)
             => scene ? $"{scene.cachedName} ({Language.GetString(scene.nameToken)})" : "none";
 
+        public static string GetDisplayName(SceneDef scene, string internalNameStyle, string displayNameStyle)
+            => scene ? $"<style={internalNameStyle}>{scene.cachedName} (<style={displayNameStyle}>{Language.GetString(scene.nameToken)}</style>)</style>" : "none";
+
         public static string DumpStyledDisplayNames()
         {
             System.Text.StringBuilder sb = new();
 
-            string[] styles = ["cIsHealth", "cIsDamage"];
             for (int i = 0; i < Stages.Length; i++) {
-                sb.Append($"<style={styles[i % styles.Length]}>{GetDisplayName(Stages[i])}</style> ");
+                sb.Append($"{GetDisplayName(Stages[i], "cIsDamage", "cIsHealth")} ");
             }
 
             return sb.ToString();
