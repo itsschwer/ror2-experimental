@@ -20,7 +20,7 @@ namespace Experimental
             return UnityEngine.AddressableAssets.Addressables.LoadAssetAsync<CharacterSpawnCard>(assetPath).WaitForCompletion();
         }
 
-        public static GameObject Spawn(SpawnCard spawnCard, CharacterBody target, DirectorPlacementRule.PlacementMode placementMode)
+        public static GameObject Spawn(SpawnCard spawnCard, CharacterBody target, DirectorPlacementRule.PlacementMode placementMode, TeamIndex team = TeamIndex.Lunar)
         {
             DirectorPlacementRule placement = new DirectorPlacementRule {
                 position = target.footPosition,
@@ -30,7 +30,7 @@ namespace Experimental
                 DirectorCore.MonsterSpawnDistance.Close,
                 out placement.minDistance, out placement.maxDistance);
             DirectorSpawnRequest request = new DirectorSpawnRequest(spawnCard, placement, RoR2Application.rng) {
-                teamIndexOverride = TeamIndex.Lunar,
+                teamIndexOverride = team,
                 ignoreTeamMemberLimit = true
             };
             GameObject obj = DirectorCore.instance.TrySpawnObject(request);
@@ -52,10 +52,8 @@ namespace Experimental
 
         public static void SpawnVoidTitan(CharacterBody target)
         {
-            GameObject obj = Spawn(Get(Titan), target, DirectorPlacementRule.PlacementMode.Approximate);
-            CharacterMaster master = RemoveAI(obj.GetComponent<CharacterMaster>());
-            master.inventory.SetEquipmentIndex(DLC1Content.Equipment.EliteVoidEquipment.equipmentIndex);
-            master.teamIndex = TeamIndex.Void;
+            GameObject obj = Spawn(Get(Titan), target, DirectorPlacementRule.PlacementMode.Approximate, TeamIndex.Void);
+            RemoveAI(obj.GetComponent<CharacterMaster>()).inventory.SetEquipmentIndex(DLC1Content.Equipment.EliteVoidEquipment.equipmentIndex);
         }
     }
 }

@@ -65,7 +65,7 @@ namespace Experimental.Commands
                         return;
                     case "t":
                     case "templar":
-                        SpawnMonster.Spawn(SpawnMonster.Get(SpawnMonster.Templar), target, DirectorPlacementRule.PlacementMode.Direct);
+                        SpawnMonster.Spawn(SpawnMonster.Get(SpawnMonster.Templar), target, DirectorPlacementRule.PlacementMode.Direct, TeamIndex.Monster);
                         return;
                     case "v":
                         SpawnMonster.SpawnVoidTitan(target);
