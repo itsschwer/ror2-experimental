@@ -59,6 +59,13 @@ namespace Experimental.Commands
                     case "e":
                         Debug.SpawnEquipmentDrones(target);
                         return;
+                    case "t":
+                    case "templar":
+                        SpawnMonster.Spawn(SpawnMonster.Get(SpawnMonster.Templar), target, DirectorPlacementRule.PlacementMode.Direct);
+                        return;
+                    case "v":
+                        SpawnMonster.SpawnVoidTitan(target);
+                        return;
                 }
             }
 
