@@ -3,7 +3,7 @@
 	"name": "MeridianPrimePrime",
 	"version_number": "0.0.0",
 	"website_url": "https://github.com/itsschwer/ror2-experimental/tree/main/sots-meridian",
-	"description": "[SotS : tweak] Makes Prime Meridian less painful in multiplayer by adding a revival method — [ server-side ]",
+	"description": "[SotS : fix + tweak] Makes Prime Meridian less painful in multiplayer by adding a revival method; Fixes Geodes throwing NullReferenceException in multiplayer when a player is dead — [ server-side ]",
 	"dependencies": [
 		"bbepis-BepInExPack-5.4.2117"
 	]
