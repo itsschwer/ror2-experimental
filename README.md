@@ -8,9 +8,10 @@ A collection of smaller, experimental mods so I don't have to make a separate re
 - [`eater`](./eater/) — personal mod for modifying other mods
 
 ### released
+- [`namechanger`](./namechanger/) — *NameChanger ([thunderstore.io](https://thunderstore.io/package/itsschwer/NameChanger/))*
 - [`sots`](./sots/) — *SprintingOnTheScoreboard ([thunderstore.io](https://thunderstore.io/package/itsschwer/SprintingOnTheScoreboard/))*
 - [`sots-scoreboard`](./sots-scoreboard/) — *RestoreScoreboard ([thunderstore.io](https://thunderstore.io/package/itsschwer/RestoreScoreboard/))*
-- [`namechanger`](./namechanger/) — *NameChanger ([thunderstore.io](https://thunderstore.io/package/itsschwer/NameChanger/))*
+- [`sots-meridian`](./sots-meridian/) — *MeridianPrimePrime ([thunderstore.io](https://thunderstore.io/package/itsschwer/MeridianPrimePrime/))*
 
 ### concepts
 - [`newt`](./newt/) — experimental mod to counteract lunar coin editing
