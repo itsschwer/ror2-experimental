@@ -24,6 +24,7 @@ namespace MeridianPrimePrime
             Logger = BepInEx.Logging.Logger.CreateLogSource(Plugin.GUID);
 
             new Harmony(Info.Metadata.GUID).PatchAll();
+            IL.RemoveGeodeBuffFromAllPlayers.Apply();
 
 #if INCLUDE_UNUSED
             itsschwer.Junk.ShrineHalcyoniteObjective.Enable();
@@ -32,6 +33,8 @@ namespace MeridianPrimePrime
 
             Logger.LogMessage("~awake.");
         }
+
+
 
 
         [HarmonyPostfix, HarmonyPatch(typeof(GeodeSecretMissionRewardState), nameof(GeodeSecretMissionRewardState.DropRewards))]
