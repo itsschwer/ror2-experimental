@@ -62,6 +62,26 @@ namespace Experimental
             SpawnInteractables(spawnCards, body.footPosition, forward, 135);
         }
 
+        public static void SpawnLootInteractables(CharacterBody body)
+        {
+            InteractableSpawnCard[] spawnCards = [
+                Addressables.LoadAssetAsync<InteractableSpawnCard>("RoR2/Base/ShrineChance/iscShrineChance.asset").WaitForCompletion(),
+                Addressables.LoadAssetAsync<InteractableSpawnCard>("RoR2/Base/EquipmentBarrel/iscEquipmentBarrel.asset").WaitForCompletion(),
+                Addressables.LoadAssetAsync<InteractableSpawnCard>("RoR2/Base/TripleShopEquipment/iscTripleShopEquipment.asset").WaitForCompletion(),
+                Addressables.LoadAssetAsync<InteractableSpawnCard>("RoR2/Base/TripleShopLarge/iscTripleShopLarge.asset").WaitForCompletion(),
+                Addressables.LoadAssetAsync<InteractableSpawnCard>("RoR2/Base/TripleShop/iscTripleShop.asset").WaitForCompletion(),
+                Addressables.LoadAssetAsync<InteractableSpawnCard>("RoR2/Base/Chest1StealthedVariant/iscChest1Stealthed.asset").WaitForCompletion(),
+                Addressables.LoadAssetAsync<InteractableSpawnCard>("RoR2/Base/CasinoChest/iscCasinoChest.asset").WaitForCompletion(),
+            ];
+
+            Vector3 forward = body.inputBank.aimDirection;
+            forward.y = 0;
+            forward.Normalize();
+            forward *= 5;
+
+            SpawnInteractables(spawnCards, body.footPosition, forward, 360);
+        }
+
         public static void SpawnInteractables(InteractableSpawnCard[] spawnCards, Vector3 position, Vector3 forward, float arcDegrees)
         {
             float angle = arcDegrees / spawnCards.Length;

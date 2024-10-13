@@ -56,6 +56,10 @@ namespace Experimental.Commands
                     case "damaging":
                         Debug.SpawnDamagingInteractables(target);
                         return;
+                    case "l":
+                    case "loot":
+                        Debug.SpawnLootInteractables(target);
+                        return;
                     case "e":
                         Debug.SpawnEquipmentDrones(target);
                         return;
