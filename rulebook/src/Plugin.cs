@@ -41,7 +41,7 @@ namespace RulebookItemBlacklist
                                 Logger.LogDebug($"{choice.tooltipNameToken} | {Language.GetString(choice.tooltipNameToken)} | {Language.GetString(choice.tooltipBodyToken)}");
 #endif
                                 choice.excludeByDefault = false;
-                                choice.spritePath = "Textures/MiscIcons/texRuleMapIsRandom";
+                                choice.spritePath = (choice.tooltipNameToken == "RULE_STAGEORDER_CHOICE_RANDOM_NAME" ? "Textures/MiscIcons/texRuleMapIsRandom" : "RoR2/Base/Common/MiscIcons/texTeleporterIcon.png");
                             }
                         }
                     }
