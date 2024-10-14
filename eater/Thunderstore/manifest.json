@@ -2,7 +2,7 @@
 	"author": "itsschwer",
 	"name": "eater",
 	"version_number": "0.0.0",
-	"website_url": "https://github.com/itsschwer/",
+	"website_url": "https://github.com/itsschwer/ror2-experimental",
 	"description": "",
 	"dependencies": [
 		"bbepis-BepInExPack-5.4.2113",

@@ -24,7 +24,9 @@ namespace Eater
 
             DynamicSkinsAccessoriesArgumentNullEater.Apply();
 #if LETSGOGAMBLING
-            LetsGoGamblingSuccessSoundEater.Apply();
+            if (BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey(LetsGoGambling.LetsGoGamblingPlugin.MODUID)) {
+                LetsGoGamblingSuccessSoundEater.Apply();
+            }
 #endif
             UnityExplorerEater.Apply();
 
