@@ -7,6 +7,7 @@ using System.Reflection;
 namespace Eater.IL
 {
     /// <summary>
+    /// Devotion Update:
     /// Each dynamic skin appears to log a warning and an error each time an enemy spawns:
     /// [Warning: ] An error occured while adding accessories to a skin
     /// [Error  : ] System.ArgumentNullException: Value cannot be null.
