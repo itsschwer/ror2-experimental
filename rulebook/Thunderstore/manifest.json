@@ -1,7 +1,7 @@
 ﻿{
 	"author": "itsschwer",
 	"name": "RulebookItemBlacklist",
-	"version_number": "0.0.0",
+	"version_number": "0.1.0",
 	"website_url": "https://github.com/itsschwer/ror2-experimental/tree/main/rulebook",
 	"description": "",
 	"dependencies": [

@@ -9,7 +9,7 @@ namespace RulebookItemBlacklist
         public const string GUID = Author + "." + Name;
         public const string Author = "itsschwer";
         public const string Name = "RulebookItemBlacklist";
-        public const string Version = "0.0.0";
+        public const string Version = "0.1.0";
 
         internal static new BepInEx.Logging.ManualLogSource Logger { get; private set; }
 

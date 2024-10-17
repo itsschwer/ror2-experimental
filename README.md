@@ -13,6 +13,9 @@ A collection of smaller, experimental mods so I don't have to make a separate re
 - [`sots-scoreboard`](./sots-scoreboard/) — *RestoreScoreboard ([thunderstore.io](https://thunderstore.io/package/itsschwer/RestoreScoreboard/))*
 - [`sots-meridian`](./sots-meridian/) — *MeridianPrimePrime ([thunderstore.io](https://thunderstore.io/package/itsschwer/MeridianPrimePrime/))*
 
+### unreleased
+- [`rulebook`](./rulebook/) — exposes the built-in rules/lobby votes for blacklisting items and equipment
+
 ### concepts
 - [`newt`](./newt/) — experimental mod to counteract lunar coin editing
 - survivor allies?
