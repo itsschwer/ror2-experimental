@@ -3,7 +3,7 @@
 	"name": "RulebookItemBlacklist",
 	"version_number": "0.1.0",
 	"website_url": "https://github.com/itsschwer/ror2-experimental/tree/main/rulebook",
-	"description": "",
+	"description": "Expose the built-in rules/lobby votes for blacklisting items and equipment",
 	"dependencies": [
 		"bbepis-BepInExPack-5.4.2113"
 	]

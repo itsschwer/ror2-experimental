@@ -12,10 +12,6 @@
 - config descriptions
 - rename?
 - proper readme
-- manifest description
-
-## issues
-- if an expansion-locked item is blacklisted, that item will appear as a disabled choice (padlock) in Command Cubes, rather than not appearing at all
 
 ## see also
 
