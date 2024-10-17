@@ -6,11 +6,16 @@
 - exposes stage order rule (meander)
 <!--  -->
 - modifies item and equipment rule summaries to only show disabled items and equipment (to reduce scrolling)
-    - ***todo*: show anything that has votes instead?**
 
 ## todo
 - add scroll bar to vote popout panel when there are too many choices?
-- save and load blacklist to and from config?
+- config descriptions
+- rename?
+- proper readme
+- manifest description
+
+## issues
+- if an expansion-locked item is blacklisted, that item will appear as a disabled choice (padlock) in Command Cubes, rather than not appearing at all
 
 ## see also
 
@@ -21,7 +26,6 @@
     - applies blacklist to yellow (boss) items
     - allows changing the blacklist mid-run (via console commands)
     - fixes Halcyon Shrines failing to drop rewards if too many *Seekers of the Storm* items are disabled
-- [LobbyVotesSave]
 
 ### technical
 - [R2API Rulebook](https://thunderstore.io/package/RiskofThunder/R2API_Rulebook/) <sup>[*src*](https://github.com/risk-of-thunder/R2API/blob/3d211189e043abaf597491fec93457c5f8a0ca24/R2API.Rules/RuleCatalogExtras.cs#L209)</sup> by [RiskofThunder](https://thunderstore.io/package/RiskofThunder/) — used as a reference for finding an entry point into modifying the `RuleCatalog`

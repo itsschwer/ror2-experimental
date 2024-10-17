@@ -11,7 +11,7 @@ namespace RulebookItemBlacklist.HarmonyPatches
         private static void RuleCategoryController_SetData(RuleCategoryController __instance, RuleChoiceMask availability, RuleCategoryDef categoryDef, RuleBook ruleBook)
         {
             if (categoryDef.ruleCategoryType == RuleCatalog.RuleCategoryType.VoteResultGrid &&
-                (categoryDef.displayToken == "RULE_HEADER_ITEMS" || categoryDef.displayToken == "RULE_HEADER_EQUIPMENT"))
+                (categoryDef.displayToken == Strings.ITEMS_CATEGORY || categoryDef.displayToken == Strings.EQUIPMENT_CATEGORY))
             {
                 foreach (RuleChoiceController choice in __instance.voteResultIconAllocator.elements) {
                     RuleDef rule = choice.choiceDef.ruleDef;

@@ -13,11 +13,15 @@ namespace RulebookItemBlacklist
 
         internal static new BepInEx.Logging.ManualLogSource Logger { get; private set; }
 
+        public static new Config Config { get; private set; }
+
         private void Awake()
         {
             // Use Plugin.GUID instead of Plugin.Name as source name
             BepInEx.Logging.Logger.Sources.Remove(base.Logger);
             Logger = BepInEx.Logging.Logger.CreateLogSource(Plugin.GUID);
+
+            Config = new Config(base.Config);
 
             IL.RuleDef_FromItem.Apply();
             // IL.RuleCategoryController_SetData.Apply();
@@ -30,7 +34,7 @@ namespace RulebookItemBlacklist
         private static void EnableRules()
         {
             foreach (RuleCategoryDef category in RuleCatalog.allCategoryDefs) {
-                if (category.displayToken == "RULE_HEADER_ITEMS" || category.displayToken == "RULE_HEADER_EQUIPMENT") {
+                if (category.displayToken == Strings.ITEMS_CATEGORY || category.displayToken == Strings.EQUIPMENT_CATEGORY) {
                     category.hiddenTest = DontHide;
                 }
                 else if (category.displayToken == "RULE_HEADER_MISC") {
@@ -47,6 +51,7 @@ namespace RulebookItemBlacklist
                     }
                 }
             }
+            Plugin.Logger.LogDebug("Exposed rules.");
         }
 
         private static bool DontHide() => false;
