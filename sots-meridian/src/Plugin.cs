@@ -8,7 +8,7 @@ namespace MeridianPrimePrime
         public const string GUID = Author + "." + Name;
         public const string Author = "itsschwer";
         public const string Name = "MeridianPrimePrime";
-        public const string Version = "1.0.0";
+        public const string Version = "1.0.1";
 
         internal static new BepInEx.Logging.ManualLogSource Logger { get; private set; }
 
