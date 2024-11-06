@@ -1,6 +1,8 @@
 ﻿using EntityStates.Missions.GeodeSecretMission;
 using HarmonyLib;
 using RoR2;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace MeridianPrimePrime.Harmony
@@ -13,6 +15,7 @@ namespace MeridianPrimePrime.Harmony
         {
             Vector3 position = __instance.geodeSecretMissionController.rewardSpawnLocation.transform.position;
             Quaternion rotation = Quaternion.identity;
+            Plugin.Logger.LogDebug($"{nameof(GeodeSecretMissionReward)} @ {position}");
 
             foreach (NetworkUser user in NetworkUser.readOnlyInstancesList) {
                 if (user.master.IsDeadAndOutOfLivesServer()) {
@@ -27,10 +30,11 @@ namespace MeridianPrimePrime.Harmony
                 }
             }
 
-            RelocateBrokenDrones(position, 10);
+            const float floorOffset = 2.6f; // Obtained by comparing survivor footPosition and rewardSpawnLocation
+            RelocateBrokenDrones(position + Vector3.down * floorOffset, 6);
         }
 
-        private static void LeashMinions(CharacterMaster master, Vector3 position, float radius, Quaternion rotation)
+        private static void LeashMinions(CharacterMaster master, Vector3 position, float withinRadius, Quaternion rotation)
         {
             MinionOwnership.MinionGroup group = MinionOwnership.MinionGroup.FindGroup(master.netId);
             if (group != null && group.members != null) {
@@ -38,7 +42,7 @@ namespace MeridianPrimePrime.Harmony
                 foreach (MinionOwnership minion in group.members) {
                     CharacterBody body = minion?.GetComponent<CharacterMaster>()?.GetBody();
                     if (body != null) {
-                        Vector2 offset = Random.insideUnitCircle * radius;
+                        Vector2 offset = Random.insideUnitCircle * withinRadius;
                         // Logic from RoR2.Items.MinionLeashBodyBehaviour
                         TeleportHelper.TeleportBody(body, position + new Vector3(offset.x, 0, offset.y));
                         GameObject teleportEffectPrefab = Run.instance.GetTeleportEffectPrefab(body.gameObject);
@@ -54,15 +58,17 @@ namespace MeridianPrimePrime.Harmony
 
         private static void RelocateBrokenDrones(Vector3 position, float radius)
         {
-            int drones = 0;
-            foreach (PurchaseInteraction purchaseInteraction in InstanceTracker.GetInstancesList<PurchaseInteraction>()) {
-                if (purchaseInteraction.displayNameToken.Contains("DRONE")) {
-                    Vector2 offset = Random.insideUnitCircle * radius;
-                    purchaseInteraction.transform.position = position + new Vector3(offset.x, 0, offset.y);
-                    drones++;
-                }
+            IList<PurchaseInteraction> brokenDrones = InstanceTracker.GetInstancesList<PurchaseInteraction>().Where((purchaseInteraction) => purchaseInteraction.displayNameToken.Contains("DRONE")).ToList();
+            if (brokenDrones.Count <= 0) return;
+
+            float angle = 360f / brokenDrones.Count;
+            Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.up);
+            Vector3 offset = Vector3.forward * radius;
+            foreach (PurchaseInteraction drone in brokenDrones) {
+                drone.transform.position = position + offset;
+                offset = rotation * offset;
             }
-            Plugin.Logger.LogDebug($"Relocated {drones} broken drone(s)");
+            Plugin.Logger.LogDebug($"Relocated {brokenDrones.Count} broken drone(s)");
         }
     }
 }
