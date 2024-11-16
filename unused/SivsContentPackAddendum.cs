@@ -24,11 +24,15 @@ namespace itsschwer.Junk
         {
             if (!SivsItems.DropYellowItemOnKillUsed.canRemove) Plugin.Logger.LogWarning("Changing canRemove of Trophy Hunter's Medallion no longer necessary");
             else SivsItems.DropYellowItemOnKillUsed.canRemove = false;
+
+            if (!SivsItems.GlassShieldBroken.canRemove) Plugin.Logger.LogWarning("Changing canRemove of Glass Shield no longer necessary");
+            else SivsItems.GlassShieldBroken.canRemove = false;
         }
 
         [MethodImpl(MethodImplOptions.NoInlining)]
         private static void AddReplenishTransformation()
         {
+            itsschwer.Items.MendConsumedTransformations.Register(new ReplenishTransformation(SivsItems.GlassShieldBroken, SivsItems.GlassShield));
             itsschwer.Items.MendConsumedTransformations.Register(new ReplenishTransformation(SivsItems.DropYellowItemOnKillUsed, SivsItems.DropYellowItemOnKill));
         }
     }
