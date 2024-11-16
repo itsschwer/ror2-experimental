@@ -2,6 +2,10 @@ using BepInEx;
 
 namespace MeridianPrimePrime
 {
+#if INCLUDE_UNUSED
+    [BepInDependency(SivsContentPack.SivsContentPack.PluginGUID, BepInDependency.DependencyFlags.SoftDependency)]
+    [BepInDependency(itsschwer.Items.Plugin.GUID, BepInDependency.DependencyFlags.SoftDependency)]
+#endif
     [BepInPlugin(GUID, Name, Version)]
     public sealed class Plugin : BaseUnityPlugin
     {
@@ -24,6 +28,7 @@ namespace MeridianPrimePrime
 #if INCLUDE_UNUSED
             itsschwer.Junk.ShrineHalcyoniteObjective.Enable();
             itsschwer.Junk.ShuffleEliteTiers.Init();
+            itsschwer.Junk.SivsContentPackAddendum.Apply();
 #endif
 
             Logger.LogMessage("~awake.");
