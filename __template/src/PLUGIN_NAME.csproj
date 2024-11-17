@@ -30,6 +30,10 @@
         <AdditionalFiles Include="$(RootDir)Thunderstore/icon.png" Visible="false" />
     </ItemGroup>
 
+    <ItemGroup>
+        <!-- <AdditionalPluginFiles Include="$(RootDir)lang/$(MSBuildProjectName).language" /> -->
+    </ItemGroup>
+
     <Target Name="SetAssemblyVersion" BeforeTargets="BeforeCompile">
         <Message Importance="Low" Text="Version property (before): $(VersionPrefix) | $(Version)" />
 
@@ -51,6 +55,7 @@
     <Target Name="PackageProduct" AfterTargets="Build">
         <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(PluginDir)" />
         <Copy SourceFiles="@(AdditionalFiles)" DestinationFolder="$(ProductDir)" ContinueOnError="true" />
+        <Copy SourceFiles="@(AdditionalPluginFiles)" DestinationFolder="$(PluginDir)" ContinueOnError="false" />
 
         <ConvertToAbsolutePath Paths="$(ProductDir)">
             <Output TaskParameter="AbsolutePaths" PropertyName="AbsoluteProductDir" />
