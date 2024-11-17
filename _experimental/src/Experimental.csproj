@@ -31,7 +31,7 @@
         <AdditionalFiles Include="$(RootDir)README.md" />
         <AdditionalFiles Include="$(RootDir)CHANGELOG.md" />
         <AdditionalFiles Include="$(RootDir)Thunderstore/manifest.json" />
-        <AdditionalFiles Include="$(RootDir)Thunderstore/icon.png" Visible="false" />
+        <AdditionalFiles Include="$(RootDir)../icon.png" Visible="false" />
     </ItemGroup>
 
     <Target Name="SetAssemblyVersion" BeforeTargets="BeforeCompile">
