@@ -1,6 +1,7 @@
 ﻿using RoR2;
 using System;
 using System.Linq;
+using Plugin = Eater.Plugin;
 
 namespace itsschwer.Junk
 {

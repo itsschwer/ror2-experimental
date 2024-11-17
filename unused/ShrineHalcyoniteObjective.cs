@@ -1,4 +1,5 @@
 ﻿using RoR2;
+using Plugin = Eater.Plugin;
 
 namespace itsschwer.Junk
 {
@@ -57,7 +58,6 @@ namespace itsschwer.Junk
             orig(self);
 
             var old = self.gameObject.GetComponent<GenericObjectiveProvider>();
-            old.objectiveToken = $"Charge the <style=cShrine>{Language.GetString(self.parentShrineReference.purchaseInteraction.displayNameToken)}</style> ({1:0%})"; // Ensure 100% is displayed
             UnityEngine.Object.Destroy(old); // Mark the charge objective as completed
             var obj = self.gameObject.AddComponent<GenericObjectiveProvider>();
             if (obj) {

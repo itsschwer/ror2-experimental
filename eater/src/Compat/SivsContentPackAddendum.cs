@@ -1,9 +1,8 @@
-using itsschwer.Items.Helpers;
 using System.Runtime.CompilerServices;
-
+using itsschwer.Items.Helpers;
 using SivsItems = SivsContentPack.Content.Items;
 
-namespace itsschwer.Junk
+namespace Eater.Compat
 {
     internal static class SivsContentPackAddendum
     {
@@ -22,10 +21,10 @@ namespace itsschwer.Junk
         [MethodImpl(MethodImplOptions.NoInlining)]
         private static void FixForPressureDrop()
         {
-            if (!SivsItems.DropYellowItemOnKillUsed.canRemove) Plugin.Logger.LogWarning("Changing canRemove of Trophy Hunter's Medallion no longer necessary");
+            if (!SivsItems.DropYellowItemOnKillUsed.canRemove) Plugin.Logger.LogWarning("SivsItems.DropYellowItemOnKillUsed.canRemove is already false");
             else SivsItems.DropYellowItemOnKillUsed.canRemove = false;
 
-            if (!SivsItems.GlassShieldBroken.canRemove) Plugin.Logger.LogWarning("Changing canRemove of Glass Shield no longer necessary");
+            if (!SivsItems.GlassShieldBroken.canRemove) Plugin.Logger.LogWarning("SivsItems.GlassShieldBroken.canRemove is already false");
             else SivsItems.GlassShieldBroken.canRemove = false;
         }
 

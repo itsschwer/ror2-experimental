@@ -7,6 +7,7 @@ using System.Reflection;
 namespace Eater.IL
 {
     /// <summary>
+    /// Might only be in conjunction with Goorakh-ModelSwapperSkins?
     /// Devotion Update:
     /// Each dynamic skin appears to log a warning and an error each time an enemy spawns:
     /// [Warning: ] An error occured while adding accessories to a skin

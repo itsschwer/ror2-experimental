@@ -30,21 +30,6 @@
         <AdditionalFiles Include="$(RootDir)Thunderstore/icon.png" Visible="false" />
     </ItemGroup>
 
-    <!-- dirty trick to compile differently locally (Windows) vs for production (Unix; GitHub workflow) -->
-    <PropertyGroup Condition="'$(OS)' == 'Windows_NT'">
-        <DefineConstants>INCLUDE_UNUSED</DefineConstants>
-    </PropertyGroup>
-    <ItemGroup Condition="'$(OS)' == 'Windows_NT'">
-        <PackageReference Include="MMHOOK.RoR2" Version="2024.11.4">
-            <NoWarn>NU1701</NoWarn>
-        </PackageReference>
-        <Reference Include="SivsContentPack"><HintPath>$(USERPROFILE)\AppData\Roaming\r2modmanPlus-local\RiskOfRain2\cache\Sivelos1-SivsContentPack\1.2.1\plugins\SivsContentPack.dll</HintPath></Reference>
-        <Reference Include="itsschwer.Items"><HintPath>$(USERPROFILE)\AppData\Roaming\r2modmanPlus-local\RiskOfRain2\cache\itsschwer-items_from_itsschwer\1.1.0\plugins\itsschwer.Items\itsschwer.Items.dll</HintPath></Reference>
-        <Compile Include="$(RootDir)/../unused/ShrineHalcyoniteObjective.cs" />
-        <Compile Include="$(RootDir)/../unused/ShuffleEliteTiers.cs" />
-        <Compile Include="$(RootDir)/../unused/SivsContentPackAddendum.cs" />
-    </ItemGroup>
-
     <Target Name="SetAssemblyVersion" BeforeTargets="BeforeCompile">
         <Message Importance="Low" Text="Version property (before): $(VersionPrefix) | $(Version)" />
 

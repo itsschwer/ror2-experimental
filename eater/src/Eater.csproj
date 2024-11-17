@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <TargetFramework>netstandard2.0</TargetFramework>
+        <TargetFramework>netstandard2.1</TargetFramework>
         <LangVersion>preview</LangVersion>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     </PropertyGroup>
@@ -11,22 +11,19 @@
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <PackageReference Include="BepInEx.Core" Version="5.4.21" />
-        <PackageReference Include="RiskOfRain2.GameLibs" Version="1.2.4-r.0" />
+        <PackageReference Include="RiskOfRain2.GameLibs" Version="1.3.5-r.1" />
         <PackageReference Include="UnityEngine.Modules" Version="2019.4.26" />
-        <PackageReference Include="MMHOOK.RoR2" Version="2022.9.20">
+        <PackageReference Include="MMHOOK.RoR2" Version="2024.11.4">
             <NoWarn>NU1701</NoWarn>
         </PackageReference>
     </ItemGroup>
 
-    <PropertyGroup>
-        <!-- <DefineConstants>LETSGOGAMBLING</DefineConstants> -->
-    </PropertyGroup>
-
     <ItemGroup>
-        <Reference Include="letsgogambling">
-            <HintPath>$(USERPROFILE)\AppData\Roaming\r2modmanPlus-local\RiskOfRain2\cache\PopcornFactory-Lets_Go_Gambling_SFX_Mod\1.0.1\letsgogambling.dll</HintPath>
-            <Private>false</Private>
-        </Reference>
+        <Reference Include="letsgogambling"><HintPath>$(USERPROFILE)\AppData\Roaming\r2modmanPlus-local\RiskOfRain2\cache\PopcornFactory-Lets_Go_Gambling_SFX_Mod\1.0.1\letsgogambling.dll</HintPath></Reference>
+        <Reference Include="SivsContentPack"><HintPath>$(USERPROFILE)\AppData\Roaming\r2modmanPlus-local\RiskOfRain2\cache\Sivelos1-SivsContentPack\1.2.1\plugins\SivsContentPack.dll</HintPath></Reference>
+        <Reference Include="itsschwer.Items"><HintPath>$(USERPROFILE)\AppData\Roaming\r2modmanPlus-local\RiskOfRain2\cache\itsschwer-items_from_itsschwer\1.1.0\plugins\itsschwer.Items\itsschwer.Items.dll</HintPath></Reference>
+        <Compile Include="$(RootDir)/../unused/ShrineHalcyoniteObjective.cs" />
+        <Compile Include="$(RootDir)/../unused/ShuffleEliteTiers.cs" />
     </ItemGroup>
 
     <PropertyGroup>
@@ -41,7 +38,7 @@
         <AdditionalFiles Include="$(RootDir)README.md" />
         <AdditionalFiles Include="$(RootDir)CHANGELOG.md" />
         <AdditionalFiles Include="$(RootDir)Thunderstore/manifest.json" />
-        <AdditionalFiles Include="$(RootDir)Thunderstore/icon.png" Visible="false" />
+        <AdditionalFiles Include="$(RootDir)../icon.png" Visible="false" />
     </ItemGroup>
 
     <Target Name="SetAssemblyVersion" BeforeTargets="BeforeCompile">

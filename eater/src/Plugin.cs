@@ -3,9 +3,9 @@ using Eater.IL;
 
 namespace Eater
 {
-#if LETSGOGAMBLING
     [BepInDependency(LetsGoGambling.LetsGoGamblingPlugin.MODUID, BepInDependency.DependencyFlags.SoftDependency)]
-#endif
+    [BepInDependency(SivsContentPack.SivsContentPack.PluginGUID, BepInDependency.DependencyFlags.SoftDependency)]
+    [BepInDependency(itsschwer.Items.Plugin.GUID, BepInDependency.DependencyFlags.SoftDependency)]
     [BepInPlugin(GUID, Name, Version)]
     public sealed class Plugin : BaseUnityPlugin
     {
@@ -22,12 +22,11 @@ namespace Eater
             BepInEx.Logging.Logger.Sources.Remove(base.Logger);
             Logger = BepInEx.Logging.Logger.CreateLogSource(Plugin.GUID);
 
-            DynamicSkinsAccessoriesArgumentNullEater.Apply();
-#if LETSGOGAMBLING
-            if (BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey(LetsGoGambling.LetsGoGamblingPlugin.MODUID)) {
-                LetsGoGamblingSuccessSoundEater.Apply();
-            }
-#endif
+            itsschwer.Junk.ShuffleEliteTiers.Init();
+            itsschwer.Junk.ShrineHalcyoniteObjective.Enable();
+            Compat.SivsContentPackAddendum.Apply();
+
+            LetsGoGamblingSuccessSoundEater.Apply();
             UnityExplorerEater.Apply();
 
             Logger.LogMessage("~awake.");
