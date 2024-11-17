@@ -70,11 +70,30 @@ namespace Experimental.Commands
                     case "v":
                         SpawnMonster.SpawnVoidTitan(target);
                         return;
+                    case "quick":
+                        GiveQuickItems(target.inventory);
+                        return;
                 }
             }
 
             ChatCommander.OutputFail(args[0],
                 "(<style=cSub>blueportal</style> | <style=cSub>itemcost</style> | <style=cSub>damaging</style>)");
+        }
+
+        private static void GiveQuickItems(Inventory inventory)
+        {
+            inventory.GiveItemString("JumpBoost", 2);
+            inventory.GiveItemString("SprintOutOfCombat", 4);
+            inventory.GiveItemString("SprintBonus", 4);
+            inventory.GiveItemString("AttackSpeedAndMoveSpeed", 12);
+            inventory.GiveItemString("HealthBasedDamageBonus", 1);
+            inventory.GiveItemString("CritDamage", 1);
+            inventory.GiveItemString("CritGlasses", 4);
+            inventory.GiveItemString("Crowbar", 8);
+            inventory.GiveItemString("IncreaseHealing", 2);
+            inventory.GiveItemString("Medkit", 8);
+            inventory.GiveItemString("EquipmentMagazine", 4);
+            inventory.GiveItemString("FragileDamageBonus", 4);
         }
     }
 }
