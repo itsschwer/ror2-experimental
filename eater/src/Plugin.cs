@@ -26,6 +26,8 @@ namespace Eater
             itsschwer.Junk.ShrineHalcyoniteObjective.Enable();
             Compat.SivsContentPackAddendum.Apply();
 
+            new HarmonyLib.Harmony(Info.Metadata.GUID).PatchAll();
+
             LetsGoGamblingSuccessSoundEater.Apply();
             UnityExplorerEater.Apply();
 
