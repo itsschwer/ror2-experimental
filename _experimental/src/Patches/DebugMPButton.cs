@@ -1,4 +1,5 @@
-﻿using Experimental.Dumps;
+﻿#if DEBUG
+using Experimental.Dumps;
 using HarmonyLib;
 using RoR2.UI;
 
@@ -24,3 +25,4 @@ namespace Experimental.Patches
         }
     }
 }
+#endif
