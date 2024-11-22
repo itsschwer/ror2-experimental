@@ -31,7 +31,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <!-- <AdditionalPluginFiles Include="$(RootDir)lang/$(MSBuildProjectName).language" /> -->
+        <!-- <AdditionalPluginFiles Include="$(RootDir)lang/*.language" /> -->
     </ItemGroup>
 
     <Target Name="SetAssemblyVersion" BeforeTargets="BeforeCompile">
