@@ -21,7 +21,6 @@ namespace Experimental
             Logger = BepInEx.Logging.Logger.CreateLogSource(Plugin.GUID);
 
             RoR2.UI.HUD.shouldHudDisplay += UI.HUD.Instantiate;
-            Patches.NoDropPods.Apply();
             Commands.Commands.Register();
 
             new Harmony(Info.Metadata.GUID).PatchAll();
@@ -38,9 +37,9 @@ namespace Experimental
                 if (hiddenOrCantRemove) Logger.LogWarning(line);
                 else Logger.LogDebug(line);
             }
-
+#if DEBUG
             Logger.LogDebug(Dumps.Layers.Dump());
-
+#endif
             RoR2.RoR2Application.onLoad -= Dump;
         }
 
