@@ -8,7 +8,7 @@ namespace itsschwer.Junk
     /// </summary>
     internal static class ShrineHalcyoniteObjective
     {
-        internal static void Enable()
+        internal static void Hook()
         {
             On.EntityStates.ShrineHalcyonite.ShrineHalcyoniteActivatedState.OnEnter += ShrineHalcyoniteActivatedState_OnEnter;
             On.EntityStates.ShrineHalcyonite.ShrineHalcyoniteBaseState.FixedUpdate += ShrineHalcyoniteBaseState_FixedUpdate; ;
@@ -16,7 +16,7 @@ namespace itsschwer.Junk
             On.EntityStates.ShrineHalcyonite.ShrineHalcyoniteFinished.OnEnter += ShrineHalcyoniteFinished_OnEnter;
         }
 
-        internal static void Disable()
+        internal static void Unhook()
         {
             On.EntityStates.ShrineHalcyonite.ShrineHalcyoniteActivatedState.OnEnter -= ShrineHalcyoniteActivatedState_OnEnter;
             On.EntityStates.ShrineHalcyonite.ShrineHalcyoniteBaseState.FixedUpdate -= ShrineHalcyoniteBaseState_FixedUpdate; ;

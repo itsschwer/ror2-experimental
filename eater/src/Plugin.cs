@@ -1,9 +1,7 @@
 using BepInEx;
-using Eater.IL;
 
 namespace Eater
 {
-    [BepInDependency(LetsGoGambling.LetsGoGamblingPlugin.MODUID, BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency(SivsContentPack.SivsContentPack.PluginGUID, BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency(itsschwer.Items.Plugin.GUID, BepInDependency.DependencyFlags.SoftDependency)]
     [BepInPlugin(GUID, Name, Version)]
@@ -22,13 +20,12 @@ namespace Eater
             BepInEx.Logging.Logger.Sources.Remove(base.Logger);
             Logger = BepInEx.Logging.Logger.CreateLogSource(Plugin.GUID);
 
-            itsschwer.Junk.ShuffleEliteTiers.Init();
-            itsschwer.Junk.ShrineHalcyoniteObjective.Enable();
             Compat.SivsContentPackAddendum.Apply();
-
             new HarmonyLib.Harmony(Info.Metadata.GUID).PatchAll();
 
-            LetsGoGamblingSuccessSoundEater.Apply();
+            itsschwer.Junk.ShuffleEliteTiers.Init();
+            itsschwer.Junk.ShrineHalcyoniteObjective.Hook();
+
             UnityExplorerEater.Apply();
 
             Logger.LogMessage("~awake.");

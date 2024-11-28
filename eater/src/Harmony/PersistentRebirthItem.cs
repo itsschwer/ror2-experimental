@@ -4,7 +4,7 @@ using MonoMod.Cil;
 using RoR2;
 using System;
 
-namespace Eater.IL
+namespace Eater.Harmony
 {
     [HarmonyPatch]
     internal static class PersistentRebirthItem

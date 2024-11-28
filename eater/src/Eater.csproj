@@ -19,7 +19,6 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Reference Include="letsgogambling"><HintPath>$(USERPROFILE)\AppData\Roaming\r2modmanPlus-local\RiskOfRain2\cache\PopcornFactory-Lets_Go_Gambling_SFX_Mod\1.0.1\letsgogambling.dll</HintPath></Reference>
         <Reference Include="SivsContentPack"><HintPath>$(USERPROFILE)\AppData\Roaming\r2modmanPlus-local\RiskOfRain2\cache\Sivelos1-SivsContentPack\1.2.1\plugins\SivsContentPack.dll</HintPath></Reference>
         <Reference Include="itsschwer.Items"><HintPath>$(USERPROFILE)\AppData\Roaming\r2modmanPlus-local\RiskOfRain2\cache\itsschwer-items_from_itsschwer\1.1.0\plugins\itsschwer.Items\itsschwer.Items.dll</HintPath></Reference>
         <Compile Include="$(RootDir)/../unused/ShrineHalcyoniteObjective.cs" />
