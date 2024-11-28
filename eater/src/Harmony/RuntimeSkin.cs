@@ -30,19 +30,18 @@ namespace Eater.Harmony
                 c.Index -= 2; // before GetComponent & after Transform.Find
                 ILLabel original = c.MarkLabel();
                 c.Emit(OpCodes.Dup);
-                // c.Emit(OpCodes.Ldloc, 14);
-                // c.Emit(OpCodes.Ldfld, typeof(SkinDef.MeshReplacementTemplate).GetField(nameof(SkinDef.MeshReplacementTemplate.path)));
-                // c.EmitDelegate<Func<string, Transform, bool>>((path, transform) => {
-                c.EmitDelegate<Func<Transform, bool>>((transform) => {
+                c.Emit(OpCodes.Ldloc, 14);
+                c.Emit(OpCodes.Ldfld, typeof(SkinDef.MeshReplacementTemplate).GetField(nameof(SkinDef.MeshReplacementTemplate.path)));
+                c.EmitDelegate<Func<Transform, string, bool>>((transform, path) => {
                     bool nullTransform = transform == null;
-                    // if (nullTransform) Plugin.Logger.LogWarning($"{path} is invalid.");
+                    if (nullTransform) Plugin.Logger.LogWarning($"{nameof(SkinDef.RuntimeSkin)}> {nameof(SkinDef.MeshReplacementTemplate)} path \"{path}\" is invalid.");
                     return nullTransform;
                 });
                 c.Emit(OpCodes.Brfalse, original);
                 c.Emit(OpCodes.Pop);
                 c.Emit(OpCodes.Br, skip);
                 c.MarkLabel(original);
-#if DEBUG || true
+#if DEBUG
                 Plugin.Logger.LogDebug(il.ToString());
 #endif
             }
