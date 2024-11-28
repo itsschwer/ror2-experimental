@@ -21,7 +21,7 @@ namespace RulebookItemBlacklist
         public string BlacklistedItems => blacklistedItems.Value;
         public string BlacklistedEquipment => blacklistedEquipment.Value;
 
-        public Config(ConfigFile config)
+        internal Config(ConfigFile config)
         {
             file = config;
 

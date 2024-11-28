@@ -10,7 +10,7 @@ namespace NameChanger
         private readonly ConfigEntry<string> nameReplacement;
         public string NameReplacement => nameReplacement.Value;
 
-        public Config(ConfigFile config)
+        internal Config(ConfigFile config)
         {
             ModSettingsManager.AddOption(new GenericButtonOption("", "Settings", "Force user names to update, in case the name replacement is not applied.", "Refresh User Names", Plugin.UpdateUserNames));
 
