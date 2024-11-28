@@ -1,5 +1,5 @@
-﻿using Experimental.Patches;
-using PressureDrop;
+﻿using Experimental.Commands;
+using Experimental.Patches;
 using RoR2;
 
 namespace Experimental
@@ -11,15 +11,15 @@ namespace Experimental
             bool wasDisabled = CombatDirector.cvDirectorCombatDisable.value;
             CombatDirector.cvDirectorCombatDisable.SetBool(!wasDisabled);
 
-            if (wasDisabled) ChatCommander.Output("Enemy spawning enabled.");
-            else ChatCommander.Output("Enemy spawning disabled.");
+            if (wasDisabled) ChatCommandListener.Output("Enemy spawning enabled.");
+            else ChatCommandListener.Output("Enemy spawning disabled.");
         }
 
         public static void TogglePlayerImmortality()
         {
             TakeDamagePlayerNonLethal.SetActive(!TakeDamagePlayerNonLethal.Active);
             string status = TakeDamagePlayerNonLethal.Active ? "enabled" : "disabled";
-            ChatCommander.Output($"Player immortality {status}.");
+            ChatCommandListener.Output($"Player immortality {status}.");
         }
 
         public static void ForceChargeTeleporter()

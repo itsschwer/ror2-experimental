@@ -26,8 +26,7 @@ namespace Experimental.Commands
                 }
             }
 
-            PressureDrop.ChatCommander.OutputFail(args[0],
-                "(<style=cSub>diff</style> | <style=cSub>obj</style> | <style=cSub>dmg</style>)");
+            ChatCommandListener.OutputFail(args[0], "(<style=cSub>diff</style> | <style=cSub>obj</style> | <style=cSub>dmg</style>)");
         }
 
         public static void Walk(Transform child, StringBuilder sb, int level = 0)

@@ -1,5 +1,4 @@
 ﻿using RoR2;
-using PressureDrop;
 
 namespace Experimental.Commands
 {
@@ -7,22 +6,22 @@ namespace Experimental.Commands
     {
         public static void Register()
         {
-            ChatCommander.Register("/show", Cheatsheet.Parse);
-            ChatCommander.Register("/setstage", Helpers.Stage.SetStage);
+            ChatCommandListener.Register("/show", Cheatsheet.Parse);
+            ChatCommandListener.Register("/setstage", Helpers.Stage.SetStage);
 
-            ChatCommander.Register("/s", Spawn);
+            ChatCommandListener.Register("/s", Spawn);
 
-            ChatCommander.Register("/walkui", WalkUI.Walk);
+            ChatCommandListener.Register("/walkui", WalkUI.Walk);
         }
 
         public static void Unregister()
         {
-            ChatCommander.Unregister("/show", Cheatsheet.Parse);
-            ChatCommander.Unregister("/setstage", Helpers.Stage.SetStage);
+            ChatCommandListener.Unregister("/show", Cheatsheet.Parse);
+            ChatCommandListener.Unregister("/setstage", Helpers.Stage.SetStage);
 
-            ChatCommander.Unregister("/s", Spawn);
+            ChatCommandListener.Unregister("/s", Spawn);
 
-            ChatCommander.Unregister("/walkui", WalkUI.Walk);
+            ChatCommandListener.Unregister("/walkui", WalkUI.Walk);
         }
 
         private static bool GetUserBody(NetworkUser user, out CharacterBody body)
@@ -76,7 +75,7 @@ namespace Experimental.Commands
                 }
             }
 
-            ChatCommander.OutputFail(args[0],
+            ChatCommandListener.OutputFail(args[0],
                 "(<style=cSub>blueportal</style> | <style=cSub>itemcost</style> | <style=cSub>damaging</style>)");
         }
 

@@ -20,7 +20,10 @@ namespace Experimental.UI
                 (body) => CommandCube.Spawn(body.footPosition, CommandCube.GetPickupOptions(def => def.tier == RoR2.ItemTier.Boss)),
                 GenerateColoredString("Yellow Command Cube", RoR2.ItemTier.Boss)),
             new(KeyCode.F10,
-                (body) => CommandCube.Spawn(body.footPosition, CommandCube.GetPickupOptions(def => PressureDrop.Drop.IsVoidTier(def.tier))),
+                (body) => CommandCube.Spawn(body.footPosition, CommandCube.GetPickupOptions(def => def.tier == RoR2.ItemTier.VoidTier1
+                                                                                                || def.tier == RoR2.ItemTier.VoidTier2
+                                                                                                || def.tier == RoR2.ItemTier.VoidTier3
+                                                                                                || def.tier == RoR2.ItemTier.VoidBoss)),
                 GenerateColoredString("Void Command Cube", RoR2.ItemTier.VoidBoss)),
             new(KeyCode.F11,
                 (body) => CommandCube.Spawn(body.footPosition, CommandCube.GetPickupOptions(def => def.tier == RoR2.ItemTier.Lunar)),

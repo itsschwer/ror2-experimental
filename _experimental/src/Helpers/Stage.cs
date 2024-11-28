@@ -1,4 +1,4 @@
-﻿using PressureDrop;
+﻿using Experimental.Commands;
 using RoR2;
 using System.Linq;
 
@@ -42,9 +42,9 @@ namespace Experimental.Helpers
                 else if (args[1] == "clear") {
                     setStage = null;
                 }
-                else ChatCommander.OutputFail(args[0], "invalid scene name.");
+                else ChatCommandListener.OutputFail(args[0], "invalid scene name.");
             }
-            else ChatCommander.OutputFail(args[0], "(<stage-scene-name> | clear)");
+            else ChatCommandListener.OutputFail(args[0], "(<stage-scene-name> | clear)");
         }
 
         public static string GetDisplayName(SceneDef scene)

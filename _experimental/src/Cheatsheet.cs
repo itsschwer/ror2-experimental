@@ -1,4 +1,4 @@
-﻿using PressureDrop;
+﻿using Experimental.Commands;
 using RoR2;
 using Stage = Experimental.Helpers.Stage;
 
@@ -19,7 +19,7 @@ namespace Experimental
                     return;
                 }
             }
-            ChatCommander.OutputFail(args[0], "(clear | stages | PressureDrop | DamageLog)");
+            ChatCommandListener.OutputFail(args[0], "(clear | stages | PressureDrop | DamageLog)");
         }
 
         private static string Parse(string arg)

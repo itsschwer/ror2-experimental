@@ -3,7 +3,6 @@ using HarmonyLib;
 
 namespace Experimental
 {
-    [BepInDependency(PressureDrop.Plugin.GUID)]
     [BepInPlugin(GUID, Name, Version)]
     public sealed class Plugin : BaseUnityPlugin
     {
@@ -21,6 +20,7 @@ namespace Experimental
             Logger = BepInEx.Logging.Logger.CreateLogSource(Plugin.GUID);
 
             RoR2.UI.HUD.shouldHudDisplay += UI.HUD.Instantiate;
+            Commands.ChatCommandListener.Hook();
             Commands.Commands.Register();
 
             new Harmony(Info.Metadata.GUID).PatchAll();
