@@ -9,3 +9,4 @@ A  \[ server-side / host-only \] that makes *Prime Meridian* less painful in mul
     - teleport all broken drones
 - cracking *Aurelionite Geodes* no longer desyncs in multiplayer if a player is dead
     - ***technical**: add missing `CharacterBody` null check when trying to remove the Lunar Ruin debuff*
+    - <mark>fixed in vanilla **RoR2v1.3.6 [Seekers of the Storm Roadmap Phase 1 — Items & Elites]**</mark>
