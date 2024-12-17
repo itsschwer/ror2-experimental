@@ -1,9 +1,9 @@
 ﻿{
 	"author": "itsschwer",
 	"name": "NREater",
-	"version_number": "0.0.0",
+	"version_number": "0.0.1",
 	"website_url": "https://github.com/itsschwer/ror2-experimental/tree/main/nre",
-	"description": "",
+	"description": "Tries to fix (spammy) vanilla null reference exceptions — [ server-side* ]",
 	"dependencies": [
 		"bbepis-BepInExPack-5.4.2117"
 	]
