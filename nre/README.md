@@ -17,5 +17,5 @@ Tries to fix (spammy) vanilla null reference exceptions.
     - *but not an NRE**
 
 ## see also
-- [MeridianPrimePrime](https://thunderstore.io/package/itsschwer/MeridianPrimePrime/) — fixes an NRE when cracking *Aurelionite Geodes* on *Prime Meridian*
-    - <mark>fixed in vanilla **RoR2v1.3.6 [Seekers of the Storm Roadmap Phase 1 — Items & Elites]**</mark>
+- [MeridianPrimePrime](https://thunderstore.io/package/itsschwer/MeridianPrimePrime/) â€” fixes an NRE when cracking *Aurelionite Geodes* on *Prime Meridian*
+    - <mark>fixed in vanilla **RoR2v1.3.6 [Seekers of the Storm Roadmap Phase 1 â€” Items & Elites]**</mark>
