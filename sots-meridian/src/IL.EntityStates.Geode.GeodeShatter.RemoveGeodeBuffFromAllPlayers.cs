@@ -47,7 +47,11 @@ namespace MeridianPrimePrime.IL
                     Plugin.Logger.LogDebug(il.ToString());
 #endif
                 }
-                else Plugin.Logger.LogError($"{nameof(RemoveGeodeBuffFromAllPlayers)}> Cannot hook: failed to match IL instructions.");
+                else {
+                    string error = $"{nameof(RemoveGeodeBuffFromAllPlayers)}> Cannot hook: failed to match IL instructions.";
+                    if (Compatibility.GeodeShatterFixed) Plugin.Logger.LogWarning($"{error} This warning can safely be ignored if playing on or after patch RoR2v1.3.6 [Seekers of the Storm Roadmap Phase 1 — Items & Elites], as the null check is now implemented in vanilla.");
+                    else Plugin.Logger.LogError(error);
+                }
             });
         }
     }
