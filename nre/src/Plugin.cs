@@ -8,7 +8,7 @@ namespace itsschwer.RoR2.NRE
     {
         public const string GUID = Author + "." + Name;
         public const string Author = "itsschwer";
-        public const string Name = "PLUGIN_NAME";
+        public const string Name = "NREater";
         public const string Version = "0.0.0";
 
         internal static new BepInEx.Logging.ManualLogSource Logger { get; private set; }
