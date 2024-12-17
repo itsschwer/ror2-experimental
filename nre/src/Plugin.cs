@@ -1,5 +1,5 @@
 using BepInEx;
-using RoR2;
+using HarmonyLib;
 
 namespace itsschwer.RoR2.NRE
 {
@@ -19,7 +19,9 @@ namespace itsschwer.RoR2.NRE
             BepInEx.Logging.Logger.Sources.Remove(base.Logger);
             Logger = BepInEx.Logging.Logger.CreateLogSource(Plugin.GUID);
 
-            Logger.LogMessage("~awake.");
+            new Harmony(Info.Metadata.GUID).PatchAll();
+
+            Logger.LogMessage("Patched.");
         }
     }
 }
