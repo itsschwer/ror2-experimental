@@ -1,15 +1,11 @@
-# [ Risk of Rain 2 ] mod template
-a very minimal mod template for copy-paste setup
+# nreater
 
-## checklist
-- Rename the `.csproj` in `src/`
-- Edit `src/Plugin.cs`
-    - Define an appropriate `Name` *(and `Author`, if you are not me)*
-    - Rename the namespace to chosen plugin name
-- Edit `Thunderstore/manifest.json`
-    - Replace `name` with chosen plugin name *(and `author`, if you are not me)*
-    - Replace `website_url` with proper url *(or empty string)*
-    - Write a proper `description`
-- Add `Thunderstore/icon.png` *(256 x 256)*
-- Populate *(or delete)* `CHANGELOG.md`
-- Populate `README.md`
+> **NullReferenceException: Object reference not set to an instance of an object**
+
+## targets
+- `ElusiveAntlersPickup`
+    - prevent NRE spam when the owner of orb pickups spawned by Elusive Antlers dies
+
+## todo
+- patch out all `Debug.LogError("Can't PushPickupNotification for " + Util.GetBestMasterName(characterMaster) + " because they aren't local.");` in `CharacterMasterNotificationQueue`?
+    - just kind of annoying (and harmless)

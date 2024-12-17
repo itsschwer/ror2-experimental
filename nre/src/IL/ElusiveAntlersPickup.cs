@@ -15,7 +15,7 @@ namespace itsschwer.RoR2.NRE.IL
         // Stack trace:
         // RoR2.ElusiveAntlersPickup.Start () (at <a43009bc6a5f4aee99e5521ef176a18d>:IL_0000)
 
-        // Inconsistent NRE on host on stage change
+        // Inconsistent NRE on host on stage change (and picking up dead ally's pickups (consistent)?) -- probably another missing body null check
         // [Error  : Unity Log] NullReferenceException
         // Stack trace:
         // UnityEngine.Component.GetComponent[T] () (at <a20b3695b7ce4017b7981f9d06962bd1>:IL_0021)
