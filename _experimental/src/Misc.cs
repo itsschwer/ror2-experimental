@@ -24,9 +24,20 @@ namespace Experimental
 
         public static void ForceChargeTeleporter()
         {
-            if (TeleporterInteraction.instance == null) return;
+            HoldoutZoneController target = null;
 
-            TeleporterInteraction.instance.holdoutZoneController.charge = 0.99f;
+            if (TeleporterInteraction.instance != null) {
+                target = TeleporterInteraction.instance.holdoutZoneController;
+            }
+            else {
+                var list = InstanceTracker.GetInstancesList<HoldoutZoneController>();
+                if (list.Count > 0) {
+                    target = list[0];
+                }
+            }
+
+            if (target == null ) return;
+            target.charge = 0.99f;
         }
 
         public static void ForceMoonEscapeSequence()
