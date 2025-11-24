@@ -1,0 +1,10 @@
+﻿{
+	"author": "itsschwer",
+	"name": "LocalClient",
+	"version_number": "0.0.0",
+	"website_url": "https://github.com/itsschwer/ror2-experimental/tree/main/localclient",
+	"description": "[ mod testing ] — Intended for developers to use on client profiles when testing multiplayer mods locally",
+	"dependencies": [
+		"bbepis-BepInExPack-5.4.2113"
+	]
+}
