@@ -26,7 +26,7 @@ namespace Experimental.Patches
             ILCursor c = new ILCursor(il);
 
             int ldargHealthComponent = -1;
-            Func<Instruction, bool>[] matchSet = {
+            Func<Instruction, bool>[] matchEnd = {
                 // num_ = 1f;
                 // x => x.MatchLdarg(out int _),
                 // x => x.MatchLdfld<HealthComponent>(nameof(HealthComponent.health)),
@@ -43,10 +43,11 @@ namespace Experimental.Patches
                 x => x.MatchCallOrCallvirt<HealthComponent>($"set_{nameof(HealthComponent.Networkhealth)}"),
             };
 
-            if (c.TryGotoNext(matchSet)) {
+            // alternative could be to move after matchEnd, read targetHealth (num_), check non-lethal condition, and clamp to 1f again?
+            if (c.TryGotoNext(matchEnd)) {
                 ILLabel eq1f = c.MarkLabel();
 
-                Func<Instruction, bool>[] matchCheck = {
+                Func<Instruction, bool>[] matchStart = {
                     // if (num_ < 1f && (damageInfo.damageType & DamageType.NonLethal) != 0 && health >= 1f)
                     x => x.MatchLdloc(out int _),
                     x => x.MatchLdcR4(1f),
@@ -54,10 +55,9 @@ namespace Experimental.Patches
                     // ... (diverge after SotS)
                 };
 
-                if (c.TryGotoPrev(MoveType.After, matchCheck)) {
+                if (c.TryGotoPrev(MoveType.After, matchStart)) {
                     c.Emit(OpCodes.Ldarg, ldargHealthComponent);
                     c.EmitDelegate<Func<HealthComponent, bool>>((@this) => {
-                        Plugin.Logger.LogWarning($"{@this.body.name} | {@this.body.isPlayerControlled && Active} | {@this.body.isPlayerControlled}");
                         return @this.body.isPlayerControlled && Active;
                     });
                     c.Emit(OpCodes.Brtrue, eq1f);
