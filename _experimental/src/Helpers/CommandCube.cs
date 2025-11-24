@@ -12,7 +12,11 @@ namespace Experimental.Helpers
             // Refer to RoR2.PickupDropletController.CreateCommandCube()
             UnityEngine.GameObject obj = UnityEngine.Object.Instantiate(RoR2.Artifacts.CommandArtifactManager.commandCubePrefab, position, UnityEngine.Quaternion.identity);
             obj.GetComponent<PickupPickerController>().SetOptionsInternal(options);
+#if NETSTANDARD2_1_OR_GREATER
+            if (options.Length > 0) obj.GetComponent<PickupIndexNetworker>().pickupIndex = options[0].pickupIndex;
+#else
             if (options.Length > 0) obj.GetComponent<PickupIndexNetworker>().NetworkpickupIndex = options[0].pickupIndex;
+#endif
             UnityEngine.Networking.NetworkServer.Spawn(obj);
         }
 
