@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Experimental
+namespace Experimental.UI.Helpers
 {
     internal static class RectTransformExtension
     {

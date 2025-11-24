@@ -1,10 +1,13 @@
 ﻿using Experimental.Helpers;
+using Experimental.UI.Helpers;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Experimental.UI
 {
     internal sealed class HUD : MonoBehaviour
     {
+        private const KeyCode hideKey = KeyCode.KeypadPlus;
         private static RoR2.UI.HUD hud;
 
         public static void Instantiate(RoR2.UI.HUD hud, ref bool _)
@@ -31,23 +34,33 @@ namespace Experimental.UI
         private Canvas canvas;
         private bool hide;
 
-        private const string Heading = $"<style=cWorldEvent>{Plugin.GUID} · {Plugin.Version} · DEBUGGING HUD</style>";
+        private const string Heading = $"<size=+2><style=cWorldEvent>{Plugin.GUID} · {Plugin.Version} · DEBUGGING HUD</style></size>";
         private RoR2.UI.HGTextMeshProUGUI topLeft;
-        private RoR2.UI.HGTextMeshProUGUI botLeft;
         private RoR2.UI.HGTextMeshProUGUI stageSelect;
+        private RoR2.UI.HGTextMeshProUGUI botLeft;
         private RoR2.UI.HGTextMeshProUGUI controlKeys;
         private RoR2.UI.HGTextMeshProUGUI controlDescriptions;
 
         private readonly CommandCubeControls commandCubeControls = new();
-        private readonly Action<object> toggleEnemySpawning = new(KeyCode.F5, (_) => Misc.ToggleEnemySpawning(), "<style=cEvent>Toggle Enemy Spawning</style>");
-        private readonly Action<object> togglePlayerImmortality = new(KeyCode.F4, (_) => Misc.TogglePlayerImmortality(), "<style=cEvent>Toggle Player Immortality</style>");
-        private readonly Action<object> addMountainStack = new(KeyCode.F3, (_) => Misc.AddMountainStack(), "<style=cEvent>Add Mountain Shrine Stack</style>");
-        private readonly Action<object> forceChargeTeleporter = new(KeyCode.F2, (_) => Misc.ForceChargeTeleporter(), "<style=cEvent>Force Charge Teleporter</style>");
-        private readonly Action<object> forceStage = new(KeyCode.F1, (_) => Stage.ForceStage(Stage.setStage ?? RoR2.Run.instance.nextStageScene), "<style=cEvent>Force Stage</style>");
 
-        private readonly Action<object> clearChat = new(KeyCode.PageUp, (_) => RoR2.Chat.Clear(), "<style=cEvent>Clear Chat</style>");
-        private readonly Action<object> addBeamsToPressurePlates = new(KeyCode.PageDown, (_) => Misc.AddBeamsToPressurePlates(), "<style=cEvent>Add Beams To Pressure Plates</style>");
-        private readonly Action<object> forceMoonEscapeSequence = new(KeyCode.End, (_) => Misc.ForceMoonEscapeSequence(), "<style=cEvent>Force Moon Escape Sequence</style>");
+        private List<List<Action<object>>> miscControls = [
+            [ new(KeyCode.KeypadMinus, (_) => RoR2.Chat.Clear(), "<style=cEvent>Clear Chat</style>") ],
+            [
+                new(KeyCode.F1, (_) => Stage.ForceStage(Stage.setStage ?? RoR2.Run.instance.nextStageScene), "<style=cEvent>Force Stage</style>"),
+                new(KeyCode.F3, (_) => Misc.TogglePlayerImmortality(), "<style=cEvent>Toggle Player Immortality</style>"),
+                new(KeyCode.F4, (_) => Misc.ToggleEnemySpawning(), "<style=cEvent>Toggle Enemy Spawning</style>"),
+            ],
+            [
+                new(KeyCode.F5, (_) => Misc.ForceMoonEscapeSequence(), "<style=cEvent>Force Moon Escape Sequence</style>"),
+                new(KeyCode.F8, (_) => Misc.AddBeamsToPressurePlates(), "<style=cEvent>Add Beams To Pressure Plates</style>"),
+            ],
+            [
+                new(KeyCode.F9, (_) => Misc.ForceChargeTeleporter(), "<style=cEvent>Force Charge Teleporter</style>"),
+                new(KeyCode.F10, (_) => Misc.AddMountainStack(), "<style=cEvent>Add Mountain Shrine Stack</style>"),
+            ],
+
+
+        ];
 
         private void Start() => CreateUI(hud.mainContainer);
 
@@ -62,16 +75,16 @@ namespace Experimental.UI
 
             topLeft = AddChild<RoR2.UI.HGTextMeshProUGUI>(rect, nameof(topLeft));
             topLeft.alignment = TMPro.TextAlignmentOptions.TopLeft;
-            topLeft.fontSize = 20;
+            topLeft.fontSize = 18;
             topLeft.text = Heading;
-
-            botLeft = AddChild<RoR2.UI.HGTextMeshProUGUI>(rect, nameof(botLeft));
-            botLeft.alignment = TMPro.TextAlignmentOptions.BottomLeft;
-            botLeft.fontSize = 18;
 
             stageSelect = AddChild<RoR2.UI.HGTextMeshProUGUI>(rect, nameof(stageSelect));
             stageSelect.alignment = TMPro.TextAlignmentOptions.TopRight;
             stageSelect.fontSize = 18;
+
+            botLeft = AddChild<RoR2.UI.HGTextMeshProUGUI>(rect, nameof(botLeft));
+            botLeft.alignment = TMPro.TextAlignmentOptions.BottomLeft;
+            botLeft.fontSize = 18;
 
             const float controlKeysWidth = 40;
             const float controlFontSize = 18;
@@ -96,69 +109,64 @@ namespace Experimental.UI
         {
             if (RoR2.Run.instance == null) return;
 
-            // Scoreboard visibility logic from RoR2.UI.HUD.Update()
-            bool scoreboardVisible = hud.localUserViewer?.inputPlayer != null && hud.localUserViewer.inputPlayer.GetButton("info");
-            if (Input.GetKeyDown(KeyCode.KeypadPlus)) hide = !hide;
-            canvas.enabled = !scoreboardVisible && !hide;
+            if (Input.GetKeyDown(hideKey)) hide = !hide;
+            canvas.enabled = !hud.scoreboardPanel.activeSelf && !hide;
 
-            clearChat.PerformIfPossible(null);
-            addBeamsToPressurePlates.PerformIfPossible(null);
-            forceMoonEscapeSequence.PerformIfPossible(null);
+            topLeft.text = $"{Heading}\n{GenerateStringPosition()}\n{Cheatsheet.currentDisplay}";
+            stageSelect.text = GenerateStringStageSelect();
+
 
             System.Text.StringBuilder keyString = new();
             System.Text.StringBuilder descriptionString = new();
 
-            if (hud.cameraRigController?.targetBody)
-            {
-                for (int i = 0; i < commandCubeControls.controls.Count; i++)
-                {
+            if (hud.cameraRigController?.targetBody) {
+                for (int i = 0; i < commandCubeControls.controls.Count; i++) {
                     commandCubeControls.controls[i].PerformIfPossible(hud.cameraRigController.targetBody);
                     keyString.AppendLine(commandCubeControls.controls[i].key.ToString());
                     descriptionString.AppendLine(commandCubeControls.controls[i].description);
                 }
             }
-
-            forceStage.PerformIfPossible(null);
-            keyString.AppendLine().AppendLine(forceStage.key.ToString());
-            descriptionString.AppendLine().AppendLine(forceStage.description);
-            forceChargeTeleporter.PerformIfPossible(null);
-            keyString.AppendLine(forceChargeTeleporter.key.ToString());
-            descriptionString.AppendLine(forceChargeTeleporter.description);
-            addMountainStack.PerformIfPossible(null);
-            keyString.AppendLine(addMountainStack.key.ToString());
-            descriptionString.AppendLine(addMountainStack.description);
-            toggleEnemySpawning.PerformIfPossible(null);
-            keyString.AppendLine(toggleEnemySpawning.key.ToString());
-            descriptionString.AppendLine(toggleEnemySpawning.description);
-            togglePlayerImmortality.PerformIfPossible(null);
-            keyString.AppendLine(togglePlayerImmortality.key.ToString());
-            descriptionString.AppendLine(togglePlayerImmortality.description);
-
-            controlKeys.text = keyString.ToString();
-            controlDescriptions.text = descriptionString.ToString();
+            
+            for (int i = 0; i < miscControls.Count; i++) {
+                keyString.AppendLine();
+                descriptionString.AppendLine();
+                for (int j = 0; j < miscControls[i].Count; j++) {
+                    miscControls[i][j].PerformIfPossible(null);
+                    keyString.AppendLine(miscControls[i][j].key.ToString());
+                    descriptionString.AppendLine(miscControls[i][j].description);
+                }
+            }
 
             if (!canvas.enabled) return;
 
-            topLeft.text = $"{Heading}\n\n\n{Cheatsheet.currentDisplay}";
+            controlKeys.text = keyString.ToString();
+            controlDescriptions.text = descriptionString.ToString();
+        }
 
+        private string GenerateStringPosition()
+        {
+            RoR2.CharacterBody body = hud.localUserViewer?.cameraRigController?.targetBody;
+            if (body) {
+                System.Text.StringBuilder gps = new();
+                gps.AppendLine($"Foot Position: {body.footPosition.PrettyPrint()}");
+                if (body.inputBank) {
+                    gps.AppendLine($"Aim Direction: {body.inputBank.aimDirection.PrettyPrint()}");
+                    gps.AppendLine($"\t{Quaternion.Euler(body.inputBank.aimDirection)}");
+                }
+                return gps.ToString();
+            }
+            return "";
+        }
+
+        private string GenerateStringStageSelect()
+        {
             System.Text.StringBuilder sb = new();
             sb.Append("<style=cEvent>");
             sb.AppendLine($"/setstage: {Stage.GetDisplayName(Stage.setStage)}");
             sb.AppendLine($"Run next stage: {Stage.GetDisplayName(RoR2.Run.instance.nextStageScene)}");
             sb.AppendLine($"Stage next stage: {Stage.GetDisplayName(RoR2.Stage.instance.nextStage)}");
             sb.Append("</style>");
-            stageSelect.text = sb.ToString();
-
-            RoR2.CharacterBody body = hud.localUserViewer?.cameraRigController?.targetBody;
-            if (body) {
-                System.Text.StringBuilder gps = new();
-                gps.AppendLine($"Foot Position: {body.footPosition}");
-                if (body.inputBank) {
-                    gps.AppendLine($"Aim Direction: {body.inputBank.aimDirection}");
-                    gps.AppendLine($"\t{Quaternion.Euler(body.inputBank.aimDirection)}");
-                }
-                botLeft.text = gps.ToString();
-            }
+            return sb.ToString();
         }
     }
 }
