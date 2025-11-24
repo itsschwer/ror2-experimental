@@ -51,7 +51,7 @@ namespace Experimental.UI
                 new(KeyCode.F4, (_) => Misc.ToggleEnemySpawning(), "<style=cEvent>Toggle Enemy Spawning</style>"),
             ],
             [
-                new(KeyCode.F5, (_) => Misc.ForceMoonEscapeSequence(), "<style=cEvent>Force Moon Escape Sequence</style>"),
+                new(KeyCode.F5, (_) => Misc.ForceMoonEscapeSequence(), "<style=cEvent>Force Moon Escape Sequence</style>"), //todo: teleport closer (so don't have to walk from spawn)
                 new(KeyCode.F8, (_) => Misc.AddBeamsToPressurePlates(), "<style=cEvent>Add Beams To Pressure Plates</style>"),
             ],
             [
@@ -114,7 +114,7 @@ namespace Experimental.UI
 
             topLeft.text = $"{Heading}\n\n{GenerateStringPosition()}\n{Cheatsheet.currentDisplay}";
             topRight.text = GenerateStringStageSelect();
-            // todo: mention hide debug hud control under heading
+            //todo: mention hide debug hud control under heading
 
             System.Text.StringBuilder keyString = new();
             System.Text.StringBuilder descriptionString = new();

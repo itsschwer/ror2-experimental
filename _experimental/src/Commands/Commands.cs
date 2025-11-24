@@ -75,6 +75,7 @@ namespace Experimental.Commands
                 }
             }
 
+            //todo: reorganise; update syntax/args output; convert to hud actions?
             ChatCommandListener.OutputFail(args[0],
                 "(<style=cSub>blueportal</style> | <style=cSub>itemcost</style> | <style=cSub>damaging</style>)");
         }

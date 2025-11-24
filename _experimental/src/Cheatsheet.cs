@@ -27,20 +27,13 @@ namespace Experimental
             return arg switch {
                 "clear" => "",
                 "stages" => Stage.DumpStyledDisplayNames(),
-                "PressureDrop" => PressureDrop,
                 "DamageLog" => DamageLog,
-                "ServerSider" => ServerSider,
                 _ => null,
             };
         }
 
 
 
-
-        public const string PressureDrop =
-            "PressureDrop:\n" +
-            "\t- goolake (pressure plates)\n" +
-            "\t- moon2 (dropping, no teleporter)";
 
         public const string DamageLog =
             "DamageLog:\n" +
@@ -58,11 +51,5 @@ namespace Experimental
             "\t\t- fall damage (portrait, tooltip colour, text colour)\n" +
             "\t- attacker counts as separate damage source if became Voidtouched\n" +
             "\t- reset Damage Log on revive";
-
-        public const string ServerSider =
-            "ServerSider:\n" +
-            "\t- moon2 (rescue ship loop portal)\n" +
-            "\t\t- force escape sequence\n" +
-            "\t- arena (void field fog tweak)";
     }
 }
