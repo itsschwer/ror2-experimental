@@ -44,22 +44,23 @@ namespace Experimental.Patches
             };
 
             if (c.TryGotoNext(matchSet)) {
-                ILLabel setNetworkHealth = il.DefineLabel();
+                ILLabel eq1f = c.MarkLabel();
 
                 Func<Instruction, bool>[] matchCheck = {
                     // if (num_ < 1f && (damageInfo.damageType & DamageType.NonLethal) != 0 && health >= 1f)
                     x => x.MatchLdloc(out int _),
                     x => x.MatchLdcR4(1f),
-                    x => x.MatchBgeUn(out setNetworkHealth)
+                    x => x.MatchBgeUn(out ILLabel _)
                     // ... (diverge after SotS)
                 };
 
                 if (c.TryGotoPrev(MoveType.After, matchCheck)) {
                     c.Emit(OpCodes.Ldarg, ldargHealthComponent);
                     c.EmitDelegate<Func<CharacterBody, bool>>((body) => {
+                        Plugin.Logger.LogWarning($"{body.name} | {body.isPlayerControlled && Active} | {body.isPlayerControlled}");
                         return body.isPlayerControlled && Active;
                     });
-                    c.Emit(OpCodes.Brfalse, setNetworkHealth);
+                    c.Emit(OpCodes.Brtrue, eq1f);
                 }
                 else Plugin.Logger.LogError($"{nameof(TakeDamagePlayerNonLethal)}> Cannot hook: failed to match IL instructions (second set)");
             }
