@@ -37,7 +37,7 @@ namespace Experimental.UI
                 "<style=cEvent>NoTier Command Cube</style>"),
             new(KeyCode.Keypad3,
                 (body) => CommandCube.Spawn(body.footPosition, CommandCube.GetPickupOptions(def => def.tier == RoR2.ItemTier.AssignedAtRuntime)),
-                "<style=cEvent>AssignedAtRuntime Command Cube</style>")
+                "<s><style=cEvent>AssignedAtRuntime Command Cube</style></s>")
         ];
 
         private static string GenerateColoredString(string str, RoR2.ItemTier tier)

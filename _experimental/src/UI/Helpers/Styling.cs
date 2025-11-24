@@ -11,12 +11,13 @@ namespace Experimental.UI.Helpers
             return RoR2.Util.GenerateColoredString(str, color);
         }
 
-        public static string PrettyPrint(this Vector3 vector3)
+        public static string PrettyPrint(this Vector3 vector3) => vector3.PrettyPrint("F3");
+        public static string PrettyPrint(this Vector3 vector3, string format)
         {
             Color32 r = RoR2.ColorCatalog.GetColor(RoR2.ColorCatalog.ColorIndex.Tier3Item);
             Color32 g = RoR2.ColorCatalog.GetColor(RoR2.ColorCatalog.ColorIndex.Tier2Item);
             Color32 b = RoR2.ColorCatalog.GetColor(RoR2.ColorCatalog.ColorIndex.LunarItem);
-            return $"({RoR2.Util.GenerateColoredString(vector3.x.ToString(), r)} / {RoR2.Util.GenerateColoredString(vector3.y.ToString(), g)} / {RoR2.Util.GenerateColoredString(vector3.z.ToString(), b)})";
+            return $"({RoR2.Util.GenerateColoredString(vector3.x.ToString(format), r)} / {RoR2.Util.GenerateColoredString(vector3.y.ToString(format), g)} / {RoR2.Util.GenerateColoredString(vector3.z.ToString(format), b)})";
         }
     }
 }

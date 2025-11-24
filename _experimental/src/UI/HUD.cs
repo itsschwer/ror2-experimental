@@ -36,7 +36,7 @@ namespace Experimental.UI
 
         private const string Heading = $"<size=+2><style=cWorldEvent>{Plugin.GUID} · {Plugin.Version} · DEBUGGING HUD</style></size>";
         private RoR2.UI.HGTextMeshProUGUI topLeft;
-        private RoR2.UI.HGTextMeshProUGUI stageSelect;
+        private RoR2.UI.HGTextMeshProUGUI topRight;
         private RoR2.UI.HGTextMeshProUGUI botLeft;
         private RoR2.UI.HGTextMeshProUGUI controlKeys;
         private RoR2.UI.HGTextMeshProUGUI controlDescriptions;
@@ -78,15 +78,15 @@ namespace Experimental.UI
             topLeft.fontSize = 18;
             topLeft.text = Heading;
 
-            stageSelect = AddChild<RoR2.UI.HGTextMeshProUGUI>(rect, nameof(stageSelect));
-            stageSelect.alignment = TMPro.TextAlignmentOptions.TopRight;
-            stageSelect.fontSize = 18;
+            topRight = AddChild<RoR2.UI.HGTextMeshProUGUI>(rect, nameof(topRight));
+            topRight.alignment = TMPro.TextAlignmentOptions.TopRight;
+            topRight.fontSize = 18;
 
             botLeft = AddChild<RoR2.UI.HGTextMeshProUGUI>(rect, nameof(botLeft));
             botLeft.alignment = TMPro.TextAlignmentOptions.BottomLeft;
             botLeft.fontSize = 18;
 
-            const float controlKeysWidth = 40;
+            const float controlKeysWidth = 80;
             const float controlFontSize = 18;
             controlKeys = AddChild<RoR2.UI.HGTextMeshProUGUI>(rect, nameof(controlKeys));
             controlKeys.enableWordWrapping = false;
@@ -112,9 +112,9 @@ namespace Experimental.UI
             if (Input.GetKeyDown(hideKey)) hide = !hide;
             canvas.enabled = !hud.scoreboardPanel.activeSelf && !hide;
 
-            topLeft.text = $"{Heading}\n{GenerateStringPosition()}\n{Cheatsheet.currentDisplay}";
-            stageSelect.text = GenerateStringStageSelect();
-
+            topLeft.text = $"{Heading}\n\n{GenerateStringPosition()}\n{Cheatsheet.currentDisplay}";
+            topRight.text = GenerateStringStageSelect();
+            // todo: mention hide debug hud control under heading
 
             System.Text.StringBuilder keyString = new();
             System.Text.StringBuilder descriptionString = new();
@@ -147,13 +147,14 @@ namespace Experimental.UI
         {
             RoR2.CharacterBody body = hud.localUserViewer?.cameraRigController?.targetBody;
             if (body) {
-                System.Text.StringBuilder gps = new();
-                gps.AppendLine($"Foot Position: {body.footPosition.PrettyPrint()}");
+                System.Text.StringBuilder sb = new();
+                sb.Append("<style=cEvent>");
+                sb.AppendLine($"footPosition: {body.footPosition.PrettyPrint()}");
                 if (body.inputBank) {
-                    gps.AppendLine($"Aim Direction: {body.inputBank.aimDirection.PrettyPrint()}");
-                    gps.AppendLine($"\t{Quaternion.Euler(body.inputBank.aimDirection)}");
+                    sb.AppendLine($"aimDirection: {body.inputBank.aimDirection.PrettyPrint()}");
                 }
-                return gps.ToString();
+                sb.Append("</style>");
+                return sb.ToString();
             }
             return "";
         }
