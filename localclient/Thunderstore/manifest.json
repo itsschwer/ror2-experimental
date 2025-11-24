@@ -1,7 +1,7 @@
 ﻿{
 	"author": "itsschwer",
 	"name": "LocalClient",
-	"version_number": "0.0.0",
+	"version_number": "0.0.1",
 	"website_url": "https://github.com/itsschwer/ror2-experimental/tree/main/localclient",
 	"description": "[ mod testing ] — Intended for developers to use on client profiles when testing multiplayer mods locally",
 	"dependencies": [
