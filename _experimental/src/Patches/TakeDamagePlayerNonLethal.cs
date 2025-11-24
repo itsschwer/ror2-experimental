@@ -1,5 +1,8 @@
 ﻿using HarmonyLib;
+using Mono.Cecil.Cil;
+using MonoMod.Cil;
 using RoR2;
+using System;
 
 namespace Experimental.Patches
 {
@@ -13,6 +16,61 @@ namespace Experimental.Patches
             _active = active;
         }
 
+#if NETSTANDARD2_1_OR_GREATER
+        [HarmonyILManipulator, HarmonyPatch(typeof(HealthComponent), nameof(HealthComponent.TakeDamageProcess))]
+#else
+        [HarmonyILManipulator, HarmonyPatch(typeof(HealthComponent), nameof(HealthComponent.TakeDamage))]
+#endif
+        private static void HealthComponent_TakeDamage_NonLethalToPlayers(ILContext il)
+        {
+            ILCursor c = new ILCursor(il);
+
+            int ldargHealthComponent = -1;
+            Func<Instruction, bool>[] matchSet = {
+                // num_ = 1f;
+                // x => x.MatchLdarg(out int _),
+                // x => x.MatchLdfld<HealthComponent>(nameof(HealthComponent.health)),
+                // x => x.MatchLdcR4(1),
+                // -- RoR2BepInExPack.VanillaFixes.FixNonLethalOneHP.FixLethality --
+                // x => x.MatchBltUn(out ILLabel _),
+
+                x => x.MatchLdcR4(1f),
+                x => x.MatchStloc(out int _),
+
+                // Networkhealth = num_
+                x => x.MatchLdarg(out ldargHealthComponent),
+                x => x.MatchLdloc(out int _),
+                x => x.MatchCallOrCallvirt<HealthComponent>($"set_{nameof(HealthComponent.Networkhealth)}"),
+            };
+
+            if (c.TryGotoNext(matchSet)) {
+                ILLabel setNetworkHealth = il.DefineLabel();
+
+                Func<Instruction, bool>[] matchCheck = {
+                    // if (num_ < 1f && (damageInfo.damageType & DamageType.NonLethal) != 0 && health >= 1f)
+                    x => x.MatchLdloc(out int _),
+                    x => x.MatchLdcR4(1f),
+                    x => x.MatchBgeUn(out setNetworkHealth)
+                    // ... (diverge after SotS)
+                };
+
+                if (c.TryGotoPrev(MoveType.After, matchCheck)) {
+                    c.Emit(OpCodes.Ldarg, ldargHealthComponent);
+                    c.EmitDelegate<Func<CharacterBody, bool>>((body) => {
+                        return body.isPlayerControlled && Active;
+                    });
+                    c.Emit(OpCodes.Brfalse, setNetworkHealth);
+                }
+                else Plugin.Logger.LogError($"{nameof(TakeDamagePlayerNonLethal)}> Cannot hook: failed to match IL instructions (second set)");
+            }
+            else Plugin.Logger.LogError($"{nameof(TakeDamagePlayerNonLethal)}> Cannot hook: failed to match IL instructions (first set)");
+#if DEBUG
+            Plugin.Logger.LogDebug(il.ToString());
+#endif
+        }
+
+
+#if OLD
         [HarmonyPrefix, HarmonyPatch(typeof(HealthComponent), nameof(HealthComponent.TakeDamage))]
         private static void HealthComponent_TakeDamage_NonLethalToPlayers(HealthComponent __instance, ref DamageInfo damageInfo)
         {
@@ -54,5 +112,6 @@ namespace Experimental.Patches
                 return _DamageTypeCombo_Field;
             }
         }
+#endif
     }
 }
