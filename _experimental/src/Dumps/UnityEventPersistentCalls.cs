@@ -1,10 +1,11 @@
 ﻿using System.Text;
+using UnityEngine.Events;
 
 namespace Experimental.Dumps
 {
     public static class UnityEventPersistentCalls
     {
-        public static string Dump(UnityEngine.Events.UnityEventBase unityEvent)
+        public static string Dump(UnityEventBase unityEvent)
         {
             StringBuilder sb = new();
             sb.AppendLine($"{unityEvent} ({unityEvent.m_Calls.m_RuntimeCalls.Count} non-persistent)");

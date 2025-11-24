@@ -20,41 +20,21 @@ namespace Experimental
             Logger = BepInEx.Logging.Logger.CreateLogSource(Plugin.GUID);
 
             RoR2.UI.HUD.shouldHudDisplay += UI.HUD.Instantiate;
+            RoR2.RoR2Application.onLoad += OnLoad;
+
             Commands.ChatCommandListener.Hook();
             Commands.Commands.Register();
 
             new Harmony(Info.Metadata.GUID).PatchAll();
 
-            RoR2.RoR2Application.onLoad += Dump;
 
             Logger.LogMessage("~awake.");
         }
 
-        private static void Dump()
+        private static void OnLoad()
         {
-            foreach (RoR2.ItemDef item in RoR2.ItemCatalog.allItemDefs) {
-                string line = Dumps.PickupItemInfo.Dump(RoR2.PickupCatalog.GetPickupDef(RoR2.PickupCatalog.FindPickupIndex(item.itemIndex)), out bool hiddenOrCantRemove);
-                if (hiddenOrCantRemove) Logger.LogWarning(line);
-                else Logger.LogDebug(line);
-            }
-#if DEBUG
             Logger.LogDebug(Dumps.Layers.Dump());
-#endif
-            RoR2.RoR2Application.onLoad -= Dump;
-        }
-
-        public static int GetClientPingMilliseconds()
-        {
-            // Thrayonlosa | QolElements.PingHud.GetPing()
-            // https://thunderstore.io/package/Thrayonlosa/QolElements/2.1.0/
-            if (UnityEngine.Networking.NetworkClient.active) {
-                UnityEngine.Networking.NetworkConnection connection = RoR2.Networking.NetworkManagerSystem.singleton?.client?.connection;
-                if (connection != null) {
-                    return (int)RoR2.Networking.RttManager.GetConnectionRTTInMilliseconds(connection);
-                }
-            }
-
-            return -1;
+            RoR2.RoR2Application.onLoad -= OnLoad;
         }
     }
 }

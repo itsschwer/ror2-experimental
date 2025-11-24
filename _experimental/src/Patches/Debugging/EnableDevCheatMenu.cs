@@ -1,4 +1,5 @@
-﻿#if NETSTANDARD2_1_OR_GREATER // DevCheatMenu was introduced in the Seekers of the Storm update
+﻿#if DEBUG
+#if NETSTANDARD2_1_OR_GREATER // DevCheatMenu was introduced in the Seekers of the Storm update
 using HarmonyLib;
 using RoR2.UI;
 using UnityEngine;
@@ -35,4 +36,5 @@ namespace Experimental.Patches
         private static bool DevCheatMenu_Awake() => false; // Prevent closing on awake
     }
 }
+#endif
 #endif
