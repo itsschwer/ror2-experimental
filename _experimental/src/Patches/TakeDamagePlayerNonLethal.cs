@@ -56,9 +56,9 @@ namespace Experimental.Patches
 
                 if (c.TryGotoPrev(MoveType.After, matchCheck)) {
                     c.Emit(OpCodes.Ldarg, ldargHealthComponent);
-                    c.EmitDelegate<Func<CharacterBody, bool>>((body) => {
-                        Plugin.Logger.LogWarning($"{body.name} | {body.isPlayerControlled && Active} | {body.isPlayerControlled}");
-                        return body.isPlayerControlled && Active;
+                    c.EmitDelegate<Func<HealthComponent, bool>>((@this) => {
+                        Plugin.Logger.LogWarning($"{@this.body.name} | {@this.body.isPlayerControlled && Active} | {@this.body.isPlayerControlled}");
+                        return @this.body.isPlayerControlled && Active;
                     });
                     c.Emit(OpCodes.Brtrue, eq1f);
                 }
