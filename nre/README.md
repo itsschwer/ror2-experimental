@@ -17,5 +17,11 @@ Tries to fix (spammy) vanilla null reference exceptions.
     - *but not an NRE**
 
 ## see also
+- [MiscFixes](https://thunderstore.io/package/score/MiscFixes/) <sup>[*src*](https://github.com/goldenguy00/MiscFixes)</sup> by [score](https://thunderstore.io/package/score/) — just use this, i'm just weird<sub> and don't really use enough/large mods<sub> to feel like having MiscFixes and SeekersPatcher as core dependencies</sub></sub>
+<!-- would the *common* errors addressed in
+https://github.com/goldenguy00/MiscFixes/blob/master/MysticFixes/ErrorPolice/Harmony/VanillaFixes.cs
+(and maybe https://github.com/goldenguy00/MiscFixes/blob/master/MysticFixes/ErrorPolice/Harmony/PermanentFixes.cs )
+not fit better in
+https://github.com/risk-of-thunder/RoR2BepInExPack/tree/dlc2/RoR2BepInExPack/VanillaFixes ? -->
 - [MeridianPrimePrime](https://thunderstore.io/package/itsschwer/MeridianPrimePrime/) — fixes an NRE when cracking *Aurelionite Geodes* on *Prime Meridian*
     - <mark>fixed in vanilla **RoR2v1.3.6 [Seekers of the Storm Roadmap Phase 1 — Items & Elites]**</mark>

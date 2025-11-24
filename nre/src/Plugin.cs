@@ -19,7 +19,7 @@ namespace itsschwer.RoR2.NRE
             BepInEx.Logging.Logger.Sources.Remove(base.Logger);
             Logger = BepInEx.Logging.Logger.CreateLogSource(Plugin.GUID);
 
-            new Harmony(Info.Metadata.GUID).PatchAll();
+            new Harmony(Info.Metadata.GUID).TryPatchAll(Logger);
 
             Logger.LogMessage("Patched.");
         }

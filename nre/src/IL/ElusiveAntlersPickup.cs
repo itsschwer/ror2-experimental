@@ -55,8 +55,9 @@ namespace itsschwer.RoR2.NRE.IL
                 c.EmitDelegate<Func<Vanilla.ElusiveAntlersPickup, Vector3>>((@this) => {
                     if (@this.ownerBody) return @this.ownerBody.gameObject.transform.position;
 
+                    // try force out of range
                     Vector3 outOfRange = @this.gameObject.transform.position;
-                    outOfRange.z += @this.maxDistanceFromOwner + 1;
+                    outOfRange.y += @this.maxDistanceFromOwner + 1;
                     return outOfRange;
                 });
 #if DEBUG
