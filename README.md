@@ -9,6 +9,10 @@ A collection of smaller, experimental mods so I don't have to make a separate re
 
 ### released
 - [`namechanger`](./namechanger/) — *NameChanger ([thunderstore.io](https://thunderstore.io/package/itsschwer/NameChanger/))*
+<!--  -->
+- [`localclient`](./localclient/) — *LocalClient ([thunderstore.io](https://thunderstore.io/package/itsschwer/LocalClient/))*
+<!--  -->
+- [`nre`](./nre/) — *NREater ([thunderstore.io](https://thunderstore.io/package/itsschwer/NREater/))*
 - [`sots`](./sots/) — *SprintingOnTheScoreboard ([thunderstore.io](https://thunderstore.io/package/itsschwer/SprintingOnTheScoreboard/))*
 - [`sots-scoreboard`](./sots-scoreboard/) — *RestoreScoreboard ([thunderstore.io](https://thunderstore.io/package/itsschwer/RestoreScoreboard/))*
 - [`sots-meridian`](./sots-meridian/) — *MeridianPrimePrime ([thunderstore.io](https://thunderstore.io/package/itsschwer/MeridianPrimePrime/))*
